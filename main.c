@@ -89,7 +89,9 @@ void *Worker1(void *threadid)
     //stoogesort(list, 0, S-1, (void*)&threadid);
 
     my_thread_create(&threadInFunc,Worker,(void*)&threadInFunc);
-
+    printf("ME SLEEP\n");
+    my_thread_sleep(4);
+    printf("REAL SHIT\n");
     stoogesort(list, 0, S-1);
     arrived = 1;
     printf("Terminó HILO 1: %d\n", *(int*)threadid);
@@ -139,7 +141,7 @@ int main(int argc, char** argv) {
         printf("Couldn't initialize warrior object\n");
     }
 
-    check = initValues(&warrior2, 20, 8, 15, 20, "warrior2");
+    check = initValues(&warrior2, 20, 25, 15, 20, "warrior2");
     if (!check){
         printf("Couldn't initialize warrior object\n");
     }
@@ -182,7 +184,7 @@ int main(int argc, char** argv) {
 
     while(!arrived)
     {
-
+        //printf("WAITING\n");
     }
 
     while(!threadCreated)

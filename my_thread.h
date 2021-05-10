@@ -11,10 +11,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include "scheduler.h"
+#include <time.h>
 
 typedef long my_thread_t;
 void my_thread_init(long period);
 int my_thread_create(my_thread_t *thread,void *(*start_routine)(void *),void *arg);
+void my_thread_sleep(long seconds);
 
 
 

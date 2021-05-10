@@ -11,6 +11,8 @@ int initValues(Warrior* const warrior, int vitality, int attack, int defense, in
     warrior->defense = defense;
     warrior->speed = speed;
     warrior->name = name;
+
+
     int attr = ((warrior->vitality + warrior->speed + warrior->defense + warrior->attack) / 4)/10 + 1;
     warrior->level = attr;
     return 1;
