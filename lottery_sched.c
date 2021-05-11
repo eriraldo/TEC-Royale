@@ -66,7 +66,7 @@ void scheduler_lottery(int  sigNum)
                     sigprocmask(SIG_UNBLOCK, &sigProcMask, NULL);
                     exit(0);
                 }
-               // nextNode = getWinnerThread(currentNode);
+                nextNode = getWinnerThread(currentNode);
                 if(nextNode != currentNode)
                 {
                     fflush(stdout);
@@ -169,6 +169,8 @@ void getTickets(Thread_ptr current){
         if (nextNode == head)
             break;
     }
+    if(totalTickets ==0)
+        totalTickets=1;
 }
 
 Thread_ptr getWinnerThread(Thread_ptr current){

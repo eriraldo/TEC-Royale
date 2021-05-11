@@ -187,6 +187,7 @@ int main(int argc, char** argv) {
     //Thread_Queue debug = readyQueue;
 
     my_thread_chsched(thread2, 1);
+    setTicket(thread2, 200);
 
 
 
