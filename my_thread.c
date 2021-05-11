@@ -2,6 +2,7 @@
 #include "my_thread.h"
 
 Thread_Queue readyQueue = null;
+Thread_Queue lotteryQueue = null;
 Completed_Queue deadQueue = null;
 struct sigaction schedulerHandle;
 extern ucontext_t notifierContext;
@@ -22,6 +23,7 @@ void my_thread_init(long period) {
             return;
         }
         readyQueue = GetThreadQueue();
+        lotteryQueue = GetThreadQueue();
         if (readyQueue != null) {
             quantum = period;
 
@@ -29,10 +31,11 @@ void my_thread_init(long period) {
             getcontext(&(ThreadOfMain->context));
             setupCompleteContext();
             ThreadOfMain->context.uc_link = &notifierContext;
+            ThreadOfMain->scheduler = 0;
 
             Push_Queue(readyQueue, ThreadOfMain);
             memset(&schedulerHandle, 0, sizeof (schedulerHandle));
-            schedulerHandle.sa_handler = &scheduler;
+            schedulerHandle.sa_handler = &manage;
             sigaction(SIGPROF, &schedulerHandle, NULL);
 
             printf("\nmy_thread library initialized\n");
@@ -62,6 +65,7 @@ int my_thread_create(my_thread_t *thread, void *(*start_routine)(void *), void *
         newThread->context.uc_stack.ss_size = STACKSIZE;
         newThread->context.uc_stack.ss_flags = 0;
         newThread->hasNoStackSpaceAllocated = 0;
+        newThread->scheduler = 0;
 
         newThread->context.uc_link = &notifierContext;
         makecontext(&(newThread->context), wrapperFunction, 2, start_routine, arg);

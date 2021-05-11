@@ -5,6 +5,7 @@
 #include "Warrior.h"
 #include <ncurses.h>
 
+
 my_thread_t threadInFunc;
 int threadCreated = 0;
 int arrived = 0;
@@ -66,7 +67,7 @@ void *Worker(void *threadid)
         fflush(stdout);
     }*/
 
-    stoogesort(list2, 0, S-1);
+    //stoogesort(list2, 0, S-1);
     printf("Terminó HILO 2: %d\n", *(int*)threadid);
     arrived2 = 1;
     *returnCode = 783;
@@ -78,6 +79,7 @@ void *Worker1(void *threadid)
     int i=5;
     int *jjd = (int*)malloc(sizeof(int));
     printf("In HILO 1 :%d\n",*(int*)threadid);
+    my_thread_create(&threadInFunc,Worker,(void*)&threadInFunc);
 
     while(i > 0)
     {
@@ -88,7 +90,7 @@ void *Worker1(void *threadid)
 
     //stoogesort(list, 0, S-1, (void*)&threadid);
 
-    my_thread_create(&threadInFunc,Worker,(void*)&threadInFunc);
+
     printf("ME SLEEP\n");
     my_thread_sleep(4);
     printf("REAL SHIT\n");
@@ -169,11 +171,23 @@ int main(int argc, char** argv) {
     //Just a test to check if Round-robin scheduler was working as expected
     int i=5;
     my_thread_t t1;
+    my_thread_t t2;
+    my_thread_t t3;
     void *status;
 
     my_thread_init(300);
 
     my_thread_create(&t1,Worker1,(void*)&t1);
+    //my_thread_create(&t2,Worker1,(void*)&t2);
+
+    extern Thread_Queue readyQueue;
+    extern Thread_Queue lotteryQueue;
+    Thread_ptr thread = GetThread(readyQueue, t1);
+    Thread_ptr thread2 = GetThread(readyQueue, t2);
+    swapSched(thread, 1);
+    //swapSched(thread2, 1);
+
+
 
     while(i > 0)
     {

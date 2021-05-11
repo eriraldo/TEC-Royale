@@ -85,6 +85,21 @@ int MoveForward(Thread_Queue queue)
     return failure;
 }
 
+Thread_ptr GetThread(Thread_Queue queue, long idThread){
+    Thread_ptr nextNode = GetCurrentThread(queue);
+    Thread_ptr head = nextNode;
+
+    while((nextNode!=null))
+    {
+        if(nextNode->idThread == idThread)
+            break;
+        nextNode = nextNode->next;
+        if (head == nextNode)
+            break;
+    }
+    return nextNode;
+}
+
 int GetThreadCount(Thread_Queue queue)
 {
     if(queue == null)
@@ -92,6 +107,22 @@ int GetThreadCount(Thread_Queue queue)
         return 0;
     }
     return queue->count;
+}
+
+int GetLotteryCount(Thread_Queue queue){
+    int count = 0;
+    Thread_ptr nextNode = GetCurrentThread(queue);
+    Thread_ptr head = nextNode;
+
+    while((nextNode!=null))
+    {
+        if (nextNode->scheduler == 1)
+            count+=1 ;
+        nextNode = nextNode->next;
+        if (head == nextNode)
+            break;
+    }
+    return count;
 }
 
 //HELPER FUNCTIONS
@@ -151,6 +182,29 @@ int Push_Queue(Thread_Queue queue,Thread_ptr node)
     }
 
     return failure;
+}
+
+void PopNode_Queue(Thread_Queue queue, Thread_ptr node)
+{
+    Thread_ptr nextNode = GetCurrentThread(queue);
+    Thread_ptr head = nextNode;
+    while((nextNode!=null))
+    {
+        if(nextNode->idThread == node->idThread)
+            break;
+        else{
+            MoveForward(queue);
+        }
+        nextNode = GetCurrentThread(queue);
+        if (nextNode == head){
+            nextNode = null;
+            break;
+        }
+    }
+    if (nextNode!=null){
+        Pop_Queue(queue);
+    }
+
 }
 
 Thread_ptr NewThread()

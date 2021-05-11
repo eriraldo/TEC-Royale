@@ -10,8 +10,9 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
-#include "scheduler.h"
+#include "roundRobin_sched.h"
 #include <time.h>
+#include "sched_manager.h"
 
 typedef long my_thread_t;
 void my_thread_init(long period);

@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 typedef long my_thread_t;
 
@@ -25,6 +26,8 @@ typedef struct Node
     ucontext_t context;
     struct Node *next;
     struct WaitThreadList *waitingThreads;
+    int tickets;
+    int scheduler;
 
 } Thread,*Thread_ptr;
 
@@ -69,6 +72,9 @@ int Push_Queue(Thread_Queue queue,Thread_ptr node);
 int PushToCompleted(Completed_Queue queue,CompletedThread_ptr node);
 Completed_Queue GetCompletedQueue();
 CompletedThread_ptr GetCompletedNode();
+void PopNode_Queue(Thread_Queue queue, Thread_ptr node);
+Thread_ptr GetThread(Thread_Queue queue, long idThread);
+int GetLotteryCount(Thread_Queue queue);
 
 
 #endif	/* DATASTRCUTURES_H */
