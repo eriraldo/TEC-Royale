@@ -35,17 +35,20 @@ void scheduler_rr(int  sigNum)
             }
             else
             {
+                //readyQueue = getNextThread(readyQueue, 0);
                 MoveForward(readyQueue);
             }
-            int lotteryCount = GetLotteryCount(readyQueue);
+            int lotteryCount = GetLotteryCount(readyQueue);/*
             for(int i = 0; i < lotteryCount; i++){
                 MoveForward(readyQueue);
-            }
+            }*/
             /*if (GetLotteryCount(readyQueue) > 0)
                 MoveForward(readyQueue);*/
+            //currentNode = GetThread(readyQueue, currentNode->idThread);
             nextNode = GetCurrentThread(readyQueue);
+            Thread_ptr head = nextNode;
 
-            while((nextNode!=null) && (nextNode->isBlocked || nextNode->isCompleted || nextNode->scheduler == 1))
+            while((nextNode!=null) && (nextNode->isBlocked || nextNode->isCompleted || nextNode->scheduler == 1 || nextNode->recently_used == 1))
             {
                 if(nextNode->isCompleted)
                 {
@@ -56,6 +59,10 @@ void scheduler_rr(int  sigNum)
                     MoveForward(readyQueue);
                 }
                 nextNode = GetCurrentThread(readyQueue);
+                if (nextNode == head){
+                    setNotUsed(readyQueue, 0);
+                    break;
+                }
             }
             if(nextNode == null)
             {
@@ -69,10 +76,12 @@ void scheduler_rr(int  sigNum)
                 sigprocmask(SIG_UNBLOCK, &sigProcMask, NULL);
                 if(currentNodeCompleted)
                 {
+                    nextNode->recently_used = 1;
                     setcontext(&(nextNode->context));
                 }
                 else
                 {
+                    nextNode->recently_used = 1;
                     swapcontext(&(currentNode->context),&(nextNode->context));
                 }
             }

@@ -28,6 +28,7 @@ typedef struct Node
     struct WaitThreadList *waitingThreads;
     int tickets;
     int scheduler;
+    int recently_used;
 
 } Thread,*Thread_ptr;
 
@@ -75,6 +76,10 @@ CompletedThread_ptr GetCompletedNode();
 void PopNode_Queue(Thread_Queue queue, Thread_ptr node);
 Thread_ptr GetThread(Thread_Queue queue, long idThread);
 int GetLotteryCount(Thread_Queue queue);
+Thread_Queue getNextThread(Thread_Queue queue, int sched);
+Thread_ptr cloneThread(Thread_ptr oldThread);
+void printThreads(Thread_Queue queue);
+void setNotUsed(Thread_Queue queue, int sched);
 
 
 #endif	/* DATASTRCUTURES_H */

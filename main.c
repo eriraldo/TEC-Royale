@@ -92,7 +92,7 @@ void *Worker1(void *threadid)
 
 
     printf("ME SLEEP\n");
-    my_thread_sleep(4);
+    my_thread_sleep(2);
     printf("REAL SHIT\n");
     stoogesort(list, 0, S-1);
     arrived = 1;
@@ -175,17 +175,18 @@ int main(int argc, char** argv) {
     my_thread_t t3;
     void *status;
 
-    my_thread_init(300);
+    my_thread_init(200);
 
     my_thread_create(&t1,Worker1,(void*)&t1);
-    //my_thread_create(&t2,Worker1,(void*)&t2);
+    my_thread_create(&t2,Worker1,(void*)&t2);
 
     extern Thread_Queue readyQueue;
-    extern Thread_Queue lotteryQueue;
     Thread_ptr thread = GetThread(readyQueue, t1);
     Thread_ptr thread2 = GetThread(readyQueue, t2);
-    swapSched(thread, 1);
-    //swapSched(thread2, 1);
+    my_thread_chsched(thread, 1);
+    //Thread_Queue debug = readyQueue;
+
+    my_thread_chsched(thread2, 0);
 
 
 
@@ -201,15 +202,10 @@ int main(int argc, char** argv) {
         //printf("WAITING\n");
     }
 
-    while(!threadCreated)
+    /*while(!arrived2)
     {
 
-    }
-
-    while(!arrived2)
-    {
-
-    }
+    }*/
 
     int returnCode = 4;
     printf("\nReturn Code:%d",returnCode);

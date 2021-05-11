@@ -100,6 +100,84 @@ Thread_ptr GetThread(Thread_Queue queue, long idThread){
     return nextNode;
 }
 
+void setNotUsed(Thread_Queue queue, int sched){
+    Thread_ptr nextNode = GetCurrentThread(queue);
+    Thread_ptr head = nextNode;
+
+    while((nextNode!=null))
+    {
+        if(nextNode->scheduler == sched)
+            nextNode->recently_used = 0;
+        nextNode = nextNode->next;
+        if (head == nextNode)
+            break;
+    }
+}
+
+Thread_ptr cloneThread(Thread_ptr oldThread){
+    Thread_ptr newthread = (Thread_ptr)malloc(sizeof(Thread));
+    newthread->idThread = oldThread->idThread;
+    newthread->quantum = oldThread->quantum;
+    newthread->context = oldThread->context;
+    newthread->isBlocked = oldThread->isBlocked;
+    newthread->isCompleted = oldThread->isCompleted;
+    newthread->waitingThreads = oldThread->waitingThreads;
+    newthread->hasNoStackSpaceAllocated = oldThread->hasNoStackSpaceAllocated;
+    newthread->scheduler = oldThread->scheduler;
+    newthread->tickets = oldThread->tickets;
+    return newthread;
+
+}
+
+void printThreads(Thread_Queue queue){
+    Thread_ptr nextNode = GetCurrentThread(queue);
+    Thread_ptr head = nextNode;
+    printf("\n PRINTING \n ");
+    while((nextNode!=null))
+    {
+        printf("%d: ", nextNode->idThread);
+        nextNode = nextNode->next;
+        if (head == nextNode)
+            break;
+    }
+    printf("\n DONE PRINTING");
+}
+
+Thread_Queue getNextThread(Thread_Queue queue, int sched){
+    Thread_Queue target_sched = GetThreadQueue();
+    Thread_Queue leftovers = GetThreadQueue();
+    Thread_Queue debug = queue;
+    Thread_ptr nextNode = GetCurrentThread(queue);
+    Thread_ptr head = nextNode;
+
+    while((nextNode!=null))
+    {
+        Thread_ptr nodeClone = cloneThread(nextNode);
+        if(nextNode->scheduler == sched)
+            Push_Queue(target_sched, nodeClone);
+        else
+            Push_Queue(leftovers, nodeClone);
+        nextNode = nextNode->next;
+        if (head == nextNode)
+            break;
+    }
+    MoveForward(target_sched);
+
+    nextNode = GetCurrentThread(leftovers);
+    head = nextNode;
+
+    while((nextNode!=null))
+    {
+        Thread_ptr nodeClone = cloneThread(nextNode);
+        Push_Queue(target_sched, nodeClone);
+        nextNode = nextNode->next;
+        if (head == nextNode)
+            break;
+    }
+    return target_sched;
+}
+
+
 int GetThreadCount(Thread_Queue queue)
 {
     if(queue == null)
@@ -222,6 +300,7 @@ Thread_ptr NewThread()
     newThread->idThread = GetNextThreadId();
     newThread->hasNoStackSpaceAllocated = 1;
     newThread->isCompleted = 0;
+    newThread->recently_used = 0;
     return newThread;
 }
 

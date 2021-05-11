@@ -13,6 +13,24 @@ void *wrapperFunction(void *(*start_routine)(void *), void *arg);
 Thread_ptr GetCurrentThread_ptr();
 extern int ignoreSignal;
 
+
+void my_thread_chsched(Thread_ptr thread, int sched){
+    switch (sched) {
+        case 0:
+            thread->tickets = 0;
+            thread->scheduler = 0;
+            break;
+        case 1:
+            thread->tickets = 10;
+            thread->scheduler = 1;
+            break;
+        default:
+            thread->tickets = 0;
+            thread->scheduler = 0;
+            break;
+    }
+}
+
 void my_thread_init(long period) {
     if (readyQueue == null && deadQueue == null) {
         sigemptyset(&sigProcMask);
@@ -46,6 +64,11 @@ void my_thread_init(long period) {
             setitimer(ITIMER_PROF, &timeQuantum, NULL);
         }
     }
+}
+
+void asd(){
+    Thread_ptr main = GetThread(readyQueue, 1);
+    notifierContext.uc_link = &main->context;
 }
 
 int my_thread_create(my_thread_t *thread, void *(*start_routine)(void *), void *arg) {

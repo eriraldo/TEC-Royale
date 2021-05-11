@@ -37,11 +37,15 @@ void scheduler_lottery(int  sigNum)
                 }
                 else
                 {
+                    //readyQueue = getNextThread(readyQueue, 1);
                     MoveForward(readyQueue);
                 }
+                Thread_Queue debug2 =readyQueue;
+                //currentNode = GetThread(readyQueue, currentNode->idThread);
                 nextNode = GetCurrentThread(readyQueue);
+                Thread_ptr head = nextNode;
 
-                while((nextNode!=null) && (nextNode->isBlocked || nextNode->isCompleted || nextNode->scheduler == 0))
+                while((nextNode!=null) && (nextNode->isBlocked || nextNode->isCompleted || nextNode->scheduler == 0 || nextNode->recently_used == 1))
                 {
                     if(nextNode->isCompleted)
                     {
@@ -52,6 +56,10 @@ void scheduler_lottery(int  sigNum)
                         MoveForward(readyQueue);
                     }
                     nextNode = GetCurrentThread(readyQueue);
+                    if (nextNode == head){
+                        setNotUsed(readyQueue, 1);
+                        break;
+                    }
                 }
                 if(nextNode == null)
                 {
