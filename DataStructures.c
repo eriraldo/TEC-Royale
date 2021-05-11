@@ -301,6 +301,8 @@ Thread_ptr NewThread()
     newThread->hasNoStackSpaceAllocated = 1;
     newThread->isCompleted = 0;
     newThread->recently_used = 0;
+    newThread->scheduler = 0;
+    newThread->tickets = 10;
     return newThread;
 }
 

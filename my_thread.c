@@ -49,7 +49,6 @@ void my_thread_init(long period) {
             getcontext(&(ThreadOfMain->context));
             setupCompleteContext();
             ThreadOfMain->context.uc_link = &notifierContext;
-            ThreadOfMain->scheduler = 0;
 
             Push_Queue(readyQueue, ThreadOfMain);
             memset(&schedulerHandle, 0, sizeof (schedulerHandle));
@@ -88,7 +87,6 @@ int my_thread_create(my_thread_t *thread, void *(*start_routine)(void *), void *
         newThread->context.uc_stack.ss_size = STACKSIZE;
         newThread->context.uc_stack.ss_flags = 0;
         newThread->hasNoStackSpaceAllocated = 0;
-        newThread->scheduler = 0;
 
         newThread->context.uc_link = &notifierContext;
         makecontext(&(newThread->context), wrapperFunction, 2, start_routine, arg);

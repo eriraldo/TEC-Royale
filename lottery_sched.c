@@ -66,7 +66,7 @@ void scheduler_lottery(int  sigNum)
                     sigprocmask(SIG_UNBLOCK, &sigProcMask, NULL);
                     exit(0);
                 }
-                nextNode = getWinnerThread();
+               // nextNode = getWinnerThread(currentNode);
                 if(nextNode != currentNode)
                 {
                     fflush(stdout);
@@ -157,13 +157,13 @@ void scheduler_lottery(int  sigNum)
 
 
 
-void getTickets(){
+void getTickets(Thread_ptr current){
     Thread_ptr nextNode = GetCurrentThread(readyQueue);
     Thread_ptr head = nextNode;
     totalTickets = 0;
     while((nextNode!=null))
     {
-        if(nextNode->scheduler == 1)
+        if(nextNode->scheduler == 1 && nextNode != current)
             totalTickets+= nextNode->tickets;
         nextNode = nextNode->next;
         if (nextNode == head)
@@ -171,8 +171,8 @@ void getTickets(){
     }
 }
 
-Thread_ptr getWinnerThread(){
-    getTickets();
+Thread_ptr getWinnerThread(Thread_ptr current){
+    getTickets(current);
     Thread_ptr nextNode = GetCurrentThread(readyQueue);
     srand(time(NULL));
     int test = totalTickets;
@@ -184,12 +184,13 @@ Thread_ptr getWinnerThread(){
 
     while((nextNode!=null))
     {
-        if (nextNode->scheduler == 1){
+        if (nextNode->scheduler == 1 && nextNode != current){
             if(win_ticket >= sumTicket && win_ticket < sumTicket+nextNode->tickets)
                 break;
             sumTicket += nextNode->tickets;
         }
-        nextNode = nextNode->next;
+        MoveForward(readyQueue);
+        nextNode = GetCurrentThread(readyQueue);
         if (head == nextNode)
             break;
     }

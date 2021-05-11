@@ -94,7 +94,7 @@ void *Worker1(void *threadid)
     printf("ME SLEEP\n");
     my_thread_sleep(2);
     printf("REAL SHIT\n");
-    stoogesort(list, 0, S-1);
+    //stoogesort(list, 0, S-1);
     arrived = 1;
     printf("Terminó HILO 1: %d\n", *(int*)threadid);
     threadCreated = 1;
@@ -186,7 +186,7 @@ int main(int argc, char** argv) {
     my_thread_chsched(thread, 1);
     //Thread_Queue debug = readyQueue;
 
-    my_thread_chsched(thread2, 0);
+    my_thread_chsched(thread2, 1);
 
 
 
