@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.19)
+project(TecRoyale C)
+add_executable(TecRoyale main.c Table.c Table.h)
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_CXX_FLAGS "-lncurses")
+find_package(Curses REQUIRED)
+set(CURSES_NEED_NCURSES TRUE)
+
+if (CURSES_FOUND AND CURSES_HAVE_NCURSES_H)
+    include_directories(${CURSES_INCLUDE_DIR})
+    target_link_libraries (TecRoyale ${CURSES_LIBRARIES})
+endif()
+include_directories(${CURSES_INCLUDE_DIR})
