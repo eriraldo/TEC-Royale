@@ -102,6 +102,30 @@ void send_message(char *s, int uid){
 	pthread_mutex_unlock(&clients_mutex);
 }
 
+
+
+void send_response(char *s, int uid){
+	pthread_mutex_lock(&clients_mutex);
+
+	for(int i=0; i<MAX_CLIENTS; ++i){
+		if(clients[i]){
+			if(clients[i]->uid == uid){
+				if(write(clients[i]->sockfd, s, strlen(s)) < 0){
+					perror("ERROR: write to descriptor failed");
+					break;
+				}
+				else{
+					write(clients[i]->sockfd, "\n", 0);
+					}
+			}
+		}
+	}
+
+	pthread_mutex_unlock(&clients_mutex);
+}
+
+
+
 /* Handle all communication with the client */
 void *handle_client(void *arg){
 	char buff_out[BUFFER_SZ];
@@ -132,13 +156,34 @@ void *handle_client(void *arg){
 		int receive = recv(cli->sockfd, buff_out, BUFFER_SZ, 0);
 		if (receive > 0){
 			if(strlen(buff_out) > 0){
-				if(strcmp(buff_out, "1")==0){	
-				send_message("23", cli->uid);
+				if(strcmp(buff_out, "250")==0){	
+				send_response("El puente bloqueado es el puente superior", cli->uid);
+				}
+				else if(strcmp(buff_out, "251")==0){	
+				send_response("El puente bloqueado es el puente superior", cli->uid);
+				}
+				else if(strcmp(buff_out, "252")==0){	
+				send_response("Ha enviado un guerrero por el puente inferior", cli->uid);
+				}else if(strcmp(buff_out, "253")==0){	
+				send_response("Ha enviado un gerrero por el puente inferior", cli->uid);
+				}else if(strcmp(buff_out, "254")==0){	
+				send_response("Tu cantidad de guerreros con vida son: ", cli->uid);
+				}else if(strcmp(buff_out, "255")==0){	
+				send_response("La cantidad de guerreros con vida del rival son: ", cli->uid);
+				}else if(strcmp(buff_out, "256")==0){	
+				send_response("La vida de las torres del rival son: ", cli->uid);
+				}else if(strcmp(buff_out, "257")==0){	
+				send_response("Aun no se", cli->uid);
+				}else if(strcmp(buff_out, "258")==0){	
+				send_response("Aun no se", cli->uid);
+				}
+				else if(strcmp(buff_out, "Commands")==0){	
+				send_response("El codigo 250-> \nEl codigo 250-> \nEl codigo 250-> \nEl codigo 250-> \nEl codigo 250-> \nEl codigo 250-> \nEl codigo 250-> \nEl codigo 250-> \nEl codigo 250-> \nEl codigo 250-> \n", cli->uid);
 				}
 				else{
-					send_message(buff_out, cli->uid);
+					send_response("El codigo ingresado no existe", cli->uid);
 					}
-
+				send_message("El otro jugador ha hecho una peticion", cli->uid);
 				str_trim_lf(buff_out, strlen(buff_out));
 				printf("%s\n", buff_out, cli->name);
 			}
@@ -236,3 +281,4 @@ int main(int argc, char **argv){
 
 	return EXIT_SUCCESS;
 }
+
