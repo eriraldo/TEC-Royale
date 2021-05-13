@@ -4,7 +4,11 @@
 
 #ifndef UNTITLED_TABLE_H
 #define UNTITLED_TABLE_H
-
-void createTable(int opcion, int user);
-void printWarrior(int nextMove,int level,int xPos, int yPos,WINDOW *screen1);
+#include <stdlib.h>
+#include "stdio.h"
+#include <ncurses.h>
+#include "Warrior.h"
+void createTable(int opcion);
+void moveWarrior(int nextMove,Warrior warrior);
+int iniciar();
 #endif //UNTITLED_TABLE_H

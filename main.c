@@ -8,7 +8,7 @@ int main()
 
 
 
-    createTable(1,1);
+    createTable(1);
 
     endwin();
 

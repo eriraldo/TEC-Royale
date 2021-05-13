@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.19)
 project(TecRoyale C)
-add_executable(TecRoyale main.c Table.c Table.h)
+add_executable(TecRoyale
+        main.c
+        Table.c
+        Table.h
+        Warrior.c
+        Warrior.h)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_FLAGS "-lncurses")
 find_package(Curses REQUIRED)
