@@ -9,6 +9,6 @@
 #include <ncurses.h>
 #include "Warrior.h"
 void createTable(int opcion);
-void moveWarrior(int nextMove,Warrior warrior);
+void moveWarrior(int nextMove,Warrior *warrior);
 int iniciar();
 #endif //UNTITLED_TABLE_H
