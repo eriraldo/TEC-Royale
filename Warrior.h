@@ -15,11 +15,11 @@ typedef struct{
     char* name;
     int Posx;
     int Posy;
-    bool screen;
+    int screen;
 }Warrior;
 
 
-int initValues(Warrior* const warrior, int vitality, int attack, int defense, int speed, char* name,int posX, int posY,bool screen);
+int initValues(Warrior* const warrior, int vitality, int attack, int defense, int speed, char* name,int posX, int posY,int screen);
 void printWarrior(Warrior* const warrior);
 void getLevel(Warrior* const warrior);
 void mutation(int*);

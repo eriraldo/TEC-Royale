@@ -8,6 +8,7 @@
 #include "stdio.h"
 #include <ncurses.h>
 #include "Warrior.h"
+#include "unistd.h"
 void createTable(int opcion);
 void moveWarrior(int nextMove,Warrior *warrior);
 int iniciar();

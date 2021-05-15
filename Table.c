@@ -20,7 +20,7 @@ char* arr[21] = {
 };
 
 int iniciar(){
-    int check = initValues(&warrior1,100,10,10,5,"P",8,5,false);
+    int check = initValues(&warrior1,100,10,10,5,"P",3,5,2);
     return check;
 }
 WINDOW *screen1;
@@ -82,7 +82,7 @@ void moveWarrior(int nextMove, Warrior *warrior){ //----------------movimientos 
     switch (nextMove) {
         case 1://movimiento a la derecha
             //validar si en la posicion en donde se va a mover no hay nadie
-            if ((warrior->Posx+2 < screen1->_maxx ) && (warrior->screen == true)){
+            if ((warrior->Posx+2 < screen1->_maxx ) && (warrior->screen == 1)){
                 mvwprintw(screen1,warrior->Posy,warrior->Posx," ");
                 mvwprintw(screen1,warrior->Posy+1,warrior->Posx," ");
                 mvwprintw(screen1,warrior->Posy,warrior->Posx-1," ");
@@ -104,10 +104,10 @@ void moveWarrior(int nextMove, Warrior *warrior){ //----------------movimientos 
                 wrefresh(screen2);
             }
                 //se cambia a movimientos en pantalla 2 a la derecha
-            if((warrior->Posx+2 >= screen1->_maxx ) && (warrior->screen == true)){
+            if((warrior->Posx+2 >= screen1->_maxx ) && (warrior->screen == 1)){
 
 
-                warrior->screen = false;
+                warrior->screen = 2;
                 mvwprintw(screen1,warrior->Posy,warrior->Posx," ");
                 mvwprintw(screen1,warrior->Posy+1,warrior->Posx," ");
                 mvwprintw(screen1,warrior->Posy,warrior->Posx+1," ");
@@ -123,7 +123,7 @@ void moveWarrior(int nextMove, Warrior *warrior){ //----------------movimientos 
                 wrefresh(screen1);
                 wrefresh(screen2);
             }
-            if((warrior->screen == false) && (warrior->Posx+2 < tower5.posX)){ //-------------------------------------------aqui se tiene que hacer la validacion de que dibuje solo si el puente está habilitado
+            if((warrior->screen == 2) && (warrior->Posx+2 < tower5.posX)){ //-------------------------------------------aqui se tiene que hacer la validacion de que dibuje solo si el puente está habilitado
                 mvwprintw(screen2,warrior->Posy,warrior->Posx," ");
                 mvwprintw(screen2,warrior->Posy+1,warrior->Posx," ");
                 mvwprintw(screen2,warrior->Posy,warrior->Posx-1," ");
@@ -144,7 +144,7 @@ void moveWarrior(int nextMove, Warrior *warrior){ //----------------movimientos 
             break;
         case 2://movimiento a la izquierda
             //validar si en la posicion en donde se va a mover no hay nadie
-            if((warrior->Posx-2 > 0) && (warrior->screen == false)){
+            if((warrior->Posx-2 > 0) && (warrior->screen == 2)){
                 //se imprime la nueva posicion
                 mvwprintw(screen2,warrior->Posy,warrior->Posx," ");
                 mvwprintw(screen2,warrior->Posy+1,warrior->Posx," ");
@@ -160,11 +160,10 @@ void moveWarrior(int nextMove, Warrior *warrior){ //----------------movimientos 
                 mvwprintw(screen2,warrior->Posy,warrior->Posx-1,warrior->name);
                 mvwprintw(screen2,warrior->Posy+1,warrior->Posx-1,lvl);
                 warrior->Posx = warrior->Posx-1;
-                wrefresh(screen1);
                 wrefresh(screen2);
             }
-            if((warrior->Posx-2 <= 0 ) && (warrior->screen == false)){
-                warrior->screen = true;
+            if((warrior->Posx-2 <= 0 ) && (warrior->screen == 2)){
+                warrior->screen = 1;
                 mvwprintw(screen2,warrior->Posy,warrior->Posx," ");
                 mvwprintw(screen2,warrior->Posy+1,warrior->Posx," ");
                 mvwprintw(screen2,warrior->Posy,warrior->Posx-1," ");
@@ -181,7 +180,7 @@ void moveWarrior(int nextMove, Warrior *warrior){ //----------------movimientos 
                 wrefresh(screen1);
                 //wrefresh(screen2);
             }
-            if((warrior->screen == true) && (warrior->Posx-2 > tower2.posX)){
+            if((warrior->screen == 1) && (warrior->Posx-2 > tower2.posX)){
                 mvwprintw(screen1,warrior->Posy,warrior->Posx," ");
                 mvwprintw(screen1,warrior->Posy+1,warrior->Posx," ");
                 mvwprintw(screen1,warrior->Posy,warrior->Posx-1," ");
@@ -342,20 +341,22 @@ void createTable(int opcion){
     mvwprintw(screen2,tower6.posY+2,tower6.posX+1,tower6.towerSymbol);
     mvwprintw(screen2,tower6.posY+2,tower6.posX+2,tower6.towerSymbol);
     wattroff(screen2,COLOR_PAIR(2));
-
-    //move(15,30);//se deja el cursor fuera del tablero
-    wrefresh(screen1);//se refresca la ventana
-    wrefresh(screen2);
     //Warrior warrior;
     //int check = initValues(&warrior20, 1, 2, 3, 4,"P",18,5,true);
+    wrefresh(screen1);//se refresca la ventana
+    wrefresh(screen2);
+    sleep(1);
     moveWarrior(2,&warrior1);
     wrefresh(screen1);//se refresca la ventana
     wrefresh(screen2);
-
-
-
-
-
+    sleep(1);
+    moveWarrior(1,&warrior1);
+    wrefresh(screen1);//se refresca la ventana
+    wrefresh(screen2);
+    sleep(1);
+    moveWarrior(1,&warrior1);
+    wrefresh(screen1);//se refresca la ventana
+    wrefresh(screen2);
 
 
     wgetch(screen1);
