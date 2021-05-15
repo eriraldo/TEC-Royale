@@ -2,14 +2,36 @@
 #include <stdlib.h>
 #include <ncurses.h>
 #include "Table.h"
+extern WINDOW *screen1;
+extern WINDOW *screen2;
+extern Warrior warrior1;
 int main()
 {
-    //initscr();
-
-
 
     createTable(1);
+    wrefresh(screen1);//se refresca la ventana
+    wrefresh(screen2);
+    //noecho();
+//    wrefresh(screen1);//se refresca la ventana
+//    wrefresh(screen2);
+//    sleep(1);
+//    moveWarrior(2,&warrior1);
+//    wrefresh(screen1);//se refresca la ventana
+//    wrefresh(screen2);
+//    sleep(1);
+//    moveWarrior(1,&warrior1);
+//    wrefresh(screen1);//se refresca la ventana
+//    wrefresh(screen2);
+//    sleep(1);
+//    moveWarrior(1,&warrior1);
+//    wrefresh(screen1);//se refresca la ventana
+//    wrefresh(screen2);
 
+
+    wgetch(screen1);
+
+    delwin(screen1);
+    delwin(screen2);
     endwin();
 
 }

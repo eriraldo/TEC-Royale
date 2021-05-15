@@ -12,4 +12,5 @@
 void createTable(int opcion);
 void moveWarrior(int nextMove,Warrior *warrior);
 int iniciar();
+void createTowers(int opcion);
 #endif //UNTITLED_TABLE_H

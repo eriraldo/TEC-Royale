@@ -36,7 +36,7 @@ struct Tower
 };
 
 
-void createTowers(){
+void createTowers(int opcion){
     //---------------------------------------------------player1-----------------------
     tower1.health = 999;//vida
     tower1.towerSymbol = "-";//figura de la torre
@@ -53,19 +53,26 @@ void createTowers(){
     tower3.posX = 1;
     tower3.posY = 9;
     //---------------------------------------------------player2-----------------------
+    int val;
+    if(opcion == 1){
+        val = 18;
+    }
+    else if (opcion == 2){
+        val = 24;
+    }
     tower4.health = 999;//vida
     tower4.towerSymbol = "-";//figura de la torre
-    tower4.posX = 18;
+    tower4.posX = val;
     tower4.posY = 1;
     //=====================
     tower5.health = 999;//vida
     tower5.towerSymbol = "-";//figura de la torre
-    tower5.posX = 18;
+    tower5.posX = val;
     tower5.posY = 5;
     //=====================
     tower6.health = 999;//vida
     tower6.towerSymbol = "-";//figura de la torre
-    tower6.posX = 18;
+    tower6.posX = val;
     tower6.posY = 9;
 };
 
@@ -80,7 +87,7 @@ void moveWarrior(int nextMove, Warrior *warrior){ //----------------movimientos 
 
 
     switch (nextMove) {
-        case 1://movimiento a la derecha
+        case KEY_RIGHT://movimiento a la derecha
             //validar si en la posicion en donde se va a mover no hay nadie
             if ((warrior->Posx+2 < screen1->_maxx ) && (warrior->screen == 1)){
                 mvwprintw(screen1,warrior->Posy,warrior->Posx," ");
@@ -142,7 +149,7 @@ void moveWarrior(int nextMove, Warrior *warrior){ //----------------movimientos 
                 wrefresh(screen2);
             }
             break;
-        case 2://movimiento a la izquierda
+        case KEY_LEFT://movimiento a la izquierda
             //validar si en la posicion en donde se va a mover no hay nadie
             if((warrior->Posx-2 > 0) && (warrior->screen == 2)){
                 //se imprime la nueva posicion
@@ -180,7 +187,7 @@ void moveWarrior(int nextMove, Warrior *warrior){ //----------------movimientos 
                 wrefresh(screen1);
                 //wrefresh(screen2);
             }
-            if((warrior->screen == 1) && (warrior->Posx-2 > tower2.posX)){
+            if((warrior->screen == 1) && (warrior->Posx-2 > tower2.posX+2)){
                 mvwprintw(screen1,warrior->Posy,warrior->Posx," ");
                 mvwprintw(screen1,warrior->Posy+1,warrior->Posx," ");
                 mvwprintw(screen1,warrior->Posy,warrior->Posx-1," ");
@@ -199,54 +206,111 @@ void moveWarrior(int nextMove, Warrior *warrior){ //----------------movimientos 
                 //wrefresh(screen2);
             }
             break;
-        case 3://movimiento hacia arriba
-            mvwprintw(screen2,warrior->Posy,warrior->Posx," ");
-            mvwprintw(screen2,warrior->Posy+1,warrior->Posx," ");
-            mvwprintw(screen2,warrior->Posy,warrior->Posx-1," ");
-            mvwprintw(screen2,warrior->Posy+1,warrior->Posx-1," ");
-            mvwprintw(screen2,warrior->Posy-1,warrior->Posx," ");
-            mvwprintw(screen2,warrior->Posy,warrior->Posx+1," ");
-            mvwprintw(screen2,warrior->Posy+1,warrior->Posx+1," ");
-            mvwprintw(screen2,warrior->Posy-1,warrior->Posx+1," ");
-            if(warrior->Posy-2 > 0){
-                //se imprime la nueva posicion
-                mvwprintw(screen1,warrior->Posy-2,warrior->Posx,"/");
-                mvwprintw(screen1,warrior->Posy-2,warrior->Posx+1,"\\");
-                mvwprintw(screen1,warrior->Posy-1,warrior->Posx,warrior->name);
-                mvwprintw(screen1,warrior->Posy-1,warrior->Posx+1,lvl);
-                warrior->Posy = warrior->Posy+1;
+        case KEY_UP://movimiento hacia arriba
+            if(warrior->screen == 1){
+                mvwprintw(screen1,warrior->Posy,warrior->Posx," ");
+                mvwprintw(screen1,warrior->Posy+1,warrior->Posx," ");
+                mvwprintw(screen1,warrior->Posy,warrior->Posx-1," ");
+                mvwprintw(screen1,warrior->Posy+1,warrior->Posx-1," ");
+                mvwprintw(screen1,warrior->Posy-1,warrior->Posx," ");
+                mvwprintw(screen1,warrior->Posy,warrior->Posx+1," ");
+                mvwprintw(screen1,warrior->Posy+1,warrior->Posx+1," ");
+                mvwprintw(screen1,warrior->Posy-1,warrior->Posx+1," ");
+                if(warrior->Posy-2 > 0){
+
+                    //se imprime la nueva posicion
+                    mvwprintw(screen1,warrior->Posy-2,warrior->Posx,"/");
+                    mvwprintw(screen1,warrior->Posy-2,warrior->Posx+1,"\\");
+                    mvwprintw(screen1,warrior->Posy-1,warrior->Posx,warrior->name);
+                    mvwprintw(screen1,warrior->Posy-1,warrior->Posx+1,lvl);
+                    warrior->Posy = warrior->Posy-1;
+                }
+                else{
+                    mvwprintw(screen1,warrior->Posy-1,warrior->Posx,"/");
+                    mvwprintw(screen1,warrior->Posy-1,warrior->Posx+1,"\\");
+                    mvwprintw(screen1,warrior->Posy,warrior->Posx,warrior->name);
+                    mvwprintw(screen1,warrior->Posy,warrior->Posx+1,lvl);
+                }
             }
-            else{
-                mvwprintw(screen1,warrior->Posy-1,warrior->Posx,"/");
-                mvwprintw(screen1,warrior->Posy-1,warrior->Posx+1,"\\");
-                mvwprintw(screen1,warrior->Posy,warrior->Posx,warrior->name);
-                mvwprintw(screen1,warrior->Posy,warrior->Posx+1,lvl);
+            else if(warrior->screen == 2 ){
+                mvwprintw(screen2,warrior->Posy,warrior->Posx," ");
+                mvwprintw(screen2,warrior->Posy+1,warrior->Posx," ");
+                mvwprintw(screen2,warrior->Posy,warrior->Posx-1," ");
+                mvwprintw(screen2,warrior->Posy+1,warrior->Posx-1," ");
+                mvwprintw(screen2,warrior->Posy-1,warrior->Posx," ");
+                mvwprintw(screen2,warrior->Posy,warrior->Posx+1," ");
+                mvwprintw(screen2,warrior->Posy+1,warrior->Posx+1," ");
+                mvwprintw(screen2,warrior->Posy-1,warrior->Posx+1," ");
+                if (warrior->Posy-2 > 0){
+
+                    mvwprintw(screen2,warrior->Posy-2,warrior->Posx,"/");
+                    mvwprintw(screen2,warrior->Posy-2,warrior->Posx+1,"\\");
+                    mvwprintw(screen2,warrior->Posy-1,warrior->Posx,warrior->name);
+                    mvwprintw(screen2,warrior->Posy-1,warrior->Posx+1,lvl);
+                    warrior->Posy = warrior->Posy-1;
+                }
+                else{
+                    mvwprintw(screen2,warrior->Posy-1,warrior->Posx,"/");
+                    mvwprintw(screen2,warrior->Posy-1,warrior->Posx+1,"\\");
+                    mvwprintw(screen2,warrior->Posy,warrior->Posx,warrior->name);
+                    mvwprintw(screen2,warrior->Posy,warrior->Posx+1,lvl);
+                }
             }
+
+
             break;
-        case 4://movimiento hacia abajo
-            mvwprintw(screen2,warrior->Posy,warrior->Posx," ");
-            mvwprintw(screen2,warrior->Posy+1,warrior->Posx," ");
-            mvwprintw(screen2,warrior->Posy,warrior->Posx-1," ");
-            mvwprintw(screen2,warrior->Posy+1,warrior->Posx-1," ");
-            mvwprintw(screen2,warrior->Posy-1,warrior->Posx," ");
-            mvwprintw(screen2,warrior->Posy,warrior->Posx+1," ");
-            mvwprintw(screen2,warrior->Posy+1,warrior->Posx+1," ");
-            mvwprintw(screen2,warrior->Posy-1,warrior->Posx+1," ");
-            if(warrior->Posy+2 < screen1->_maxy){
-                //se imprime la nueva posicion
-                mvwprintw(screen1,warrior->Posy+1,warrior->Posx,warrior->name);
-                mvwprintw(screen1,warrior->Posy+1,warrior->Posx+1,lvl);
-                mvwprintw(screen1,warrior->Posy+2,warrior->Posx,"\\");
-                mvwprintw(screen1,warrior->Posy+2,warrior->Posx+1,"/");
-                warrior->Posy = warrior->Posy+1;
+        case KEY_DOWN://movimiento hacia abajo
+            if(warrior->screen == 1){
+                mvwprintw(screen1,warrior->Posy,warrior->Posx," ");
+                mvwprintw(screen1,warrior->Posy+1,warrior->Posx," ");
+                mvwprintw(screen1,warrior->Posy,warrior->Posx-1," ");
+                mvwprintw(screen1,warrior->Posy+1,warrior->Posx-1," ");
+                mvwprintw(screen1,warrior->Posy-1,warrior->Posx," ");
+                mvwprintw(screen1,warrior->Posy,warrior->Posx+1," ");
+                mvwprintw(screen1,warrior->Posy+1,warrior->Posx+1," ");
+                mvwprintw(screen1,warrior->Posy-1,warrior->Posx+1," ");
+                if(warrior->Posy+2 < screen1->_maxy){
+                    //se imprime la nueva posicion
+                    mvwprintw(screen1,warrior->Posy+1,warrior->Posx,warrior->name);
+                    mvwprintw(screen1,warrior->Posy+1,warrior->Posx+1,lvl);
+                    mvwprintw(screen1,warrior->Posy+2,warrior->Posx,"\\");
+                    mvwprintw(screen1,warrior->Posy+2,warrior->Posx+1,"/");
+                    warrior->Posy = warrior->Posy+1;
+                }
+                else{
+                    mvwprintw(screen1,warrior->Posy,warrior->Posx,warrior->name);
+                    mvwprintw(screen1,warrior->Posy,warrior->Posx+1,lvl);
+                    mvwprintw(screen1,warrior->Posy+1,warrior->Posx,"\\");
+                    mvwprintw(screen1,warrior->Posy+1,warrior->Posx+1,"/");
+                }
             }
-            else{
-                mvwprintw(screen1,warrior->Posy,warrior->Posx,warrior->name);
-                mvwprintw(screen1,warrior->Posy,warrior->Posx+1,lvl);
-                mvwprintw(screen1,warrior->Posy+1,warrior->Posx,"\\");
-                mvwprintw(screen1,warrior->Posy+1,warrior->Posx+1,"/");
+            else if(warrior->screen == 2){
+                mvwprintw(screen2,warrior->Posy,warrior->Posx," ");
+                mvwprintw(screen2,warrior->Posy+1,warrior->Posx," ");
+                mvwprintw(screen2,warrior->Posy,warrior->Posx-1," ");
+                mvwprintw(screen2,warrior->Posy+1,warrior->Posx-1," ");
+                mvwprintw(screen2,warrior->Posy-1,warrior->Posx," ");
+                mvwprintw(screen2,warrior->Posy,warrior->Posx+1," ");
+                mvwprintw(screen2,warrior->Posy+1,warrior->Posx+1," ");
+                mvwprintw(screen2,warrior->Posy-1,warrior->Posx+1," ");
+                if(warrior->Posy+2 < screen1->_maxy){
+                    //se imprime la nueva posicion
+                    mvwprintw(screen2,warrior->Posy+1,warrior->Posx,warrior->name);
+                    mvwprintw(screen2,warrior->Posy+1,warrior->Posx+1,lvl);
+                    mvwprintw(screen2,warrior->Posy+2,warrior->Posx,"\\");
+                    mvwprintw(screen2,warrior->Posy+2,warrior->Posx+1,"/");
+                    warrior->Posy = warrior->Posy+1;
+                }
+                else{
+                    mvwprintw(screen2,warrior->Posy,warrior->Posx,warrior->name);
+                    mvwprintw(screen2,warrior->Posy,warrior->Posx+1,lvl);
+                    mvwprintw(screen2,warrior->Posy+1,warrior->Posx,"\\");
+                    mvwprintw(screen2,warrior->Posy+1,warrior->Posx+1,"/");
+                }
             }
+
             break;
+        default:break;//no haga nada si mete otra tecla
     }
 };
 
@@ -255,6 +319,11 @@ void createTable(int opcion){
 
     initscr();
     iniciar();
+    keypad(stdscr,TRUE);
+    cbreak();
+    noecho();
+    curs_set(0);
+
     int x, y, height, width;
     x = 0;
     y = 0;
@@ -266,9 +335,16 @@ void createTable(int opcion){
     start_color();
     init_pair(1,COLOR_BLUE,COLOR_BLACK);
     init_pair(2,COLOR_RED,COLOR_BLACK);
-    height = 13;
-    width = 22;
-    createTowers();//se crean las 3 torres
+    if(opcion == 1){
+        height = 13;
+        width = 22;
+    }
+    else if( opcion == 2){
+        height = 13;
+        width = 28;
+    }
+
+    createTowers(opcion);//se crean las 3 torres
     screen1 = newwin(height, width, y, x);
     screen2 = newwin(height, width, y, width);
     wrefresh(screen1);
@@ -341,28 +417,19 @@ void createTable(int opcion){
     mvwprintw(screen2,tower6.posY+2,tower6.posX+1,tower6.towerSymbol);
     mvwprintw(screen2,tower6.posY+2,tower6.posX+2,tower6.towerSymbol);
     wattroff(screen2,COLOR_PAIR(2));
-    //Warrior warrior;
-    //int check = initValues(&warrior20, 1, 2, 3, 4,"P",18,5,true);
-    wrefresh(screen1);//se refresca la ventana
-    wrefresh(screen2);
-    sleep(1);
-    moveWarrior(2,&warrior1);
-    wrefresh(screen1);//se refresca la ventana
-    wrefresh(screen2);
-    sleep(1);
-    moveWarrior(1,&warrior1);
-    wrefresh(screen1);//se refresca la ventana
-    wrefresh(screen2);
-    sleep(1);
-    moveWarrior(1,&warrior1);
-    wrefresh(screen1);//se refresca la ventana
-    wrefresh(screen2);
 
+    int key = 0;
+    while(key != 'q'){
+        //move(5,5);
+        nodelay(stdscr, TRUE);
+        key = getch();
+        //sleep(1);
+        moveWarrior(key,&warrior1);
+        refresh();
+        wrefresh(screen1);//se refresca la ventana
+        wrefresh(screen2);
+    }
 
-    wgetch(screen1);
-
-    delwin(screen1);
-    delwin(screen2);
 
 
     /*
