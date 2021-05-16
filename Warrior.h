@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ncurses.h>
-typedef struct{
+typedef struct warrior{
     int vitality;
     int attack;
     int defense;
@@ -16,6 +16,7 @@ typedef struct{
     int Posx;
     int Posy;
     int screen;
+    struct warrior* next;
 }Warrior;
 
 
