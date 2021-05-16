@@ -125,6 +125,7 @@ Thread_ptr cloneThread(Thread_ptr oldThread){
     newthread->hasNoStackSpaceAllocated = oldThread->hasNoStackSpaceAllocated;
     newthread->scheduler = oldThread->scheduler;
     newthread->tickets = oldThread->tickets;
+    newthread->special = 0;
     return newthread;
 
 }

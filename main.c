@@ -79,7 +79,7 @@ void *Worker1(void *threadid)
     int i=5;
     int *jjd = (int*)malloc(sizeof(int));
     printf("In HILO 1 :%d\n",*(int*)threadid);
-    my_thread_create(&threadInFunc,Worker,(void*)&threadInFunc);
+    my_thread_create(&threadInFunc,Worker,(void*)&threadInFunc, 0);
 
     while(i > 0)
     {
@@ -177,11 +177,12 @@ int main(int argc, char** argv) {
 
     my_thread_init(200);
 
-    my_thread_create(&t1,Worker1,(void*)&t1);
-    my_thread_create(&t2,Worker1,(void*)&t2);
+    my_thread_create(&t1,Worker1,(void*)&t1, 0);
+    my_thread_create(&t2,Worker1,(void*)&t2, 0);
 
     extern Thread_Queue readyQueue;
     Thread_ptr thread = GetThread(readyQueue, t1);
+    thread->special = 1; //adds priority
     Thread_ptr thread2 = GetThread(readyQueue, t2);
     my_thread_chsched(thread, 1);
     //Thread_Queue debug = readyQueue;
@@ -207,7 +208,6 @@ int main(int argc, char** argv) {
     {
 
     }*/
-
     int returnCode = 4;
     printf("\nReturn Code:%d",returnCode);
     printf("\nExiting Main\n");

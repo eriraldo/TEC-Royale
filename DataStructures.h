@@ -29,6 +29,7 @@ typedef struct Node
     int tickets;
     int scheduler;
     int recently_used;
+    int special;
 
 } Thread,*Thread_ptr;
 

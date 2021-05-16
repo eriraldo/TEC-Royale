@@ -51,10 +51,10 @@ void scheduler_lottery(int  sigNum)
                     {
                         Pop_Queue(readyQueue);
                     }
-                    else
-                    {
+                    else{
                         MoveForward(readyQueue);
                     }
+
                     nextNode = GetCurrentThread(readyQueue);
                     if (nextNode == head){
                         setNotUsed(readyQueue, 1);
@@ -67,6 +67,7 @@ void scheduler_lottery(int  sigNum)
                     exit(0);
                 }
                 nextNode = getWinnerThread(currentNode);
+
                 if(nextNode != currentNode)
                 {
                     fflush(stdout);
@@ -88,93 +89,26 @@ void scheduler_lottery(int  sigNum)
     }
 }
 
-    /*
-    if(!ignoreSignal){
-        sigprocmask(SIG_BLOCK, &sigProcMask, NULL);
-        if(GetThreadCount(lotteryQueue) == 1)
-        {
-            Thread_ptr currentNode = GetCurrentThread(lotteryQueue);
-            if(currentNode->isCompleted)
-            {
-                Pop_Queue(lotteryQueue);
-                sigprocmask(SIG_UNBLOCK, &sigProcMask, NULL);
-                exit(0);
-            }
-        }
-        if(GetThreadCount(lotteryQueue) > 0)
-        {
-            Thread_ptr currentNode= GetCurrentThread(lotteryQueue);
-            int currentNodeCompleted = 0;
-            if(currentNode != null)
-            {
-                Thread_ptr nextNode;
-                if(currentNode->isCompleted){
-                    currentNodeCompleted = 1;
-                    Pop_Queue(lotteryQueue);
-                }
-                else{
-                    MoveForward(lotteryQueue);
-                }
-                nextNode = GetCurrentThread(lotteryQueue);
 
-                while((nextNode!=null) && (nextNode->isBlocked || nextNode->isCompleted))
-                {
-                    if(nextNode->isCompleted)
-                    {
-                        Pop_Queue(lotteryQueue);
-                    }
-                    else
-                    {
-                        MoveForward(lotteryQueue);
-                    }
-                    nextNode = GetCurrentThread(lotteryQueue);
-                }
-                fflush(stdout);
-                timeQuantum.it_value.tv_usec = quantum;
-                sigprocmask(SIG_UNBLOCK, &sigProcMask, NULL);
-               // nextNode = getWinnerThread();
-                if(currentNodeCompleted)
-                {
-                    setcontext(&(nextNode->context));
-                }
-                else
-                {
-                    totalTickets = 0;
-
-                    if(GetThreadCount(lotteryQueue) > 1){
-                        swapcontext(&(currentNode->context),&(nextNode->context));
-                    }else{
-                        getcontext(&(currentNode->context));
-                        setcontext(&(currentNode->context));
-                    }
-
-                }
-
-            }
-        }
-        sigprocmask(SIG_UNBLOCK, &sigProcMask, NULL);
-    }*/
-
-
-
-void getTickets(Thread_ptr current){
+int getTickets(){
     Thread_ptr nextNode = GetCurrentThread(readyQueue);
     Thread_ptr head = nextNode;
-    totalTickets = 0;
+    int tickets = 0;
     while((nextNode!=null))
     {
-        if(nextNode->scheduler == 1 && nextNode != current)
-            totalTickets+= nextNode->tickets;
+        if(nextNode->scheduler == 1 && nextNode->recently_used != 1)
+            tickets+= nextNode->tickets;
         nextNode = nextNode->next;
         if (nextNode == head)
             break;
     }
-    if(totalTickets ==0)
-        totalTickets=1;
+    if(tickets ==0)
+        tickets=1;
+    return tickets;
 }
 
 Thread_ptr getWinnerThread(Thread_ptr current){
-    getTickets(current);
+    totalTickets = getTickets();
     Thread_ptr nextNode = GetCurrentThread(readyQueue);
     srand(time(NULL));
     int test = totalTickets;
@@ -183,7 +117,6 @@ Thread_ptr getWinnerThread(Thread_ptr current){
 
 
     Thread_ptr head = nextNode;
-
     while((nextNode!=null))
     {
         if (nextNode->scheduler == 1 && nextNode != current){

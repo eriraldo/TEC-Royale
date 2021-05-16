@@ -15,5 +15,5 @@ add_executable(TEC_Royale
         my_thread.h
         Warrior.c
         Warrior.h
-        roundRobin_sched.c main.c roundRobin_sched.h lottery_sched.h lottery_sched.c sched_manager.c sched_manager.h)
+        roundRobin_sched.c main.c roundRobin_sched.h lottery_sched.h lottery_sched.c realtime_sched.c realtime_sched.h)
 target_link_libraries(TEC_Royale ${CURSES_LIBRARIES})

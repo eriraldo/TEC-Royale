@@ -24,6 +24,9 @@ void my_thread_chsched(Thread_ptr thread, int sched){
             thread->tickets = 10;
             thread->scheduler = 1;
             break;
+        case 2:
+            thread->special = 1;
+            break;
         default:
             thread->tickets = 0;
             thread->scheduler = 0;
@@ -70,7 +73,7 @@ void asd(){
     notifierContext.uc_link = &main->context;
 }
 
-int my_thread_create(my_thread_t *thread, void *(*start_routine)(void *), void *arg) {
+int my_thread_create(my_thread_t *thread, void *(*start_routine)(void *), void *arg, int sched) {
 
     if (readyQueue != null) {
         sigprocmask(SIG_BLOCK, &sigProcMask, NULL);
@@ -91,6 +94,7 @@ int my_thread_create(my_thread_t *thread, void *(*start_routine)(void *), void *
         newThread->context.uc_link = &notifierContext;
         makecontext(&(newThread->context), wrapperFunction, 2, start_routine, arg);
         *thread = newThread->idThread;
+        my_thread_chsched(newThread, sched);
 
         printf("Created Thread:%ld\n", *thread);
         Push_Queue(readyQueue, newThread);

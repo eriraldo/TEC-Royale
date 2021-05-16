@@ -7,6 +7,6 @@
 
 void scheduler_lottery(int  sigNum);
 Thread_ptr getWinnerThread(Thread_ptr current);
-void getTickets(Thread_ptr current);
+int getTickets();
 
 #endif //LOTTERY_SCHED_H

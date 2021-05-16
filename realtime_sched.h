@@ -10,6 +10,10 @@ void threadCompletedNotifier();
 ucontext_t setupCompleteContext();
 void manage(int sigNum);
 void setTicket(Thread_ptr thread, int tickets);
+void disableSpecialThreads();
+int getRR();
+void manageSpecialThread();
+int getSpecialThread();
 
 
 #endif //SCHED_MANAGER_H
