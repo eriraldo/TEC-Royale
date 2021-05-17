@@ -24,34 +24,27 @@ char* arr[21] = {
 };
 
 int iniciar(){
-    int check = initValues(&warrior1,100,10,10,5,"P",3,5,2);
+    int check = initValues(&warrior1,100,100,10,5,"P",3,5,2);
     warriorQueue1 = GetThreadQueue();
     return check;
 }
-struct Tower
-{
-    int health;
-    char *towerSymbol;
-    int posX;
-    int posY;
 
-};
-void createTowers(int opcion){
+void createTowers(int opcion, struct Tower *tower1,  struct Tower *tower2,  struct Tower *tower3,  struct Tower *tower4,  struct Tower *tower5,  struct Tower *tower6){
     //---------------------------------------------------player1-----------------------
-    tower1.health = 999;//vida
-    tower1.towerSymbol = "-";//figura de la torre
-    tower1.posX = 1; //posicion de x para guiarse
-    tower1.posY = 1; //posicion de y para guiarse
+    tower1->health = 999;//vida
+    tower1->towerSymbol = "-";//figura de la torre
+    tower1->posX = 1; //posicion de x para guiarse
+    tower1->posY = 1; //posicion de y para guiarse
     //=====================
-    tower2.health = 999;//vida
-    tower2.towerSymbol = "-";//figura de la torre
-    tower2.posX = 1;
-    tower2.posY = 5;
+    tower2->health = 999;//vida
+    tower2->towerSymbol = "-";//figura de la torre
+    tower2->posX = 1;
+    tower2->posY = 5;
     //=====================
-    tower3.health = 999;//vida
-    tower3.towerSymbol = "-";//figura de la torre
-    tower3.posX = 1;
-    tower3.posY = 9;
+    tower3->health = 999;//vida
+    tower3->towerSymbol = "-";//figura de la torre
+    tower3->posX = 1;
+    tower3->posY = 9;
     //---------------------------------------------------player2-----------------------
     int val;
     if(opcion == 1){
@@ -60,20 +53,20 @@ void createTowers(int opcion){
     else if (opcion == 2){
         val = 24;
     }
-    tower4.health = 999;//vida
-    tower4.towerSymbol = "-";//figura de la torre
-    tower4.posX = val;
-    tower4.posY = 1;
+    tower4->health = 999;//vida
+    tower4->towerSymbol = "-";//figura de la torre
+    tower4->posX = val;
+    tower4->posY = 1;
     //=====================
-    tower5.health = 999;//vida
-    tower5.towerSymbol = "-";//figura de la torre
-    tower5.posX = val;
-    tower5.posY = 5;
+    tower5->health = 999;//vida
+    tower5->towerSymbol = "-";//figura de la torre
+    tower5->posX = val;
+    tower5->posY = 5;
     //=====================
-    tower6.health = 999;//vida
-    tower6.towerSymbol = "-";//figura de la torre
-    tower6.posX = val;
-    tower6.posY = 9;
+    tower6->health = 999;//vida
+    tower6->towerSymbol = "-";//figura de la torre
+    tower6->posX = val;
+    tower6->posY = 9;
 };
 warrior_ptr GetCurrentThread(warriorQueue queue)
 {
@@ -281,7 +274,136 @@ warrior_ptr checkCollision(warrior_ptr warrior){
     }
     return null;
 }
+void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower *tower2,  struct Tower *tower3,  struct Tower *tower4,  struct Tower *tower5,  struct Tower *tower6){
 
+
+
+    if((warrior->warrior->Posx+2 == tower4->posX) && ((warrior->warrior->Posy == tower4->posY+1) || (warrior->warrior->Posy == tower4->posY+2)) && (warrior->player ==1) && (warrior->warrior->screen==2)){
+        wattron(screen2,COLOR_PAIR(2));
+        while(tower4->health > 0){
+
+            tower4->health = tower4->health-warrior->warrior->attack;
+            char health4[4] ;
+            sprintf(health4,"%d",tower4->health);
+            mvwprintw(screen2,tower4->posY+1,tower4->posX,health4);
+            sleep(1);
+            wrefresh(screen2);
+        }
+        if(tower4->health <= 0){
+            mvwprintw(screen2,tower4->posY+1,tower4->posX,"0");
+            mvwprintw(screen2,tower4->posY+1,tower4->posX+1," ");
+            mvwprintw(screen2,tower4->posY+1,tower4->posX+2," ");
+            wrefresh(screen2);
+        }
+        wattroff(screen2,COLOR_PAIR(2));
+
+    }
+    else if((warrior->warrior->Posx+2 == tower5->posX) && ((warrior->warrior->Posy == tower5->posY) || (warrior->warrior->Posy == tower5->posY+1)) && (warrior->player ==1) && (warrior->warrior->screen==2)){
+        wattron(screen2,COLOR_PAIR(2));
+        while(tower5->health > 0){
+
+            tower5->health = tower5->health-warrior->warrior->attack;
+            char health4[4] ;
+            sprintf(health4,"%d",tower5->health);
+            mvwprintw(screen2,tower5->posY+1,tower5->posX,health4);
+            sleep(1);
+            wrefresh(screen2);
+        }
+        if(tower5->health <= 0){
+            tower5->health = 0;
+            mvwprintw(screen2,tower5->posY+1,tower5->posX,"0");
+            mvwprintw(screen2,tower5->posY+1,tower5->posX+1," ");
+            mvwprintw(screen2,tower5->posY+1,tower5->posX+2," ");
+            wrefresh(screen2);
+        }
+        wattroff(screen2,COLOR_PAIR(2));
+
+    }
+    else if((warrior->warrior->Posx+2 == tower6->posX) && ((warrior->warrior->Posy == tower6->posY) || (warrior->warrior->Posy == tower6->posY+1)) && (warrior->player ==1) && (warrior->warrior->screen==2)){
+        wattron(screen2,COLOR_PAIR(2));
+        while(tower6->health > 0){
+
+            tower6->health = tower6->health-warrior->warrior->attack;
+            char health4[4] ;
+            sprintf(health4,"%d",tower6->health);
+            mvwprintw(screen2,tower6->posY+1,tower6->posX,health4);
+            sleep(1);
+            wrefresh(screen2);
+        }
+        if(tower6->health <= 0){
+            tower6->health = 0;
+            mvwprintw(screen2,tower6->posY+1,tower6->posX,"0");
+            mvwprintw(screen2,tower6->posY+1,tower6->posX+1," ");
+            mvwprintw(screen2,tower6->posY+1,tower6->posX+2," ");
+            wrefresh(screen2);
+        }
+        wattroff(screen2,COLOR_PAIR(2));
+
+    }
+    else if((warrior->warrior->Posx-2 <= tower1->posX+2) && ((warrior->warrior->Posy == tower1->posY+1) || (warrior->warrior->Posy == tower1->posY+2)) && (warrior->player ==2) && (warrior->warrior->screen==1) ){
+        wattron(screen1,COLOR_PAIR(1));
+        while(tower1->health > 0){
+
+            tower1->health = tower1->health-warrior->warrior->attack;
+            char health4[4] ;
+            sprintf(health4,"%d",tower1->health);
+            mvwprintw(screen1,tower1->posY+1,tower1->posX,health4);
+            sleep(1);
+            wrefresh(screen1);
+        }
+        if(tower1->health <= 0){
+            mvwprintw(screen1,tower1->posY+1,tower1->posX,"0");
+            mvwprintw(screen1,tower1->posY+1,tower1->posX+1," ");
+            mvwprintw(screen1,tower1->posY+1,tower1->posX+2," ");
+            wrefresh(screen1);
+        }
+        wattroff(screen1,COLOR_PAIR(1));
+
+    }
+    else if((warrior->warrior->Posx-2 <= tower2->posX+2) && ((warrior->warrior->Posy == tower2->posY) || (warrior->warrior->Posy == tower2->posY+1)) && (warrior->player ==2) && (warrior->warrior->screen==1)){
+        wattron(screen1,COLOR_PAIR(1));
+        while(tower2->health > 0){
+
+            tower2->health = tower2->health-warrior->warrior->attack;
+            char health4[4] ;
+            sprintf(health4,"%d",tower2->health);
+            mvwprintw(screen1,tower2->posY+1,tower2->posX,health4);
+            sleep(1);
+            wrefresh(screen1);
+        }
+        if(tower2->health <= 0){
+            tower2->health = 0;
+            mvwprintw(screen1,tower2->posY+1,tower2->posX,"0");
+            mvwprintw(screen1,tower2->posY+1,tower2->posX+1," ");
+            mvwprintw(screen1,tower2->posY+1,tower2->posX+2," ");
+            wrefresh(screen1);
+        }
+        wattroff(screen1,COLOR_PAIR(1));
+
+    }
+    else if((warrior->warrior->Posx-2 <= tower3->posX+2) && ((warrior->warrior->Posy == tower3->posY) || (warrior->warrior->Posy == tower3->posY+1)) && (warrior->player ==2) && (warrior->warrior->screen==1)){
+        wattron(screen1,COLOR_PAIR(1));
+        while(tower3->health > 0){
+
+            tower3->health = tower3->health-warrior->warrior->attack;
+            char health4[4] ;
+            sprintf(health4,"%d",tower3->health);
+            mvwprintw(screen1,tower3->posY+1,tower3->posX,health4);
+            sleep(1);
+            wrefresh(screen1);
+        }
+        if(tower3->health <= 0){
+            tower3->health = 0;
+            mvwprintw(screen1,tower3->posY+1,tower3->posX,"0");
+            mvwprintw(screen1,tower3->posY+1,tower3->posX+1," ");
+            mvwprintw(screen1,tower3->posY+1,tower3->posX+2," ");
+            wrefresh(screen1);
+        }
+        wattroff(screen1,COLOR_PAIR(1));
+
+    }
+
+}
 
 
 
@@ -333,8 +455,7 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node){ //----------
                     mvwprintw(screen2, warrior->Posy + 1, warrior->Posx + 1, ">");
                     wrefresh(screen2);
                 }
-                if ((warrior->screen == 2) && (warrior->Posx + 2 <
-                                               tower5.posX)) { //-------------------------------------------aqui se tiene que hacer la validacion de que dibuje solo si el puente está habilitado
+                if ((warrior->screen == 2) && (warrior->Posx + 2 < tower5.posX)) { //-------------------------------------------aqui se tiene que hacer la validacion de que dibuje solo si el puente está habilitado
                     mvwprintw(screen2, warrior->Posy, warrior->Posx, " ");
                     mvwprintw(screen2, warrior->Posy + 1, warrior->Posx, " ");
                     mvwprintw(screen2, warrior->Posy, warrior->Posx - 1, " ");
@@ -552,8 +673,7 @@ void createTable(int opcion){
         height = 13;
         width = 28;
     }
-
-    createTowers(opcion);//se crean las 3 torres
+    createTowers(opcion,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);//se crean las 3 torres
     screen1 = newwin(height, width, y, x);
     screen2 = newwin(height, width, y, width);
     //terminal = newwin(3, width, height+1, x);
@@ -632,9 +752,10 @@ void createTable(int opcion){
     Warrior warrior2;
 
     initValues(&warrior2,100,10,10,5,"X",7,5,1);
-    moveWarrior(KEY_DOWN,&warrior2, GetThread(2));
-    Push_Queue(warriorQueue1,NewThread(&warrior1,1));
-    Push_Queue(warriorQueue1,NewThread(&warrior2,2));
+    moveWarrior(KEY_DOWN,&warrior2, GetThread(1));
+    Push_Queue(warriorQueue1,NewThread(&warrior2,1));
+    Push_Queue(warriorQueue1,NewThread(&warrior1,2));
+
 
     int key = 0;
     while(key != 'q'){
@@ -642,7 +763,15 @@ void createTable(int opcion){
         nodelay(stdscr, TRUE);
         key = getch();
         //sleep(1);
-        moveWarrior(key,&warrior1, GetThread(1));
+
+        checkTowerCollision(GetThread(2),&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
+        int terminar =decidirGanador(&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
+        if(terminar == 1){
+            sleep(10);
+            break;
+        }
+
+        moveWarrior(key,&warrior1, GetThread(2));
         refresh();
         wrefresh(screen1);//se refresca la ventana
         wrefresh(screen2);
@@ -660,21 +789,24 @@ void createTable(int opcion){
 };
 
 
-void decidirGanador(){
-    if((tower1.health == 0)&&(tower2.health == 0) && (tower3.health == 0))
+int decidirGanador(struct Tower *tower1,  struct Tower *tower2,  struct Tower *tower3,  struct Tower *tower4,  struct Tower *tower5,  struct Tower *tower6){
+    if((tower1->health <= 0)&&(tower2->health <= 0) && (tower3->health <= 0))
     {
         clear();
-        wprintw(screen2,"EL GANADOR ES EL JUGADOR 2");
+        mvwprintw(screen2,4,10,"GANADOR ");
         wrefresh(screen1);//se refresca la ventana
         wrefresh(screen2);
+        return 1;
     }
-    else if((tower4.health == 0)&&(tower5.health == 0) && (tower6.health == 0))
+    else if((tower4->health <= 0)&&(tower5->health <= 0) && (tower6->health <= 0))
     {
         clear();
-        wprintw(screen1,"EL GANADOR ES EL JUGADOR 1");
+        mvwprintw(screen1,4,10,"GANADOR ");
         wrefresh(screen1);//se refresca la ventana
         wrefresh(screen2);
+        return 1;
     }
+    return 0;
 }
 
 
