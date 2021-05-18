@@ -4,6 +4,7 @@
 
 #include <strings.h>
 #include "Table.h"
+#include "time.h"
 //player1
 struct Tower tower1;
 struct Tower tower2;
@@ -256,16 +257,16 @@ warrior_ptr checkCollision(warrior_ptr warrior){
 
     while((nextNode!=null))
     {
-        if((warrior->warrior->Posx+2 == nextNode->warrior->Posx) &&(warrior->warrior->Posy == nextNode->warrior->Posy) && (warrior->player != nextNode->player)){
+        if((warrior->warrior->Posx+2 == nextNode->warrior->Posx) &&(warrior->warrior->Posy == nextNode->warrior->Posy) && (warrior->player != nextNode->player) && (warrior->warrior->screen == nextNode->warrior->screen)){
 
             return nextNode;
-        } else if((warrior->warrior->Posx-2 == nextNode->warrior->Posx) &&(warrior->warrior->Posy == nextNode->warrior->Posy)&& (warrior->player != nextNode->player)){
+        } else if((warrior->warrior->Posx-2 == nextNode->warrior->Posx) &&(warrior->warrior->Posy == nextNode->warrior->Posy)&& (warrior->player != nextNode->player) &&(warrior->warrior->screen == nextNode->warrior->screen)){
             return nextNode;
         }
-        else if((warrior->warrior->Posx == nextNode->warrior->Posx) &&(warrior->warrior->Posy+2 == nextNode->warrior->Posy)&& (warrior->player != nextNode->player)){
+        else if((warrior->warrior->Posx == nextNode->warrior->Posx) &&(warrior->warrior->Posy+2 == nextNode->warrior->Posy)&& (warrior->player != nextNode->player) && (warrior->warrior->screen == nextNode->warrior->screen)){
             return nextNode;
         }
-        else if((warrior->warrior->Posx == nextNode->warrior->Posx) &&(warrior->warrior->Posy-2 == nextNode->warrior->Posy)&& (warrior->player != nextNode->player)){
+        else if((warrior->warrior->Posx == nextNode->warrior->Posx) &&(warrior->warrior->Posy-2 == nextNode->warrior->Posy)&& (warrior->player != nextNode->player) && (warrior->warrior->screen == nextNode->warrior->screen)){
             return nextNode;
         }
         nextNode = nextNode->next;
@@ -629,13 +630,29 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node){ //----------
     }
     else{
         //hacer random para definir quien muere
+        srand(time(NULL));   // Initialization, should only be called once.
+        int r = rand();
         if(check->warrior->screen == 1){
-            mvwprintw(screen1, check->warrior->Posy, check->warrior->Posx, " ");
-            mvwprintw(screen1, check->warrior->Posy + 1, check->warrior->Posx, " ");
+            if(r%2 == 0){
+                mvwprintw(screen1, check->warrior->Posy, check->warrior->Posx, " ");
+                mvwprintw(screen1, check->warrior->Posy + 1, check->warrior->Posx, " ");
+            }
+            else{
+                mvwprintw(screen1, warrior->Posy, warrior->Posx, " ");
+                mvwprintw(screen1, warrior->Posy + 1, warrior->Posx, " ");
+            }
+
+
         }
         else{
-            mvwprintw(screen2, check->warrior->Posy, check->warrior->Posx, " ");
-            mvwprintw(screen2, check->warrior->Posy + 1, check->warrior->Posx, " ");
+            if(r%2 == 0){
+                mvwprintw(screen1, check->warrior->Posy, check->warrior->Posx, " ");
+                mvwprintw(screen1, check->warrior->Posy + 1, check->warrior->Posx, " ");
+            }
+            else{
+                mvwprintw(screen1, warrior->Posy, warrior->Posx, " ");
+                mvwprintw(screen1, warrior->Posy + 1, warrior->Posx, " ");
+            }
 
         }
         PopNode_Queue(warriorQueue1,check);
@@ -676,13 +693,25 @@ void createTable(int opcion){
     createTowers(opcion,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);//se crean las 3 torres
     screen1 = newwin(height, width, y, x);
     screen2 = newwin(height, width, y, width);
-    //terminal = newwin(3, width, height+1, x);
+    //terminal = newwin(3, width, height, x);
     wrefresh(screen1);
     wrefresh(screen2);
     //wrefresh(terminal);
     box(screen1,0,0);//se le define un borde al cuadro donde se puede jugar
     box(screen2,0,0);
     //box(terminal,0,0);
+    //-------------------------------------------------------------------------------puente pantalla1
+    mvwprintw(screen1,(height/2)-4,screen1->_maxx,"-");
+    mvwprintw(screen1,(height/2)-2,screen1->_maxx,"-");
+    mvwprintw(screen1,(height/2)+2,screen1->_maxx,"-");
+    mvwprintw(screen1,(height/2)+4,screen1->_maxx,"-");
+
+    //-------------------------------------------------------------------------------puente pantalla2
+    mvwprintw(screen2,(height/2)-4,0,"-");
+    mvwprintw(screen2,(height/2)-2,0,"-");
+    mvwprintw(screen2,(height/2)+2,0,"-");
+    mvwprintw(screen2,(height/2)+4,0,"-");
+
     char health[40] ;
     sprintf(health,"%d",tower1.health);//se cambia a string la vida para poder mostrarla
     wattron(screen1,COLOR_PAIR(1));
