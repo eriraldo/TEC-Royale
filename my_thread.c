@@ -12,6 +12,7 @@ sigset_t sigProcMask;
 void *wrapperFunction(void *(*start_routine)(void *), void *arg);
 Thread_ptr GetCurrentThread_ptr();
 extern int ignoreSignal;
+extern int ignoreSignal2;
 
 
 void my_thread_chsched(Thread_ptr thread, int sched){
@@ -39,6 +40,7 @@ void my_thread_init(long period) {
         sigemptyset(&sigProcMask);
         sigaddset(&sigProcMask, SIGPROF);
         ignoreSignal = 0;
+        ignoreSignal2 = 0;
         deadQueue = GetCompletedQueue();
         if (deadQueue == null) {
             return;
@@ -68,9 +70,8 @@ void my_thread_init(long period) {
     }
 }
 
-void asd(){
-    Thread_ptr main = GetThread(readyQueue, 1);
-    notifierContext.uc_link = &main->context;
+void my_thread_yield(){
+    raise(SIGPROF);
 }
 
 int my_thread_create(my_thread_t *thread, void *(*start_routine)(void *), void *arg, int sched) {
@@ -133,5 +134,17 @@ Thread_ptr GetCurrentThread_ptr() {
     currentThread = GetCurrentThread(readyQueue);
     sigprocmask(SIG_UNBLOCK, &sigProcMask, NULL);
     return currentThread;
+}
+
+void my_thread_exit() {
+    Thread_ptr thread = GetCurrentThread(readyQueue);
+    CompletedThread_ptr completedNode = GetCompletedNode();
+    if (completedNode != null && thread!= null) {
+        completedNode->idThread = thread->idThread;
+        PushToCompleted(deadQueue, completedNode);
+    }
+    threadCompletedNotifier();
+    raise(SIGPROF);
+
 }
 

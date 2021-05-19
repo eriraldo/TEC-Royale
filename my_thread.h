@@ -18,8 +18,9 @@ typedef long my_thread_t;
 void my_thread_init(long period);
 int my_thread_create(my_thread_t *thread,void *(*start_routine)(void *),void *arg, int sched);
 void my_thread_sleep(long seconds);
-void asd();
 void my_thread_chsched(Thread_ptr thread, int sched);
+void my_thread_yield();
+void my_thread_exit();
 
 
 

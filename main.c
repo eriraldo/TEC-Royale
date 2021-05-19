@@ -3,6 +3,7 @@
 #include "my_thread.h"
 #include <unistd.h>
 #include "Warrior.h"
+#include "my_mutex.h"
 #include <ncurses.h>
 
 
@@ -14,6 +15,7 @@ int arrived2 = 0;
 static int list[N];
 static int list2[N];
 static int S ;
+int lock;
 
 void swap(int *xp, int *yp)
 {
@@ -78,8 +80,10 @@ void *Worker1(void *threadid)
 {
     int i=5;
     int *jjd = (int*)malloc(sizeof(int));
+    my_mutex_lock(&lock);
     printf("In HILO 1 :%d\n",*(int*)threadid);
-    my_thread_create(&threadInFunc,Worker,(void*)&threadInFunc, 0);
+    my_mutex_unlock(&lock);
+    //my_thread_create(&threadInFunc,Worker,(void*)&threadInFunc, 0);
 
     while(i > 0)
     {
@@ -94,7 +98,7 @@ void *Worker1(void *threadid)
     printf("ME SLEEP\n");
     my_thread_sleep(2);
     printf("REAL SHIT\n");
-    //stoogesort(list, 0, S-1);
+    stoogesort(list, 0, S-1);
     arrived = 1;
     printf("Terminó HILO 1: %d\n", *(int*)threadid);
     threadCreated = 1;
@@ -132,7 +136,7 @@ void pairing(Warrior* const cmp, Warrior* const depart){
 
 int main(int argc, char** argv) {
 
-
+    my_mutex_init(&lock);
     Warrior warrior;
     Warrior warrior2;
     int mutate = 3;
