@@ -7,11 +7,11 @@
 #include <ncurses.h>
 
 
-my_thread_t threadInFunc;
+
 int threadCreated = 0;
 int arrived = 0;
 int arrived2 = 0;
-#define N 2000
+#define N 2000000
 static int list[N];
 static int list2[N];
 static int S ;
@@ -22,6 +22,17 @@ void swap(int *xp, int *yp)
     int temp = *xp;
     *xp = *yp;
     *yp = temp;
+}
+
+void bubbleSort(int arr[], int n)
+{
+    int i, j;
+    for (i = 0; i < n-1; i++)
+
+        // Last i elements are already in place
+        for (j = 0; j < n-i-1; j++)
+            if (arr[j] > arr[j+1])
+                swap(&arr[j], &arr[j+1]);
 }
 
 void stoogesort(int arr[], int l, int h)
@@ -68,11 +79,13 @@ void *Worker(void *threadid)
         printf("In Worker:%d\n",i--);
         fflush(stdout);
     }*/
-
+    int n = sizeof(list2)/sizeof(list2);
     //stoogesort(list2, 0, S-1);
+    bubbleSort(list2,n);
     printf("Terminó HILO 2: %d\n", *(int*)threadid);
     arrived2 = 1;
     *returnCode = 783;
+    my_thread_exit();
     return returnCode;
 }
 
@@ -83,7 +96,8 @@ void *Worker1(void *threadid)
     my_mutex_lock(&lock);
     printf("In HILO 1 :%d\n",*(int*)threadid);
     my_mutex_unlock(&lock);
-    //my_thread_create(&threadInFunc,Worker,(void*)&threadInFunc, 0);
+    my_thread_t threadInFunc;
+    my_thread_create(&threadInFunc,Worker,(void*)&threadInFunc, 1);
 
     while(i > 0)
     {
@@ -96,13 +110,15 @@ void *Worker1(void *threadid)
 
 
     printf("ME SLEEP\n");
-    my_thread_sleep(2);
+    my_thread_sleep(4);
     printf("REAL SHIT\n");
-    stoogesort(list, 0, S-1);
+    int n = sizeof(list)/sizeof(list);
+    bubbleSort(list, n);
     arrived = 1;
     printf("Terminó HILO 1: %d\n", *(int*)threadid);
     threadCreated = 1;
     *jjd = 234;
+    my_thread_exit();
     return (void*)jjd;
 }
 
@@ -181,18 +197,19 @@ int main(int argc, char** argv) {
 
     my_thread_init(200);
 
-    my_thread_create(&t1,Worker1,(void*)&t1, 0);
-    my_thread_create(&t2,Worker1,(void*)&t2, 0);
+    my_thread_create(&t1,Worker1,(void*)&t1, 1);
+    my_thread_create(&t2,Worker1,(void*)&t2, 1);
 
     extern Thread_Queue readyQueue;
     Thread_ptr thread = GetThread(readyQueue, t1);
+
     thread->special = 1; //adds priority
     Thread_ptr thread2 = GetThread(readyQueue, t2);
-    my_thread_chsched(thread, 1);
+    //my_thread_chsched(thread, 1);
     //Thread_Queue debug = readyQueue;
 
-    my_thread_chsched(thread2, 1);
-    setTicket(thread2, 200);
+    //my_thread_chsched(thread2, 1);
+    //setTicket(thread2, 200);
 
 
 
@@ -212,6 +229,10 @@ int main(int argc, char** argv) {
     {
 
     }*/
+
+    while(true){
+
+    }
     int returnCode = 4;
     printf("\nReturn Code:%d",returnCode);
     printf("\nExiting Main\n");

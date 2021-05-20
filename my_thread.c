@@ -11,8 +11,6 @@ long quantum;
 sigset_t sigProcMask;
 void *wrapperFunction(void *(*start_routine)(void *), void *arg);
 Thread_ptr GetCurrentThread_ptr();
-extern int ignoreSignal;
-extern int ignoreSignal2;
 
 
 void my_thread_chsched(Thread_ptr thread, int sched){
@@ -39,8 +37,6 @@ void my_thread_init(long period) {
     if (readyQueue == null && deadQueue == null) {
         sigemptyset(&sigProcMask);
         sigaddset(&sigProcMask, SIGPROF);
-        ignoreSignal = 0;
-        ignoreSignal2 = 0;
         deadQueue = GetCompletedQueue();
         if (deadQueue == null) {
             return;
@@ -49,7 +45,6 @@ void my_thread_init(long period) {
         lotteryQueue = GetThreadQueue();
         if (readyQueue != null) {
             quantum = period;
-
             Thread_ptr ThreadOfMain = NewThread();
             getcontext(&(ThreadOfMain->context));
             setupCompleteContext();
@@ -59,8 +54,6 @@ void my_thread_init(long period) {
             memset(&schedulerHandle, 0, sizeof (schedulerHandle));
             schedulerHandle.sa_handler = &manage;
             sigaction(SIGPROF, &schedulerHandle, NULL);
-
-            printf("\nmy_thread library initialized\n");
             timeQuantum.it_value.tv_sec = 0;
             timeQuantum.it_value.tv_usec = quantum;
             timeQuantum.it_interval.tv_sec = 0;
@@ -91,12 +84,10 @@ int my_thread_create(my_thread_t *thread, void *(*start_routine)(void *), void *
         newThread->context.uc_stack.ss_size = STACKSIZE;
         newThread->context.uc_stack.ss_flags = 0;
         newThread->hasNoStackSpaceAllocated = 0;
-
         newThread->context.uc_link = &notifierContext;
-        makecontext(&(newThread->context), wrapperFunction, 2, start_routine, arg);
+        makecontext(&(newThread->context), (void (*)(void)) wrapperFunction, 2, start_routine, arg);
         *thread = newThread->idThread;
         my_thread_chsched(newThread, sched);
-
         printf("Created Thread:%ld\n", *thread);
         Push_Queue(readyQueue, newThread);
         sigprocmask(SIG_UNBLOCK, &sigProcMask, NULL);
@@ -138,6 +129,7 @@ Thread_ptr GetCurrentThread_ptr() {
 
 void my_thread_exit() {
     Thread_ptr thread = GetCurrentThread(readyQueue);
+    thread->scheduler = -1;
     CompletedThread_ptr completedNode = GetCompletedNode();
     if (completedNode != null && thread!= null) {
         completedNode->idThread = thread->idThread;

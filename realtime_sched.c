@@ -106,6 +106,28 @@ int getSpecialThread(){
     return specialCount;
 }
 
+void cleanQueue(int sched){
+    Thread_ptr nextNode = GetCurrentThread(readyQueue);
+    Thread_ptr head = nextNode;
+
+    while((nextNode!=null) && (nextNode->isBlocked || nextNode->isCompleted || nextNode->scheduler == sched || nextNode->recently_used == 1))
+    {
+        if(nextNode->isCompleted)
+        {
+            Pop_Queue(readyQueue);
+        }
+        else
+        {
+            MoveForward(readyQueue);
+        }
+        nextNode = GetCurrentThread(readyQueue);
+        if (nextNode == head){
+            setNotUsed(readyQueue, 0);
+            break;
+        }
+    }
+}
+
 void manage(int sigNum){
     int special = getSpecialThread();
     int test = ticks;

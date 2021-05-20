@@ -14,6 +14,7 @@ void disableSpecialThreads();
 int getRR();
 void manageSpecialThread();
 int getSpecialThread();
+void cleanQueue(int sched);
 
 
 #endif //SCHED_MANAGER_H

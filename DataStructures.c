@@ -190,18 +190,23 @@ int GetThreadCount(Thread_Queue queue)
 
 int GetLotteryCount(Thread_Queue queue){
     int count = 0;
-    Thread_ptr nextNode = GetCurrentThread(queue);
-    Thread_ptr head = nextNode;
+    if(queue!= null){
+        Thread_ptr nextNode = GetCurrentThread(queue);
+        Thread_ptr head = nextNode;
 
-    while((nextNode!=null))
-    {
-        if (nextNode->scheduler == 1)
-            count+=1 ;
-        nextNode = nextNode->next;
-        if (head == nextNode)
-            break;
+        while((nextNode!=null))
+        {
+            if (nextNode->scheduler == 1)
+                count+=1 ;
+            nextNode = nextNode->next;
+            if (head == nextNode)
+                break;
+        }
+        return count;
     }
-    return count;
+    printf("ERROR COLA\n");
+    return -1;
+
 }
 
 //HELPER FUNCTIONS
@@ -335,7 +340,7 @@ CompletedThread_ptr GetCompletedNode()
         free(newNode);
         return null;
     }
-    newNode->idThread=INVALID_my_thread_T;
+    newNode->idThread=INVALID_MY_THREAD_ID;
     *(newNode->returnStatus) = null;
     newNode->nextThread = null;
     return newNode;
