@@ -292,19 +292,22 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
     if((warrior->warrior->Posx+2 == tower4->posX) && ((warrior->warrior->Posy == tower4->posY+1) || (warrior->warrior->Posy == tower4->posY+2)) && (warrior->player ==1) && (warrior->warrior->screen==2)){
         wattron(screen2,COLOR_PAIR(2));
         while(tower4->health > 0){
-
+            my_mutex_lock(&lock);
             tower4->health = tower4->health-warrior->warrior->attack;
             char health4[4] ;
             sprintf(health4,"%d",tower4->health);
             mvwprintw(screen2,tower4->posY+1,tower4->posX,health4);
-            my_thread_sleep(1);
             wrefresh(screen2);
+            my_mutex_unlock(&lock);
+            my_thread_sleep(1);
         }
         if(tower4->health <= 0){
+            my_mutex_lock(&lock);
             mvwprintw(screen2,tower4->posY+1,tower4->posX,"0");
             mvwprintw(screen2,tower4->posY+1,tower4->posX+1," ");
             mvwprintw(screen2,tower4->posY+1,tower4->posX+2," ");
             wrefresh(screen2);
+            my_mutex_unlock(&lock);
         }
         wattroff(screen2,COLOR_PAIR(2));
 
@@ -312,20 +315,23 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
     else if((warrior->warrior->Posx+2 == tower5->posX) && ((warrior->warrior->Posy == tower5->posY) || (warrior->warrior->Posy == tower5->posY+1)) && (warrior->player ==1) && (warrior->warrior->screen==2)){
         wattron(screen2,COLOR_PAIR(2));
         while(tower5->health > 0){
-
+            my_mutex_lock(&lock);
             tower5->health = tower5->health-warrior->warrior->attack;
             char health4[4] ;
             sprintf(health4,"%d",tower5->health);
             mvwprintw(screen2,tower5->posY+1,tower5->posX,health4);
-            my_thread_sleep(1);
             wrefresh(screen2);
+            my_mutex_unlock(&lock);
+            my_thread_sleep(1);
         }
         if(tower5->health <= 0){
+            my_mutex_lock(&lock);
             tower5->health = 0;
             mvwprintw(screen2,tower5->posY+1,tower5->posX,"0");
             mvwprintw(screen2,tower5->posY+1,tower5->posX+1," ");
             mvwprintw(screen2,tower5->posY+1,tower5->posX+2," ");
             wrefresh(screen2);
+            my_mutex_unlock(&lock);
         }
         wattroff(screen2,COLOR_PAIR(2));
 
@@ -333,20 +339,23 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
     else if((warrior->warrior->Posx+2 == tower6->posX) && ((warrior->warrior->Posy == tower6->posY) || (warrior->warrior->Posy == tower6->posY+1)) && (warrior->player ==1) && (warrior->warrior->screen==2)){
         wattron(screen2,COLOR_PAIR(2));
         while(tower6->health > 0){
-
+            my_mutex_lock(&lock);
             tower6->health = tower6->health-warrior->warrior->attack;
             char health4[4] ;
             sprintf(health4,"%d",tower6->health);
             mvwprintw(screen2,tower6->posY+1,tower6->posX,health4);
-            my_thread_sleep(1);
             wrefresh(screen2);
+            my_mutex_unlock(&lock);
+            my_thread_sleep(1);
         }
         if(tower6->health <= 0){
+            my_mutex_lock(&lock);
             tower6->health = 0;
             mvwprintw(screen2,tower6->posY+1,tower6->posX,"0");
             mvwprintw(screen2,tower6->posY+1,tower6->posX+1," ");
             mvwprintw(screen2,tower6->posY+1,tower6->posX+2," ");
             wrefresh(screen2);
+            my_mutex_unlock(&lock);
         }
         wattroff(screen2,COLOR_PAIR(2));
 
@@ -354,19 +363,22 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
     else if((warrior->warrior->Posx-2 <= tower1->posX+2) && ((warrior->warrior->Posy == tower1->posY+1) || (warrior->warrior->Posy == tower1->posY+2)) && (warrior->player ==2) && (warrior->warrior->screen==1) ){
         wattron(screen1,COLOR_PAIR(1));
         while(tower1->health > 0){
-
+            my_mutex_lock(&lock);
             tower1->health = tower1->health-warrior->warrior->attack;
             char health4[4] ;
             sprintf(health4,"%d",tower1->health);
             mvwprintw(screen1,tower1->posY+1,tower1->posX,health4);
-            my_thread_sleep(1);
             wrefresh(screen1);
+            my_mutex_unlock(&lock);
+            my_thread_sleep(1);
         }
         if(tower1->health <= 0){
+            my_mutex_lock(&lock);
             mvwprintw(screen1,tower1->posY+1,tower1->posX,"0");
             mvwprintw(screen1,tower1->posY+1,tower1->posX+1," ");
             mvwprintw(screen1,tower1->posY+1,tower1->posX+2," ");
             wrefresh(screen1);
+            my_mutex_unlock(&lock);
         }
         wattroff(screen1,COLOR_PAIR(1));
 
@@ -374,20 +386,23 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
     else if((warrior->warrior->Posx-2 <= tower2->posX+2) && ((warrior->warrior->Posy == tower2->posY) || (warrior->warrior->Posy == tower2->posY+1)) && (warrior->player ==2) && (warrior->warrior->screen==1)){
         wattron(screen1,COLOR_PAIR(1));
         while(tower2->health > 0){
-
+            my_mutex_lock(&lock);
             tower2->health = tower2->health-warrior->warrior->attack;
             char health4[4] ;
             sprintf(health4,"%d",tower2->health);
             mvwprintw(screen1,tower2->posY+1,tower2->posX,health4);
-            my_thread_sleep(1);
             wrefresh(screen1);
+            my_mutex_unlock(&lock);
+            my_thread_sleep(1);
         }
         if(tower2->health <= 0){
+            my_mutex_lock(&lock);
             tower2->health = 0;
             mvwprintw(screen1,tower2->posY+1,tower2->posX,"0");
             mvwprintw(screen1,tower2->posY+1,tower2->posX+1," ");
             mvwprintw(screen1,tower2->posY+1,tower2->posX+2," ");
             wrefresh(screen1);
+            my_mutex_unlock(&lock);
         }
         wattroff(screen1,COLOR_PAIR(1));
 
@@ -395,20 +410,23 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
     else if((warrior->warrior->Posx-2 <= tower3->posX+2) && ((warrior->warrior->Posy == tower3->posY) || (warrior->warrior->Posy == tower3->posY+1)) && (warrior->player ==2) && (warrior->warrior->screen==1)){
         wattron(screen1,COLOR_PAIR(1));
         while(tower3->health > 0){
-
+            my_mutex_lock(&lock);
             tower3->health = tower3->health-warrior->warrior->attack;
             char health4[4] ;
             sprintf(health4,"%d",tower3->health);
             mvwprintw(screen1,tower3->posY+1,tower3->posX,health4);
             my_thread_sleep(1);
             wrefresh(screen1);
+            my_mutex_unlock(&lock);
         }
         if(tower3->health <= 0){
+            my_mutex_lock(&lock);
             tower3->health = 0;
             mvwprintw(screen1,tower3->posY+1,tower3->posX,"0");
             mvwprintw(screen1,tower3->posY+1,tower3->posX+1," ");
             mvwprintw(screen1,tower3->posY+1,tower3->posX+2," ");
             wrefresh(screen1);
+            my_mutex_unlock(&lock);
         }
         wattroff(screen1,COLOR_PAIR(1));
 
@@ -825,7 +843,7 @@ void createTable(int opcion){
         par2->width = width;
         par2->node = GetThreadW(2);
         par2->warrior = &warrior2;
-        par2->nextMove = 1;
+        par2->nextMove = 2;
 
         my_thread_create(&t2,movePlayer1,(void*)par2, 0);
         while(1){};
@@ -867,8 +885,8 @@ void* movePlayer1(void * parameters){
     wrefresh(screen1);
     wrefresh(screen2);
     while(stepsX < pathLength){//solo tiene que moverse a la derecha
-        my_mutex_lock(&lock);
         checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
+        my_mutex_lock(&lock);
         moveWarrior(nextMove,warrior,node);
         my_mutex_unlock(&lock);
         my_thread_sleep(1);
@@ -879,7 +897,9 @@ void* movePlayer1(void * parameters){
 
     }
     my_thread_sleep(1);
+    my_mutex_lock(&lock);
     moveWarrior(2,warrior,node);
+    my_mutex_unlock(&lock);
     wrefresh(screen1);
     wrefresh(screen2);
     int down = 0;
@@ -887,7 +907,9 @@ void* movePlayer1(void * parameters){
     while(down <4){
         checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
         my_thread_sleep(1);
+        my_mutex_lock(&lock);
         moveWarrior(4,warrior,node);
+        my_mutex_unlock(&lock);
         wrefresh(screen1);
         wrefresh(screen2);
         down +=1;
