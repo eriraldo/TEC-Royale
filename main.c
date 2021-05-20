@@ -21,7 +21,7 @@ int arrived2 = 0;
 static int list[N];
 static int list2[N];
 static int S ;
-int lock;
+
 
 void swap(int *xp, int *yp)
 {
@@ -99,9 +99,9 @@ void *Worker1(void *threadid)
 {
     int i=5;
     int *jjd = (int*)malloc(sizeof(int));
-    my_mutex_lock(&lock);
+   // my_mutex_lock(&lock);
     printf("In HILO 1 :%d\n",*(int*)threadid);
-    my_mutex_unlock(&lock);
+    //my_mutex_unlock(&lock);
     my_thread_t threadInFunc;
     my_thread_create(&threadInFunc,Worker,(void*)&threadInFunc, 1);
 

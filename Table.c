@@ -5,6 +5,8 @@
 #include <strings.h>
 #include "Table.h"
 #include "time.h"
+#include "my_mutex.h"
+
 //player1
 struct Tower tower1;
 struct Tower tower2;
@@ -20,6 +22,7 @@ Warrior warrior1;
 WINDOW *screen1;
 WINDOW *screen2;
 WINDOW *terminal;
+int lock;
 
 struct Params{
     int nextMove;
@@ -294,7 +297,7 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
             char health4[4] ;
             sprintf(health4,"%d",tower4->health);
             mvwprintw(screen2,tower4->posY+1,tower4->posX,health4);
-            sleep(1);
+            my_thread_sleep(1);
             wrefresh(screen2);
         }
         if(tower4->health <= 0){
@@ -314,7 +317,7 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
             char health4[4] ;
             sprintf(health4,"%d",tower5->health);
             mvwprintw(screen2,tower5->posY+1,tower5->posX,health4);
-            sleep(1);
+            my_thread_sleep(1);
             wrefresh(screen2);
         }
         if(tower5->health <= 0){
@@ -335,7 +338,7 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
             char health4[4] ;
             sprintf(health4,"%d",tower6->health);
             mvwprintw(screen2,tower6->posY+1,tower6->posX,health4);
-            sleep(1);
+            my_thread_sleep(1);
             wrefresh(screen2);
         }
         if(tower6->health <= 0){
@@ -356,7 +359,7 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
             char health4[4] ;
             sprintf(health4,"%d",tower1->health);
             mvwprintw(screen1,tower1->posY+1,tower1->posX,health4);
-            sleep(1);
+            my_thread_sleep(1);
             wrefresh(screen1);
         }
         if(tower1->health <= 0){
@@ -376,7 +379,7 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
             char health4[4] ;
             sprintf(health4,"%d",tower2->health);
             mvwprintw(screen1,tower2->posY+1,tower2->posX,health4);
-            sleep(1);
+            my_thread_sleep(1);
             wrefresh(screen1);
         }
         if(tower2->health <= 0){
@@ -397,7 +400,7 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
             char health4[4] ;
             sprintf(health4,"%d",tower3->health);
             mvwprintw(screen1,tower3->posY+1,tower3->posX,health4);
-            sleep(1);
+            my_thread_sleep(1);
             wrefresh(screen1);
         }
         if(tower3->health <= 0){
@@ -807,14 +810,24 @@ void createTable(int opcion){
 //            break;
 //        }
         sleep(1/2);
+        my_mutex_init(&lock);
         my_thread_t t1;
+        my_thread_t t2;
         my_thread_init(200);
         struct Params * par = (struct Params *)malloc(sizeof(struct Params));
+        struct Params * par2 = (struct Params *)malloc(sizeof(struct Params));
         par->width = width;
         par->node = GetThreadW(1);
         par->warrior = &warrior1;
         par->nextMove = 1;
-        my_thread_create(&t1,movePlayer1,(void*)par, 1);
+        my_thread_create(&t1,movePlayer1,(void*)par, 0);
+
+        par2->width = width;
+        par2->node = GetThreadW(2);
+        par2->warrior = &warrior2;
+        par2->nextMove = 1;
+
+        my_thread_create(&t2,movePlayer1,(void*)par2, 0);
         while(1){};
         //movePlayer1(1, &warrior1, GetThreadW(1), width);
 
@@ -854,17 +867,18 @@ void* movePlayer1(void * parameters){
     wrefresh(screen1);
     wrefresh(screen2);
     while(stepsX < pathLength){//solo tiene que moverse a la derecha
-
+        my_mutex_lock(&lock);
         checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
         moveWarrior(nextMove,warrior,node);
-        sleep(1);
+        my_mutex_unlock(&lock);
+        my_thread_sleep(1);
         stepsX +=1;
         //refresh();
         wrefresh(screen1);
         wrefresh(screen2);
 
     }
-    sleep(1);
+    my_thread_sleep(1);
     moveWarrior(2,warrior,node);
     wrefresh(screen1);
     wrefresh(screen2);
@@ -872,7 +886,7 @@ void* movePlayer1(void * parameters){
 
     while(down <4){
         checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
-        sleep(1);
+        my_thread_sleep(1);
         moveWarrior(4,warrior,node);
         wrefresh(screen1);
         wrefresh(screen2);
