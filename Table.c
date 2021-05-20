@@ -25,8 +25,8 @@ char* arr[21] = {
 };
 
 int iniciar(){
-    int check = initValues(&warrior1,100,100,10,5,"P",3,5,2);
-    warriorQueue1 = GetThreadQueue();
+    int check = initValues(&warrior1,100,100,10,5,"P",6,2,1);
+    warriorQueue1 = GetThreadQueueW();
     return check;
 }
 
@@ -69,7 +69,7 @@ void createTowers(int opcion, struct Tower *tower1,  struct Tower *tower2,  stru
     tower6->posX = val;
     tower6->posY = 9;
 };
-warrior_ptr GetCurrentThread(warriorQueue queue)
+warrior_ptr GetCurrentThreadW(warriorQueue queue)
 {
     if(queue == null)
     {
@@ -79,7 +79,7 @@ warrior_ptr GetCurrentThread(warriorQueue queue)
 }
 
 //This will remove the Thread which is pointed by head of the given queue
-int Pop_Queue(warriorQueue queue)
+int Pop_QueueW(warriorQueue queue)
 {
     int failure = 0;
     warrior_ptr next_node,prev_node,head_node;
@@ -121,7 +121,7 @@ int Pop_Queue(warriorQueue queue)
 }
 
 
-int MoveForward(warriorQueue queue)
+int MoveForwardW(warriorQueue queue)
 {
     int failure = -1;
     if(queue != null)
@@ -137,7 +137,7 @@ int MoveForward(warriorQueue queue)
     return failure;
 }
 
-int GetThreadCount(warriorQueue queue)
+int GetThreadCountW(warriorQueue queue)
 {
     if(queue == null)
     {
@@ -145,14 +145,14 @@ int GetThreadCount(warriorQueue queue)
     }
     return queue->count;
 }
-int GetNextThreadId()
+int GetNextThreadIdW()
 {
     static long currentThreadID=0;
     return ++currentThreadID;
 }
 
 
-int Push_Queue(warriorQueue queue,warrior_ptr node)
+int Push_QueueW(warriorQueue queue,warrior_ptr node)
 {
     int failure = 0;
     if(queue ==null || node== null)
@@ -182,28 +182,28 @@ int Push_Queue(warriorQueue queue,warrior_ptr node)
     return failure;
 }
 
-void PopNode_Queue(warriorQueue queue, warrior_ptr node)
+void PopNode_QueueW(warriorQueue queue, warrior_ptr node)
 {
-    warrior_ptr nextNode = GetCurrentThread(queue);
+    warrior_ptr nextNode = GetCurrentThreadW(queue);
     warrior_ptr head = nextNode;
     while((nextNode!=null))
     {
         if(nextNode->id == node->id)
             break;
         else{
-            MoveForward(queue);
+            MoveForwardW(queue);
         }
-        nextNode = GetCurrentThread(queue);
+        nextNode = GetCurrentThreadW(queue);
         if (nextNode == head){
             break;
         }
     }
     if (nextNode!=null){
-        Pop_Queue(queue);
+        Pop_QueueW(queue);
     }
 
 }
-warriorQueue GetThreadQueue()
+warriorQueue GetThreadQueueW()
 {
     warriorQueue newQueue = (warriorQueue)malloc(sizeof(struct warriorQueue));
     if(newQueue == null)
@@ -216,7 +216,7 @@ warriorQueue GetThreadQueue()
     return newQueue;
 }
 
-warrior_ptr NewThread(Warrior * warrior, int player)
+warrior_ptr NewThreadW(Warrior * warrior, int player)
 {
     warrior_ptr newThread = (warrior_ptr)malloc(sizeof(war));
     if(newThread == null)
@@ -228,12 +228,12 @@ warrior_ptr NewThread(Warrior * warrior, int player)
 
     //falta agregar todos los valores que vaya a agregar para inicializarlos
     newThread->warrior = warrior;
-    newThread->id = GetNextThreadId();
+    newThread->id = GetNextThreadIdW();
     newThread->player = player;
     return newThread;
 }
-warrior_ptr GetThread( long idThread){
-    warrior_ptr nextNode = GetCurrentThread(warriorQueue1);
+warrior_ptr GetThreadW( long idThread){
+    warrior_ptr nextNode = GetCurrentThreadW(warriorQueue1);
     warrior_ptr head = nextNode;
 
     while((nextNode!=null))
@@ -252,7 +252,7 @@ warrior_ptr GetThread( long idThread){
 
 
 warrior_ptr checkCollision(warrior_ptr warrior){
-    warrior_ptr nextNode = GetCurrentThread(warriorQueue1);
+    warrior_ptr nextNode = GetCurrentThreadW(warriorQueue1);
     warrior_ptr head = nextNode;
 
     while((nextNode!=null))
@@ -404,6 +404,7 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
 
     }
 
+
 }
 
 
@@ -420,7 +421,7 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node){ //----------
     if (check == null) {
 
         switch (nextMove) {
-            case KEY_RIGHT://movimiento a la derecha
+            case 1://movimiento a la derecha
 
                 if ((warrior->Posx + 2 < screen1->_maxx) && (warrior->screen == 1)) {
 
@@ -474,7 +475,7 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node){ //----------
                     wrefresh(screen2);
                 }
                 break;
-            case KEY_LEFT://movimiento a la izquierda
+            case 2://movimiento a la izquierda
                 //validar si en la posicion en donde se va a mover no hay nadie
                 if ((warrior->Posx - 2 > 0) && (warrior->screen == 2)) {
                     //se imprime la nueva posicion
@@ -527,7 +528,7 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node){ //----------
                     wrefresh(screen1);
                 }
                 break;
-            case KEY_UP://movimiento hacia arriba
+            case 3://movimiento hacia arriba
                 if (warrior->screen == 1) {
                     mvwprintw(screen1, warrior->Posy, warrior->Posx, " ");
                     mvwprintw(screen1, warrior->Posy + 1, warrior->Posx, " ");
@@ -576,7 +577,7 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node){ //----------
 
 
                 break;
-            case KEY_DOWN://movimiento hacia abajo
+            case 4://movimiento hacia abajo
                 if (warrior->screen == 1) {
                     mvwprintw(screen1, warrior->Posy, warrior->Posx, " ");
                     mvwprintw(screen1, warrior->Posy + 1, warrior->Posx, " ");
@@ -646,16 +647,16 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node){ //----------
         }
         else{
             if(r%2 == 0){
-                mvwprintw(screen1, check->warrior->Posy, check->warrior->Posx, " ");
-                mvwprintw(screen1, check->warrior->Posy + 1, check->warrior->Posx, " ");
+                mvwprintw(screen2, check->warrior->Posy, check->warrior->Posx, " ");
+                mvwprintw(screen2, check->warrior->Posy + 1, check->warrior->Posx, " ");
             }
             else{
-                mvwprintw(screen1, warrior->Posy, warrior->Posx, " ");
-                mvwprintw(screen1, warrior->Posy + 1, warrior->Posx, " ");
+                mvwprintw(screen2, warrior->Posy, warrior->Posx, " ");
+                mvwprintw(screen2, warrior->Posy + 1, warrior->Posx, " ");
             }
 
         }
-        PopNode_Queue(warriorQueue1,check);
+        PopNode_QueueW(warriorQueue1,check);
         moveWarrior(nextMove,warrior,node);
 
     }
@@ -781,40 +782,76 @@ void createTable(int opcion){
     Warrior warrior2;
 
     initValues(&warrior2,100,10,10,5,"X",7,5,1);
-    moveWarrior(KEY_DOWN,&warrior2, GetThread(1));
-    Push_Queue(warriorQueue1,NewThread(&warrior2,1));
-    Push_Queue(warriorQueue1,NewThread(&warrior1,2));
+    moveWarrior(1,&warrior2, GetThreadW(1));
 
+    Push_QueueW(warriorQueue1,NewThreadW(&warrior1,1));
+    Push_QueueW(warriorQueue1,NewThreadW(&warrior2,2));
 
     int key = 0;
-    while(key != 'q'){
+    //while(key != 'q'){
         //move(5,5);
         nodelay(stdscr, TRUE);
-        key = getch();
-        //sleep(1);
+        //key = getch();
 
-        checkTowerCollision(GetThread(2),&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
-        int terminar =decidirGanador(&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
-        if(terminar == 1){
-            sleep(10);
-            break;
-        }
+//        checkTowerCollision(GetThreadW(2),&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
+//        int terminar =decidirGanador(&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
+//        if(terminar == 1){
+//            sleep(10);
+//            break;
+//        }
+        sleep(1/2);
+        movePlayer1(1, &warrior1, GetThreadW(1), width);
 
-        moveWarrior(key,&warrior1, GetThread(2));
-        refresh();
+        //moveWarrior(1,&warrior1, GetThreadW(2));
+        //refresh();
         wrefresh(screen1);//se refresca la ventana
         wrefresh(screen2);
         //wrefresh(terminal);
-
-        //tengo que meterle guerreros a la lista warriorQueue
-
         //decidirGanador();
-    }
+    //}
+    wgetch(screen1);
     delwin(screen1);
     delwin(screen2);
     //delwin(terminal);
 
 
+};
+//el deploy en el INIT tiene que ser en el x = 5
+void movePlayer1(int nextMove, Warrior * warrior, warrior_ptr node,int width){
+    int stepsX = 0;
+    int pathLength;
+    if (width <= 23){
+        pathLength =10;
+    }
+    if (23<width <= 28){
+        pathLength =32;
+    }
+    wrefresh(screen1);
+    wrefresh(screen2);
+    while(stepsX < pathLength){//solo tiene que moverse a la derecha
+
+        checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
+        moveWarrior(nextMove,warrior,node);
+        sleep(1);
+        stepsX +=1;
+        //refresh();
+        wrefresh(screen1);
+        wrefresh(screen2);
+
+    }
+    sleep(1);
+    moveWarrior(2,warrior,node);
+    wrefresh(screen1);
+    wrefresh(screen2);
+    int down = 0;
+
+    while(down <4){
+        sleep(1);
+        moveWarrior(4,warrior,node);
+        wrefresh(screen1);
+        wrefresh(screen2);
+        down +=1;
+    }
 };
 
 

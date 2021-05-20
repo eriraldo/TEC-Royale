@@ -10,10 +10,10 @@
 #include "Warrior.h"
 #include "unistd.h"
 #define null  NULL
-typedef struct Node
+typedef struct Node2
 {
     int id;
-    struct Node* next;
+    struct Node2* next;
     struct warrior * warrior;
     int player;
 
@@ -40,15 +40,15 @@ void moveWarrior(int nextMove,Warrior *warrior, warrior_ptr node);
 int iniciar();
 void createTowers(int opcion, struct Tower *tower1,  struct Tower *tower2,  struct Tower *tower3,  struct Tower *tower4,  struct Tower *tower5,  struct Tower *tower6);
 int decidirGanador(struct Tower *tower1,  struct Tower *tower2,  struct Tower *tower3,  struct Tower *tower4,  struct Tower *tower5,  struct Tower *tower6);
-int Pop_Queue(warriorQueue queue);
-int Push_Queue(warriorQueue queue,warrior_ptr node);
-warriorQueue GetThreadQueue();
-int MoveForward(warriorQueue queue);
-warrior_ptr NewThread(Warrior * warrior, int player);
-void PopNode_Queue(warriorQueue queue, warrior_ptr node);
-int GetNextThreadId();
-warrior_ptr GetThread( long idThread);
+int Pop_QueueW(warriorQueue queue);
+int Push_QueueW(warriorQueue queue,warrior_ptr node);
+warriorQueue GetThreadQueueW();
+int MoveForwardW(warriorQueue queue);
+warrior_ptr NewThreadW(Warrior * warrior, int player);
+void PopNode_QueueW(warriorQueue queue, warrior_ptr node);
+int GetNextThreadIdW();
+warrior_ptr GetThreadW( long idThread);
 warrior_ptr  checkCollision(warrior_ptr warrior);
 void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower *tower2,  struct Tower *tower3,  struct Tower *tower4,  struct Tower *tower5,  struct Tower *tower6);
-
+void movePlayer1(int nextMove, Warrior  *warrior, warrior_ptr node, int width);
 #endif //UNTITLED_TABLE_H
