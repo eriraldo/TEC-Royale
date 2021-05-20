@@ -202,15 +202,15 @@ int main(int argc, char** argv) {
 //
 //    //Just a test to check if Round-robin scheduler was working as expected
 //    int i=5;
-//    my_thread_t t1;
-//    my_thread_t t2;
-//    my_thread_t t3;
+    //my_thread_t t1;
+    //my_thread_t t2;
+    //my_thread_t t3;
 //    void *status;
 //
-//    my_thread_init(200);
+    //my_thread_init(200);
 //
-//    my_thread_create(&t1,Worker1,(void*)&t1, 1);
-//    my_thread_create(&t2,Worker1,(void*)&t2, 1);
+    //my_thread_create(&t1,Worker1,(void*)&t1, 1);
+    //my_thread_create(&t2,Worker1,(void*)&t2, 1);
 //
 //    extern Thread_Queue readyQueue;
 //    Thread_ptr thread = GetThread(readyQueue, t1);

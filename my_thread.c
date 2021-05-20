@@ -91,7 +91,7 @@ int my_thread_create(my_thread_t *thread, void *(*start_routine)(void *), void *
         makecontext(&(newThread->context), (void (*)(void)) wrapperFunction, 2, start_routine, arg);
         *thread = newThread->idThread;
         my_thread_chsched(newThread, sched);
-        printf("Created Thread:%ld\n", *thread);
+        //printf("Created Thread:%ld\n", *thread);
         Push_Queue(readyQueue, newThread);
         sigprocmask(SIG_UNBLOCK, &sigProcMask, NULL);
         return 0;

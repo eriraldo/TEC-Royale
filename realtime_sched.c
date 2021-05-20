@@ -19,7 +19,7 @@ void threadCompletedNotifier()
         blockedNode->node->isBlocked = 0;
         blockedNode = blockedNode->next;
     }
-    printf("Thread Completed:%ld\n",currentNode->idThread);
+    //printf("Thread Completed:%ld\n",currentNode->idThread);
     currentNode->isCompleted = 1;
 
     raise(SIGPROF);

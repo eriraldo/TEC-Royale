@@ -20,6 +20,13 @@ Warrior warrior1;
 WINDOW *screen1;
 WINDOW *screen2;
 WINDOW *terminal;
+
+struct Params{
+    int nextMove;
+    Warrior * warrior;
+    warrior_ptr node;
+    int width;
+};
 char* arr[21] = {
         "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"
 };
@@ -800,7 +807,16 @@ void createTable(int opcion){
 //            break;
 //        }
         sleep(1/2);
-        movePlayer1(1, &warrior1, GetThreadW(1), width);
+        my_thread_t t1;
+        my_thread_init(200);
+        struct Params * par = (struct Params *)malloc(sizeof(struct Params));
+        par->width = width;
+        par->node = GetThreadW(1);
+        par->warrior = &warrior1;
+        par->nextMove = 1;
+        my_thread_create(&t1,movePlayer1,(void*)par, 1);
+        while(1){};
+        //movePlayer1(1, &warrior1, GetThreadW(1), width);
 
         //moveWarrior(1,&warrior1, GetThreadW(2));
         //refresh();
@@ -817,7 +833,16 @@ void createTable(int opcion){
 
 };
 //el deploy en el INIT tiene que ser en el x = 5
-void movePlayer1(int nextMove, Warrior * warrior, warrior_ptr node,int width){
+void* movePlayer1(void * parameters){
+    int  width, nextMove;
+    warrior_ptr node;
+    Warrior * warrior;
+
+    width = ((struct Params*)parameters)->width;
+    nextMove = ((struct Params*)parameters)->nextMove;
+    node = ((struct Params*)parameters)->node;
+    warrior = ((struct Params*)parameters)->warrior;
+
     int stepsX = 0;
     int pathLength;
     if (width <= 23){
@@ -846,6 +871,7 @@ void movePlayer1(int nextMove, Warrior * warrior, warrior_ptr node,int width){
     int down = 0;
 
     while(down <4){
+        checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
         sleep(1);
         moveWarrior(4,warrior,node);
         wrefresh(screen1);
