@@ -10,6 +10,7 @@
 #include "Warrior.h"
 #include "unistd.h"
 #include "my_thread.h"
+#include <time.h>
 #define null  NULL
 typedef struct Node2
 {
@@ -55,4 +56,5 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
 void* movePlayer1(void * Params);
 void exitWarriorThread(int id);
 void cleanWarrior(Warrior * warrior, warrior_ptr node);
+void bombWarrior(Warrior * warrior);
 #endif //UNTITLED_TABLE_H
