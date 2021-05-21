@@ -158,7 +158,7 @@ void pairing(Warrior* const cmp, Warrior* const depart){
 
 int main(int argc, char** argv) {
 
-    createTable(1);
+    createTable(2);
 
     delwin(screen1);
     delwin(screen2);
