@@ -35,6 +35,7 @@ struct Tower
     char *towerSymbol;
     int posX;
     int posY;
+    int attack;
 
 };
 

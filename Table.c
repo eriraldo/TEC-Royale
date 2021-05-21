@@ -38,7 +38,7 @@ char* arr[21] = {
 };
 
 int iniciar(){
-    int check = initValues(&warrior1,100,100,10,5,"P",6,2,1,1);
+    int check = initValues(&warrior1,100,100,10,5,"P",6,2,1,0);
     warriorQueue1 = GetThreadQueueW();
     return check;
 }
@@ -49,16 +49,19 @@ void createTowers(int opcion, struct Tower *tower1,  struct Tower *tower2,  stru
     tower1->towerSymbol = "-";//figura de la torre
     tower1->posX = 1; //posicion de x para guiarse
     tower1->posY = 1; //posicion de y para guiarse
+    tower1->attack = 15;
     //=====================
     tower2->health = 600;//vida
     tower2->towerSymbol = "-";//figura de la torre
     tower2->posX = 1;
     tower2->posY = 5;
+    tower2->attack = 15;
     //=====================
     tower3->health = 500;//vida
     tower3->towerSymbol = "-";//figura de la torre
     tower3->posX = 1;
     tower3->posY = 9;
+    tower3->attack = 15;
     //---------------------------------------------------player2-----------------------
     int val;
     if(opcion == 1){
@@ -71,16 +74,19 @@ void createTowers(int opcion, struct Tower *tower1,  struct Tower *tower2,  stru
     tower4->towerSymbol = "-";//figura de la torre
     tower4->posX = val;
     tower4->posY = 1;
+    tower4->attack = 15;
     //=====================
     tower5->health = 600;//vida
     tower5->towerSymbol = "-";//figura de la torre
     tower5->posX = val;
     tower5->posY = 5;
+    tower5->attack = 15;
     //=====================
     tower6->health = 500;//vida
     tower6->towerSymbol = "-";//figura de la torre
     tower6->posX = val;
     tower6->posY = 9;
+    tower6->attack = 15;
 };
 warrior_ptr GetCurrentThreadW(warriorQueue queue)
 {
@@ -296,6 +302,17 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
 
         while(tower4->health > 0){
             my_mutex_lock(&lock);
+            //tower attacks the warrior
+            warrior->warrior->vitality = warrior->warrior->vitality - tower4->attack;
+            char healthW[4] ;
+            sprintf(healthW,"%d",warrior->warrior->vitality);
+            if(warrior->warrior->vitality <= 0){
+                cleanWarrior(warrior->warrior,warrior);
+                my_mutex_unlock(&lock);
+                my_thread_exit();
+                break;
+            }
+            //Warrior attacks the tower
             tower4->health = tower4->health-warrior->warrior->attack;
             char health4[4] ;
             sprintf(health4,"%d",tower4->health);
@@ -331,6 +348,17 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
 
         while(tower5->health > 0){
             my_mutex_lock(&lock);
+            //tower attacks the warrior
+            warrior->warrior->vitality = warrior->warrior->vitality - tower5->attack;
+            char healthW[4] ;
+            sprintf(healthW,"%d",warrior->warrior->vitality);
+            if(warrior->warrior->vitality <= 0){
+                cleanWarrior(warrior->warrior,warrior);
+                my_mutex_unlock(&lock);
+                my_thread_exit();
+                break;
+            }
+            //Warrior attacks the tower
             tower5->health = tower5->health-warrior->warrior->attack;
             char health4[4] ;
             sprintf(health4,"%d",tower5->health);
@@ -367,6 +395,17 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
 
         while(tower6->health > 0){
             my_mutex_lock(&lock);
+            //tower attacks the warrior
+            warrior->warrior->vitality = warrior->warrior->vitality - tower6->attack;
+            char healthW[4] ;
+            sprintf(healthW,"%d",warrior->warrior->vitality);
+            if(warrior->warrior->vitality <= 0){
+                cleanWarrior(warrior->warrior,warrior);
+                my_mutex_unlock(&lock);
+                my_thread_exit();
+                break;
+            }
+            //Warrior attacks the tower
             tower6->health = tower6->health-warrior->warrior->attack;
             char health4[4] ;
             sprintf(health4,"%d",tower6->health);
@@ -403,6 +442,17 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
 
         while(tower1->health > 0){
             my_mutex_lock(&lock);
+            //tower attacks the warrior
+            warrior->warrior->vitality = warrior->warrior->vitality - tower1->attack;
+            char healthW[4] ;
+            sprintf(healthW,"%d",warrior->warrior->vitality);
+            if(warrior->warrior->vitality <= 0){
+                cleanWarrior(warrior->warrior,warrior);
+                my_mutex_unlock(&lock);
+                my_thread_exit();
+                break;
+            }
+            //Warrior attacks the tower
             tower1->health = tower1->health-warrior->warrior->attack;
             char health4[4] ;
             sprintf(health4,"%d",tower1->health);
@@ -440,6 +490,17 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
 
         while(tower2->health > 0){
             my_mutex_lock(&lock);
+            //tower attacks the warrior
+            warrior->warrior->vitality = warrior->warrior->vitality - tower2->attack;
+            char healthW[4] ;
+            sprintf(healthW,"%d",warrior->warrior->vitality);
+            if(warrior->warrior->vitality <= 0){
+                cleanWarrior(warrior->warrior,warrior);
+                my_mutex_unlock(&lock);
+                my_thread_exit();
+                break;
+            }
+            //Warrior attacks the tower
             tower2->health = tower2->health-warrior->warrior->attack;
             char health4[4] ;
             sprintf(health4,"%d",tower2->health);
@@ -475,6 +536,17 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
         wattron(screen1,COLOR_PAIR(1));
         while(tower3->health > 0){
             my_mutex_lock(&lock);
+            //tower attacks the warrior
+            warrior->warrior->vitality = warrior->warrior->vitality - tower3->attack;
+            char healthW[4] ;
+            sprintf(healthW,"%d",warrior->warrior->vitality);
+            if(warrior->warrior->vitality <= 0){
+                cleanWarrior(warrior->warrior,warrior);
+                my_mutex_unlock(&lock);
+                my_thread_exit();
+                break;
+            }
+            //Warrior attacks the tower
             tower3->health = tower3->health-warrior->warrior->attack;
             char health4[4] ;
             sprintf(health4,"%d",tower3->health);
@@ -912,7 +984,7 @@ void createTable(int opcion){
         par->node = GetThreadW(1);
         par->warrior = &warrior1;
         par->nextMove = 1;
-        bombWarrior(&warrior1);
+        //bombWarrior(&warrior1);
         my_thread_create(&t1,movePlayer1,(void*)par, 0);
 
         wrefresh(screen1);//se refresca la ventana
