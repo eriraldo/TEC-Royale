@@ -17,6 +17,7 @@ typedef struct Node2
     struct Node2* next;
     struct warrior * warrior;
     int player;
+    int finish;
 
 } war,*warrior_ptr;
 
@@ -52,4 +53,6 @@ warrior_ptr GetThreadW( long idThread);
 warrior_ptr  checkCollision(warrior_ptr warrior);
 void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower *tower2,  struct Tower *tower3,  struct Tower *tower4,  struct Tower *tower5,  struct Tower *tower6);
 void* movePlayer1(void * Params);
+void exitWarriorThread(int id);
+void cleanWarrior(Warrior * warrior, warrior_ptr node);
 #endif //UNTITLED_TABLE_H

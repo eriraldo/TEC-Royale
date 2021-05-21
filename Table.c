@@ -914,6 +914,8 @@ void createTable(int opcion){
         par2->nextMove = 2;
 
         my_thread_create(&t2,movePlayer1,(void*)par2, 0);
+        my_thread_sleep(3);
+        exitWarriorThread(1);
         while(1){};
 
         wrefresh(screen1);//se refresca la ventana
@@ -949,7 +951,12 @@ void* movePlayer1(void * parameters){
     }
     wrefresh(screen1);
     wrefresh(screen2);
+
     while(stepsX < pathLength){//solo tiene que moverse a la derecha
+        if(node->finish ==1){
+            cleanWarrior( warrior, node);
+            my_thread_exit();
+        }
         checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
         my_mutex_lock(&lock);
         if(node->player == 1 && warrior->screen == 1){
@@ -976,6 +983,10 @@ void* movePlayer1(void * parameters){
     int down = 0;
 
     while(down <4){
+        if(node->finish ==1){
+            cleanWarrior( warrior, node);
+            my_thread_exit();
+        }
         checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
         my_thread_sleep(1);
         my_mutex_lock(&lock);
@@ -1007,6 +1018,11 @@ int decidirGanador(struct Tower *tower1,  struct Tower *tower2,  struct Tower *t
     }
     return 0;
 }
+void exitWarriorThread(int id){
+    warrior_ptr warriorToRemove =  GetThreadW(id);
+    warriorToRemove->finish = 1;
+    lock = 0;
+}
 
 void cleanWarrior(Warrior * warrior, warrior_ptr node){
     if(warrior->screen == 1){
@@ -1022,6 +1038,8 @@ void cleanWarrior(Warrior * warrior, warrior_ptr node){
         mvwprintw(screen2,warrior->Posy+1,warrior->Posx+1," ");
     }
     PopNode_QueueW(warriorQueue1,node);
+    wrefresh(screen1);
+    wrefresh(screen2);
 
 
 }
