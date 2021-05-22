@@ -39,7 +39,7 @@ void scheduler_rr(int  sigNum)
                 MoveForward(readyQueue);
             }
 
-            cleanQueue(1);
+            cleanQueue(1, 0);
             nextNode = GetCurrentThread(readyQueue);
 
             if(nextNode == null)

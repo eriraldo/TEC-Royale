@@ -80,13 +80,21 @@ void manageSpecialThread(){
     {
         if(nextNode->special == 1) {
             double rrCount = getRR() + 1;
-            double tickets = getTickets() + 50;
+            double tickets = getTickets();
+            if (tickets == 1)
+                tickets = 50;
+            else
+                tickets+=50;
             if (1/rrCount > 50/tickets){
                 my_thread_chsched(nextNode, 0);
+                nextNode->tickets = 0;
+                //printf("CHANGED TO RR \n");
             }else{
                 my_thread_chsched(nextNode, 1);
                 nextNode->tickets = 50;
+                //printf("CHANGED TO LOTTERY \n");
             }
+            //printf("RR: %f, LOTTERY: %f\n", 1/rrCount, 50/tickets);
         }
         nextNode = nextNode->next;
         if (nextNode == head)
@@ -109,7 +117,7 @@ int getSpecialThread(){
     return specialCount;
 }
 
-void cleanQueue(int sched){
+void cleanQueue(int sched, int origSched){
     Thread_ptr nextNode = GetCurrentThread(readyQueue);
     Thread_ptr head = nextNode;
 
@@ -125,7 +133,7 @@ void cleanQueue(int sched){
         }
         nextNode = GetCurrentThread(readyQueue);
         if (nextNode == head){
-            setNotUsed(readyQueue, 0);
+            setNotUsed(readyQueue, origSched);
             break;
         }
     }

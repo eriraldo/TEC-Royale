@@ -103,7 +103,7 @@ void *Worker1(void *threadid)
     printf("In HILO 1 :%d\n",*(int*)threadid);
     //my_mutex_unlock(&lock);
     my_thread_t threadInFunc;
-    my_thread_create(&threadInFunc,Worker,(void*)&threadInFunc, 1);
+    //my_thread_create(&threadInFunc,Worker,(void*)&threadInFunc, 1);
 
     while(i > 0)
     {
@@ -163,6 +163,14 @@ int main(int argc, char** argv) {
     delwin(screen1);
     delwin(screen2);
     endwin();
+/*
+    my_thread_t t1;
+    my_thread_t t2;
+    my_thread_t t3;
+    my_thread_init(100);
+    my_thread_create(&t1,Worker1,(void*)&t1, 2);
+    my_thread_create(&t2,Worker1,(void*)&t2, 1);
+    my_thread_create(&t3,Worker1,(void*)&t3, 1);*/
 
 //    my_mutex_init(&lock);
 //    Warrior warrior;
@@ -202,15 +210,10 @@ int main(int argc, char** argv) {
 //
 //    //Just a test to check if Round-robin scheduler was working as expected
 //    int i=5;
-    //my_thread_t t1;
-    //my_thread_t t2;
-    //my_thread_t t3;
+
 //    void *status;
 //
-    //my_thread_init(200);
-//
-    //my_thread_create(&t1,Worker1,(void*)&t1, 1);
-    //my_thread_create(&t2,Worker1,(void*)&t2, 1);
+
 //
 //    extern Thread_Queue readyQueue;
 //    Thread_ptr thread = GetThread(readyQueue, t1);
@@ -242,9 +245,9 @@ int main(int argc, char** argv) {
 //
 //    }*/
 //
-//    while(true){
+    //while(true){
 //
-//    }
+   // }
 //    int returnCode = 4;
 //    printf("\nReturn Code:%d",returnCode);
 //    printf("\nExiting Main\n");

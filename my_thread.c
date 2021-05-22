@@ -131,6 +131,7 @@ Thread_ptr GetCurrentThread_ptr() {
 }
 
 void my_thread_exit() {
+    sigprocmask(SIG_BLOCK, &sigProcMask, NULL);
     Thread_ptr thread = GetCurrentThread(readyQueue);
     thread->scheduler = -1;
     CompletedThread_ptr completedNode = GetCompletedNode();
@@ -139,7 +140,9 @@ void my_thread_exit() {
         PushToCompleted(deadQueue, completedNode);
     }
     threadCompletedNotifier();
+    sigprocmask(SIG_UNBLOCK, &sigProcMask, NULL);
     raise(SIGPROF);
+
 
 }
 

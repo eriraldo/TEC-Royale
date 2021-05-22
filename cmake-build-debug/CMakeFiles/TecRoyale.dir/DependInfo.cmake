@@ -4,15 +4,15 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/erickelizondo/CLionProjects/TEC-Royale/DataStructures.c" "/home/erickelizondo/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/DataStructures.c.o"
-  "/home/erickelizondo/CLionProjects/TEC-Royale/Table.c" "/home/erickelizondo/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/Table.c.o"
-  "/home/erickelizondo/CLionProjects/TEC-Royale/Warrior.c" "/home/erickelizondo/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/Warrior.c.o"
-  "/home/erickelizondo/CLionProjects/TEC-Royale/lottery_sched.c" "/home/erickelizondo/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/lottery_sched.c.o"
-  "/home/erickelizondo/CLionProjects/TEC-Royale/main.c" "/home/erickelizondo/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/main.c.o"
-  "/home/erickelizondo/CLionProjects/TEC-Royale/my_mutex.c" "/home/erickelizondo/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/my_mutex.c.o"
-  "/home/erickelizondo/CLionProjects/TEC-Royale/my_thread.c" "/home/erickelizondo/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/my_thread.c.o"
-  "/home/erickelizondo/CLionProjects/TEC-Royale/realtime_sched.c" "/home/erickelizondo/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/realtime_sched.c.o"
-  "/home/erickelizondo/CLionProjects/TEC-Royale/roundRobin_sched.c" "/home/erickelizondo/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/roundRobin_sched.c.o"
+  "/home/erick/CLionProjects/TEC-Royale/DataStructures.c" "/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/DataStructures.c.o"
+  "/home/erick/CLionProjects/TEC-Royale/Table.c" "/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/Table.c.o"
+  "/home/erick/CLionProjects/TEC-Royale/Warrior.c" "/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/Warrior.c.o"
+  "/home/erick/CLionProjects/TEC-Royale/lottery_sched.c" "/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/lottery_sched.c.o"
+  "/home/erick/CLionProjects/TEC-Royale/main.c" "/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/main.c.o"
+  "/home/erick/CLionProjects/TEC-Royale/my_mutex.c" "/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/my_mutex.c.o"
+  "/home/erick/CLionProjects/TEC-Royale/my_thread.c" "/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/my_thread.c.o"
+  "/home/erick/CLionProjects/TEC-Royale/realtime_sched.c" "/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/realtime_sched.c.o"
+  "/home/erick/CLionProjects/TEC-Royale/roundRobin_sched.c" "/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/roundRobin_sched.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

@@ -34,7 +34,7 @@ void scheduler_lottery(int  sigNum)
             else{
                 MoveForward(readyQueue);
             }
-            cleanQueue(0);
+            cleanQueue(0, 1);
             nextNode = GetCurrentThread(readyQueue);
             if(nextNode == null)
             {
@@ -49,11 +49,13 @@ void scheduler_lottery(int  sigNum)
                 sigprocmask(SIG_UNBLOCK, &sigProcMask, NULL);
                 if(currentNodeCompleted)
                 {
+                    nextNode->recently_used = 1;
                     setcontext(&(nextNode->context));
                 }
                 else
                 {
                     totalTickets = 0;
+                    nextNode->recently_used = 1;
                     swapcontext(&(currentNode->context),&(nextNode->context));
                 }
             }
@@ -92,7 +94,7 @@ Thread_ptr getWinnerThread(Thread_ptr current){
     Thread_ptr head = nextNode;
     while((nextNode!=null))
     {
-        if (nextNode->scheduler == 1 && nextNode != current){
+        if (nextNode->scheduler == 1 && nextNode->recently_used !=1){
             if(win_ticket >= sumTicket && win_ticket < sumTicket+nextNode->tickets)
                 break;
             sumTicket += nextNode->tickets;

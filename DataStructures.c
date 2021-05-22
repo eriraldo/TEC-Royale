@@ -308,7 +308,7 @@ Thread_ptr NewThread()
     newThread->isCompleted = 0;
     newThread->recently_used = 0;
     newThread->scheduler = 0;
-    newThread->tickets = 10;
+    newThread->tickets = 0;
     return newThread;
 }
 

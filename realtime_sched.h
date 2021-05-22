@@ -18,7 +18,7 @@ void disableSpecialThreads();
 int getRR();
 void manageSpecialThread();
 int getSpecialThread();
-void cleanQueue(int sched);
+void cleanQueue(int sched, int origSched);
 
 
 

@@ -957,11 +957,14 @@ void createTable(int opcion){
     mvwprintw(screen2,tower6.posY+2,tower6.posX+2,tower6.towerSymbol);
     wattroff(screen2,COLOR_PAIR(2));
     Warrior warrior2;
+    Warrior warrior3;
 
     initValues(&warrior2,100,10,10,5,"X",7,5,1,0);
+    initValues(&warrior3,100,10,10,5,"T",7,8,1,0);
 
     Push_QueueW(warriorQueue1,NewThreadW(&warrior1,1));
     Push_QueueW(warriorQueue1,NewThreadW(&warrior2,2));
+    Push_QueueW(warriorQueue1,NewThreadW(&warrior3,1));
 
     int key = 0;
         nodelay(stdscr, TRUE);
@@ -976,16 +979,18 @@ void createTable(int opcion){
         my_mutex_init(&lock);
         my_thread_t t1;
         my_thread_t t2;
-        my_thread_init(200);
+        my_thread_t t3;
+        my_thread_init(100);
 
         struct Params * par = (struct Params *)malloc(sizeof(struct Params));
         struct Params * par2 = (struct Params *)malloc(sizeof(struct Params));
+        struct Params * par3 = (struct Params *)malloc(sizeof(struct Params));
         par->width = width;
         par->node = GetThreadW(1);
         par->warrior = &warrior1;
         par->nextMove = 1;
         //bombWarrior(&warrior1);
-        my_thread_create(&t1,movePlayer1,(void*)par, 0);
+        my_thread_create(&t1,movePlayer1,(void*)par, 2);
 
         wrefresh(screen1);//se refresca la ventana
         wrefresh(screen2);
@@ -995,9 +1000,15 @@ void createTable(int opcion){
         par2->warrior = &warrior2;
         par2->nextMove = 2;
 
-        my_thread_create(&t2,movePlayer1,(void*)par2, 0);
+        my_thread_create(&t2,movePlayer1,(void*)par2, 1);
         //my_thread_sleep(3);
         //exitWarriorThread(1);
+
+        par3->width = width;
+        par3->node = GetThreadW(3);
+        par3->warrior = &warrior3;
+        par3->nextMove = 1;
+        my_thread_create(&t3,movePlayer1,(void*)par3, 1);
         while(1){};
 
         wrefresh(screen1);//se refresca la ventana
@@ -1101,10 +1112,10 @@ void* movePlayer1(void * parameters){
             my_thread_exit();
         }
         checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
-        my_thread_sleep(1);
         my_mutex_lock(&lock);
         moveWarrior(4,warrior,node);
         my_mutex_unlock(&lock);
+        my_thread_sleep(1);
         wrefresh(screen1);
         wrefresh(screen2);
         down +=1;
@@ -1139,7 +1150,7 @@ int decidirGanador(struct Tower *tower1,  struct Tower *tower2,  struct Tower *t
 void exitWarriorThread(int id){
     warrior_ptr warriorToRemove =  GetThreadW(id);
     warriorToRemove->finish = 1;
-    lock = 0;
+    my_mutex_unlock(&lock);
 }
 
 void cleanWarrior(Warrior * warrior, warrior_ptr node){
