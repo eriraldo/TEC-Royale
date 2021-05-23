@@ -38,7 +38,7 @@ char* arr[21] = {
 };
 
 int iniciar(){
-    int check = initValues(&warrior1,100,100,10,5,"P",6,2,1,0);
+    int check = initValues(&warrior1,200,100,10,5,"P",6,2,1,0);
     warriorQueue1 = GetThreadQueueW();
     return check;
 }
@@ -959,7 +959,7 @@ void createTable(int opcion){
     Warrior warrior2;
     Warrior warrior3;
 
-    initValues(&warrior2,100,10,10,5,"X",7,5,1,0);
+    initValues(&warrior2,100,10,10,5,"X",17,5,2,1);
     initValues(&warrior3,100,10,10,5,"T",7,8,1,0);
 
     Push_QueueW(warriorQueue1,NewThreadW(&warrior1,1));
@@ -970,11 +970,7 @@ void createTable(int opcion){
         nodelay(stdscr, TRUE);
         //key = getch();
 
-//        int terminar =decidirGanador(&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
-//        if(terminar == 1){
-//            sleep(10);
-//            break;
-//        }
+
         sleep(1/2);
         my_mutex_init(&lock);
         my_thread_t t1;
@@ -999,7 +995,7 @@ void createTable(int opcion){
         par2->node = GetThreadW(2);
         par2->warrior = &warrior2;
         par2->nextMove = 2;
-
+        bombWarrior(&warrior2);
         my_thread_create(&t2,movePlayer1,(void*)par2, 1);
         //my_thread_sleep(3);
         //exitWarriorThread(1);
@@ -1009,19 +1005,20 @@ void createTable(int opcion){
         par3->warrior = &warrior3;
         par3->nextMove = 1;
         my_thread_create(&t3,movePlayer1,(void*)par3, 1);
-        while(1){};
+        while(1){
+            int terminar =decidirGanador(&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
+            if(terminar == 1){
+                break;
+            }};
 
         wrefresh(screen1);//se refresca la ventana
         wrefresh(screen2);
         //wrefresh(terminal);
         //decidirGanador();
-    //}
     wgetch(screen1);
     delwin(screen1);
     delwin(screen2);
     //delwin(terminal);
-
-
 };
 //el deploy en el INIT tiene que ser en el x = 5
 void* movePlayer1(void * parameters){
@@ -1054,20 +1051,39 @@ void* movePlayer1(void * parameters){
     while(stepsX < pathLength ){//solo tiene que moverse a la derecha
         if (time(0) > t1 && warrior->bomb == 1){
             my_mutex_lock(&lock);
-            if(warrior->screen == 1){
-                mvwprintw(screen1,warrior->Posy,warrior->Posx,"X");
-                mvwprintw(screen1,warrior->Posy+1,warrior->Posx,"X");
-                mvwprintw(screen1,warrior->Posy,warrior->Posx+1,"X");
-                mvwprintw(screen1,warrior->Posy+1,warrior->Posx+1,"X");
-                wrefresh(screen1);
+            if(node->player == 1){
+                if(warrior->screen == 1){
+                    mvwprintw(screen1,warrior->Posy,warrior->Posx,"X");
+                    mvwprintw(screen1,warrior->Posy+1,warrior->Posx,"X");
+                    mvwprintw(screen1,warrior->Posy,warrior->Posx+1,"X");
+                    mvwprintw(screen1,warrior->Posy+1,warrior->Posx+1,"X");
+                    wrefresh(screen1);
+                }
+                else{
+                    mvwprintw(screen2,warrior->Posy,warrior->Posx,"X");
+                    mvwprintw(screen2,warrior->Posy+1,warrior->Posx,"X");
+                    mvwprintw(screen2,warrior->Posy,warrior->Posx+1,"X");
+                    mvwprintw(screen2,warrior->Posy+1,warrior->Posx+1,"X");
+                    wrefresh(screen2);
+                }
             }
             else{
-                mvwprintw(screen2,warrior->Posy,warrior->Posx,"X");
-                mvwprintw(screen2,warrior->Posy+1,warrior->Posx,"X");
-                mvwprintw(screen2,warrior->Posy,warrior->Posx+1,"X");
-                mvwprintw(screen2,warrior->Posy+1,warrior->Posx+1,"X");
-                wrefresh(screen2);
+                if(warrior->screen == 1){
+                    mvwprintw(screen1,warrior->Posy,warrior->Posx,"X");
+                    mvwprintw(screen1,warrior->Posy+1,warrior->Posx,"X");
+                    mvwprintw(screen1,warrior->Posy,warrior->Posx-1,"X");
+                    mvwprintw(screen1,warrior->Posy+1,warrior->Posx-1,"X");
+                    wrefresh(screen1);
+                }
+                else{
+                    mvwprintw(screen2,warrior->Posy,warrior->Posx,"X");
+                    mvwprintw(screen2,warrior->Posy+1,warrior->Posx,"X");
+                    mvwprintw(screen2,warrior->Posy,warrior->Posx-1,"X");
+                    mvwprintw(screen2,warrior->Posy+1,warrior->Posx-1,"X");
+                    wrefresh(screen2);
+                }
             }
+
             my_thread_sleep(1);
             cleanWarrior( warrior, node);
             my_mutex_unlock(&lock);
@@ -1159,12 +1175,16 @@ void cleanWarrior(Warrior * warrior, warrior_ptr node){
         mvwprintw(screen1,warrior->Posy+1,warrior->Posx," ");
         mvwprintw(screen1,warrior->Posy,warrior->Posx+1," ");
         mvwprintw(screen1,warrior->Posy+1,warrior->Posx+1," ");
+        mvwprintw(screen1,warrior->Posy,warrior->Posx-1," ");
+        mvwprintw(screen1,warrior->Posy+1,warrior->Posx-1," ");
     }
     else{
         mvwprintw(screen2,warrior->Posy,warrior->Posx," ");
         mvwprintw(screen2,warrior->Posy+1,warrior->Posx," ");
         mvwprintw(screen2,warrior->Posy,warrior->Posx+1," ");
         mvwprintw(screen2,warrior->Posy+1,warrior->Posx+1," ");
+        mvwprintw(screen2,warrior->Posy,warrior->Posx-1," ");
+        mvwprintw(screen2,warrior->Posy+1,warrior->Posx-1," ");
     }
     PopNode_QueueW(warriorQueue1,node);
     wrefresh(screen1);

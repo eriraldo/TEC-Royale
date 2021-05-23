@@ -55,6 +55,7 @@ warrior_ptr GetThreadW( long idThread);
 warrior_ptr  checkCollision(warrior_ptr warrior);
 void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower *tower2,  struct Tower *tower3,  struct Tower *tower4,  struct Tower *tower5,  struct Tower *tower6);
 void* movePlayer1(void * Params);
+void* movePlayer2(void * parameters);
 void exitWarriorThread(int id);
 void cleanWarrior(Warrior * warrior, warrior_ptr node);
 void bombWarrior(Warrior * warrior);
