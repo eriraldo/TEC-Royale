@@ -8,38 +8,38 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/erick/CLionProjects/TEC-Royale/cmake-build-debug"/>
+				<Option working_dir="/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/home/erick/CLionProjects/TEC-Royale/cmake-build-debug"/>
+				<Option working_dir="/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/home/erick/CLionProjects/TEC-Royale/cmake-build-debug"/>
+				<Option working_dir="/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="TecRoyale">
-				<Option output="/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/TecRoyale" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/erick/CLionProjects/TEC-Royale/cmake-build-debug"/>
+				<Option output="/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/TecRoyale" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -50,15 +50,15 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 TecRoyale"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 TecRoyale"/>
+					<CompileFile command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="TecRoyale/fast">
-				<Option output="/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/TecRoyale" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/erick/CLionProjects/TEC-Royale/cmake-build-debug"/>
+				<Option output="/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/TecRoyale" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -69,68 +69,68 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 TecRoyale/fast"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 TecRoyale/fast"/>
+					<CompileFile command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j6 -f &quot;/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/DataStructures.c">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/DataStructures.c">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/DataStructures.h">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/DataStructures.h">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/Table.c">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/Table.c">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/Table.h">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/Table.h">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/Warrior.c">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/Warrior.c">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/Warrior.h">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/Warrior.h">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/errorCodes.h">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/errorCodes.h">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/lottery_sched.c">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/lottery_sched.c">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/lottery_sched.h">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/lottery_sched.h">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/main.c">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/main.c">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/my_mutex.c">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/my_mutex.c">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/my_mutex.h">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/my_mutex.h">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/my_thread.c">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/my_thread.c">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/my_thread.h">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/my_thread.h">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/realtime_sched.c">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/realtime_sched.c">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/realtime_sched.h">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/realtime_sched.h">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/roundRobin_sched.c">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/roundRobin_sched.c">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/roundRobin_sched.h">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/roundRobin_sched.h">
 			<Option target="TecRoyale"/>
 		</Unit>
-		<Unit filename="/home/erick/CLionProjects/TEC-Royale/CMakeLists.txt">
+		<Unit filename="/home/erickelizondo/repos/otro/TEC-Royale/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

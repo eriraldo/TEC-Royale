@@ -18,6 +18,7 @@ struct Tower tower6;
 int i ;
 int entry_limit = 2;
 int depart_limit = 3;
+extern sigset_t sigProcMask;
 
 warriorQueue warriorQueue1;
 
@@ -26,6 +27,7 @@ WINDOW *screen1;
 WINDOW *screen2;
 WINDOW *terminal;
 int lock;
+int battleLock;
 
 struct Params{
     int nextMove;
@@ -214,6 +216,7 @@ void PopNode_QueueW(warriorQueue queue, warrior_ptr node)
         }
         nextNode = GetCurrentThreadW(queue);
         if (nextNode == head){
+            nextNode = null;
             break;
         }
     }
@@ -257,8 +260,9 @@ warrior_ptr GetThreadW( long idThread){
 
     while((nextNode!=null))
     {
-        if(nextNode->id == idThread)
+        if(nextNode->id == idThread) {
             break;
+        }
         nextNode = nextNode->next;
         if (head == nextNode){
 
@@ -587,11 +591,11 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
 
 
 
-void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node){
+void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node, int * stepX){
 
     char * lvl = arr[warrior->level];
 
-
+    int idWarrior = node->id;
 
     warrior_ptr check = checkCollision(node);
 
@@ -807,35 +811,35 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node){
         }
     }
     else{
-
-        srand(time(NULL));   // Initialization, should only be called once.
-        int r = rand();
-        if(check->warrior->screen == 1){
-            if(r%2 == 0){
-                mvwprintw(screen1, check->warrior->Posy, check->warrior->Posx, " ");
-                mvwprintw(screen1, check->warrior->Posy + 1, check->warrior->Posx, " ");
-            }
-            else{
+        my_mutex_unlock(&lock);
+        my_mutex_lock(&battleLock);
+        my_mutex_lock(&lock);
+        warrior_ptr checkExist = GetThreadW(idWarrior);
+        if(checkExist == null){
+            my_mutex_unlock(&battleLock);
+            my_mutex_unlock(&lock);
+            my_thread_exit();
+        }else{
+            srand(time(NULL));   // Initialization, should only be called once.
+            int r = rand();
+            if(check->warrior->screen == 1){
                 mvwprintw(screen1, warrior->Posy, warrior->Posx, " ");
                 mvwprintw(screen1, warrior->Posy + 1, warrior->Posx, " ");
-            }
-
-
-        }
-        else{
-            if(r%2 == 0){
-                mvwprintw(screen2, check->warrior->Posy, check->warrior->Posx, " ");
-                mvwprintw(screen2, check->warrior->Posy + 1, check->warrior->Posx, " ");
             }
             else{
                 mvwprintw(screen2, warrior->Posy, warrior->Posx, " ");
                 mvwprintw(screen2, warrior->Posy + 1, warrior->Posx, " ");
+
             }
+            *stepX-=1;
+            sigprocmask(SIG_BLOCK, &sigProcMask, NULL);
+            PopNode_QueueW(warriorQueue1,check);
+            //cleanWarrior( check->warrior, check);
+            sigprocmask(SIG_UNBLOCK, &sigProcMask, NULL);
+            my_mutex_unlock(&battleLock);
+            //moveWarrior(nextMove,warrior,node);
 
         }
-        PopNode_QueueW(warriorQueue1,check);
-        moveWarrior(nextMove,warrior,node);
-
     }
 
 };
@@ -959,7 +963,7 @@ void createTable(int opcion){
     Warrior warrior2;
     Warrior warrior3;
 
-    initValues(&warrior2,100,10,10,5,"X",17,5,2,1);
+    initValues(&warrior2,100,10,10,5,"X",6,2,2,0);
     initValues(&warrior3,100,10,10,5,"T",7,8,1,0);
 
     Push_QueueW(warriorQueue1,NewThreadW(&warrior1,1));
@@ -995,7 +999,7 @@ void createTable(int opcion){
         par2->node = GetThreadW(2);
         par2->warrior = &warrior2;
         par2->nextMove = 2;
-        bombWarrior(&warrior2);
+        //bombWarrior(&warrior2);
         my_thread_create(&t2,movePlayer1,(void*)par2, 1);
         //my_thread_sleep(3);
         //exitWarriorThread(1);
@@ -1103,7 +1107,7 @@ void* movePlayer1(void * parameters){
         else{
             wattron(screen2, COLOR_PAIR(1));
         }
-        moveWarrior(nextMove,warrior,node);
+        moveWarrior(nextMove,warrior,node, &stepsX);
         if(node->player == 1 && warrior->screen == 1){
             wattroff(screen1, COLOR_PAIR(1));
         }
@@ -1129,13 +1133,14 @@ void* movePlayer1(void * parameters){
         }
         checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
         my_mutex_lock(&lock);
-        moveWarrior(4,warrior,node);
+        moveWarrior(4,warrior,node, &down);
         my_mutex_unlock(&lock);
         my_thread_sleep(1);
         wrefresh(screen1);
         wrefresh(screen2);
         down +=1;
     }
+    return null;
 };
 
 
