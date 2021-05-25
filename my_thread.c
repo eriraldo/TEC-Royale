@@ -142,7 +142,5 @@ void my_thread_exit() {
     threadCompletedNotifier();
     sigprocmask(SIG_UNBLOCK, &sigProcMask, NULL);
     raise(SIGPROF);
-
-
 }
 
