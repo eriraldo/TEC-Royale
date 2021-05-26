@@ -63,10 +63,10 @@ RM = /opt/clion-2021.1.1/bin/cmake/linux/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/erick/CLionProjects/TEC-Royale
+CMAKE_SOURCE_DIR = /home/erickelizondo/repos/otro/TEC-Royale
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/erick/CLionProjects/TEC-Royale/cmake-build-debug
+CMAKE_BINARY_DIR = /home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -93,14 +93,14 @@ clean: CMakeFiles/TecRoyale.dir/clean
 CMakeFiles/TecRoyale.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TecRoyale.dir/build.make CMakeFiles/TecRoyale.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TecRoyale.dir/build.make CMakeFiles/TecRoyale.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/erick/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10 "Built target TecRoyale"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10 "Built target TecRoyale"
 .PHONY : CMakeFiles/TecRoyale.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/TecRoyale.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/erick/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles 10
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/CMakeFiles 10
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/TecRoyale.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/erick/CLionProjects/TEC-Royale/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/TecRoyale.dir/rule
 
 # Convenience name for target.

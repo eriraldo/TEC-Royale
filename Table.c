@@ -18,6 +18,7 @@ struct Tower tower6;
 int i ;
 int entry_limit = 2;
 int depart_limit = 3;
+extern sigset_t sigProcMask;
 
 warriorQueue warriorQueue1;
 
@@ -26,7 +27,7 @@ WINDOW *screen1;
 WINDOW *screen2;
 WINDOW *terminal;
 int lock;
-int lock2;
+int battleLock;
 
 struct Params{
     int nextMove;
@@ -39,7 +40,7 @@ char* arr[21] = {
 };
 
 int iniciar(){
-    int check = initValues(&warrior1,200,100,10,5,"P",6,2,1,0);
+    int check = initValues(&warrior1,200,100,10,5,"P",6,3,1,0);
     warriorQueue1 = GetThreadQueueW();
     return check;
 }
@@ -66,10 +67,10 @@ void createTowers(int opcion, struct Tower *tower1,  struct Tower *tower2,  stru
     //---------------------------------------------------player2-----------------------
     int val;
     if(opcion == 1){
-        val = 18;
+        val = 24;
     }
     else if (opcion == 2){
-        val = 24;
+        val = 30;
     }
     tower4->health = 500;//vida
     tower4->towerSymbol = "-";//figura de la torre
@@ -215,6 +216,7 @@ void PopNode_QueueW(warriorQueue queue, warrior_ptr node)
         }
         nextNode = GetCurrentThreadW(queue);
         if (nextNode == head){
+            nextNode = null;
             break;
         }
     }
@@ -258,8 +260,9 @@ warrior_ptr GetThreadW( long idThread){
 
     while((nextNode!=null))
     {
-        if(nextNode->id == idThread)
+        if(nextNode->id == idThread) {
             break;
+        }
         nextNode = nextNode->next;
         if (head == nextNode){
 
@@ -588,9 +591,12 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
 
 
 
-void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node){
+void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node, int * stepX){
 
     char * lvl = arr[warrior->level];
+
+    int idWarrior = node->id;
+
     warrior_ptr check = checkCollision(node);
 
     if (check == null) {
@@ -674,7 +680,7 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node){
                     mvwprintw(screen2, warrior->Posy, warrior->Posx - 1, " ");
                     mvwprintw(screen2, warrior->Posy + 1, warrior->Posx - 1, " ");
                     wrefresh(screen2);
-                    warrior->Posx = 19;
+                    warrior->Posx = screen1->_maxx-2;
                     //se imprime la nueva posicion
                     mvwprintw(screen1, warrior->Posy, warrior->Posx, warrior->name);
                     mvwprintw(screen1, warrior->Posy + 1, warrior->Posx, lvl);
@@ -801,26 +807,37 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node){
         }
     }
     else{
-        my_mutex_lock(&lock2);
-        //my_thread_sleep(1);
-        if (GetThreadW(node->id) != null){
-
-            //my_thread_sleep(1);
-            cleanWarrior(check->warrior,check);
-            exitWarriorThread(check->id);
-            my_mutex_unlock(&lock2);
-        }
-        else{
-            my_mutex_unlock(&lock2);
+        my_mutex_unlock(&lock);
+        my_mutex_lock(&battleLock);
+        my_mutex_lock(&lock);
+        warrior_ptr checkExist = GetThreadW(idWarrior);
+        if(checkExist == null){
+            my_mutex_unlock(&battleLock);
+            my_mutex_unlock(&lock);
             my_thread_exit();
-            wrefresh(screen1);
-            wrefresh(screen2);
+        }else{
+            if(check->warrior->screen == 1){
+//                mvwprintw(screen1, checkExist->warrior->Posy, checkExist->warrior->Posx, " ");
+//                mvwprintw(screen1, checkExist->warrior->Posy + 1, checkExist->warrior->Posx, " ");
+                mvwprintw(screen1, checkExist->warrior->Posy, checkExist->warrior->Posx+1, " ");
+                mvwprintw(screen1, checkExist->warrior->Posy + 1, checkExist->warrior->Posx+1, " ");
+                mvwprintw(screen1, checkExist->warrior->Posy, checkExist->warrior->Posx-1, " ");
+                mvwprintw(screen1, checkExist->warrior->Posy + 1, checkExist->warrior->Posx-1, " ");
+            }
+            else{
+//                mvwprintw(screen2, checkExist->warrior->Posy, checkExist->warrior->Posx, " ");
+//                mvwprintw(screen2, checkExist->warrior->Posy + 1, checkExist->warrior->Posx, " ");
+                mvwprintw(screen2, checkExist->warrior->Posy, checkExist->warrior->Posx+1, " ");
+                mvwprintw(screen2, checkExist->warrior->Posy + 1, checkExist->warrior->Posx+1, " ");
+                mvwprintw(screen2, checkExist->warrior->Posy, checkExist->warrior->Posx-1, " ");
+                mvwprintw(screen2, checkExist->warrior->Posy + 1, checkExist->warrior->Posx-1, " ");
+            }
+            *stepX-=1;
+            sigprocmask(SIG_BLOCK, &sigProcMask, NULL);
+            PopNode_QueueW(warriorQueue1,check);
+            sigprocmask(SIG_UNBLOCK, &sigProcMask, NULL);
+            my_mutex_unlock(&battleLock);
         }
-
-
-
-
-
     }
 
 };
@@ -848,10 +865,10 @@ void createTable(int opcion){
     init_pair(2,COLOR_RED,COLOR_BLACK);
     height = 13;
     if(opcion == 1){
-        width = 22;
+        width = 28;
     }
     else if( opcion == 2){
-        width = 28;
+        width = 34;
     }
     createTowers(opcion,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);//se crean las 3 torres
     screen1 = newwin(height, width, y, x);
@@ -864,17 +881,19 @@ void createTable(int opcion){
     box(screen2,0,0);
     //box(terminal,0,0);
     //-------------------------------------------------------------------------------bridge screen1
-    mvwprintw(screen1,(height/2)-4,screen1->_maxx,"-");
-    mvwprintw(screen1,(height/2)-2,screen1->_maxx,"-");
-    mvwprintw(screen1,(height/2)+2,screen1->_maxx,"-");
-    mvwprintw(screen1,(height/2)+4,screen1->_maxx,"-");
-
-    //-------------------------------------------------------------------------------bridge screen
-    mvwprintw(screen2,(height/2)-4,0,"-");
-    mvwprintw(screen2,(height/2)-2,0,"-");
-    mvwprintw(screen2,(height/2)+2,0,"-");
-    mvwprintw(screen2,(height/2)+4,0,"-");
-
+    int count = 0;
+    while(count < 7){
+        mvwprintw(screen1,(height/2)-5,screen1->_maxx-count,"-");
+        mvwprintw(screen1,(height/2)-1,screen1->_maxx-count,"-");
+        mvwprintw(screen1,(height/2)+1,screen1->_maxx-count,"-");
+        mvwprintw(screen1,(height/2)+5,screen1->_maxx-count,"-");
+        //-------------------------------------------------------------------------------bridge screen2
+        mvwprintw(screen2,(height/2)-5,count,"-");
+        mvwprintw(screen2,(height/2)-1,count,"-");
+        mvwprintw(screen2,(height/2)+1,count,"-");
+        mvwprintw(screen2,(height/2)+5,count,"-");
+        count += 1;
+    }
     char health[40] ;
     sprintf(health,"%d",tower1.health);
     wattron(screen1,COLOR_PAIR(1));
@@ -941,11 +960,12 @@ void createTable(int opcion){
     mvwprintw(screen2,tower6.posY+2,tower6.posX+1,tower6.towerSymbol);
     mvwprintw(screen2,tower6.posY+2,tower6.posX+2,tower6.towerSymbol);
     wattroff(screen2,COLOR_PAIR(2));
+
     Warrior warrior2;
     Warrior warrior3;
-                                                                        //posX17
-    initValues(&warrior2,100,10,10,5,"X",6,8,2,0);
-    initValues(&warrior3,100,10,10,5,"T",7,8,1,0);
+
+    initValues(&warrior2,100,10,10,5,"X",6,3,2,0);
+    initValues(&warrior3,200,100,10,5,"T",6,9,1,0);
 
     Push_QueueW(warriorQueue1,NewThreadW(&warrior1,1));
     Push_QueueW(warriorQueue1,NewThreadW(&warrior2,2));
@@ -980,7 +1000,7 @@ void createTable(int opcion){
         par2->node = GetThreadW(2);
         par2->warrior = &warrior2;
         par2->nextMove = 2;
-        bombWarrior(&warrior2);
+        //bombWarrior(&warrior2);
         my_thread_create(&t2,movePlayer1,(void*)par2, 1);
         //my_thread_sleep(3);
         //exitWarriorThread(1);
@@ -999,13 +1019,12 @@ void createTable(int opcion){
         wrefresh(screen1);//se refresca la ventana
         wrefresh(screen2);
         //wrefresh(terminal);
-        //decidirGanador();
     wgetch(screen1);
     delwin(screen1);
     delwin(screen2);
     //delwin(terminal);
 };
-//el deploy en el INIT tiene que ser en el x = 5
+//el deploy en el INIT tiene que ser en el x = 6
 void* movePlayer1(void * parameters){
 
     int  width, nextMove;
@@ -1024,11 +1043,11 @@ void* movePlayer1(void * parameters){
     }
     int stepsX = 0;
     int pathLength;
-    if (width <= 27){
-        pathLength =10;
-    }
-    if (width >= 28){
+    if (width <= 29){
         pathLength =38;
+    }
+    if (width > 30){
+        pathLength =51;
     }
     wrefresh(screen1);
     wrefresh(screen2);
@@ -1088,7 +1107,7 @@ void* movePlayer1(void * parameters){
         else{
             wattron(screen2, COLOR_PAIR(1));
         }
-        moveWarrior(nextMove,warrior,node);
+        moveWarrior(nextMove,warrior,node, &stepsX);
         if(node->player == 1 && warrior->screen == 1){
             wattroff(screen1, COLOR_PAIR(1));
         }
@@ -1103,24 +1122,47 @@ void* movePlayer1(void * parameters){
         wrefresh(screen1);
         wrefresh(screen2);
     }
-    int down = 0;
 
-    while(down <4){
-        if(node->finish ==1){
+    int down = 0;
+    int up = 0;
+    if(warrior->Posy < (screen1->_maxy)/2){
+        while(down <3){
+            if(node->finish ==1){
+                my_mutex_lock(&lock);
+                cleanWarrior( warrior, node);
+                my_mutex_unlock(&lock);
+                my_thread_exit();
+            }
+            checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
             my_mutex_lock(&lock);
-            cleanWarrior( warrior, node);
+            moveWarrior(4,warrior,node, &down);
             my_mutex_unlock(&lock);
-            my_thread_exit();
+            my_thread_sleep(1);
+            wrefresh(screen1);
+            wrefresh(screen2);
+            down +=1;
         }
-        checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
-        my_mutex_lock(&lock);
-        moveWarrior(4,warrior,node);
-        my_mutex_unlock(&lock);
-        my_thread_sleep(1);
-        wrefresh(screen1);
-        wrefresh(screen2);
-        down +=1;
     }
+    else{
+        while(up <3){
+            if(node->finish ==1){
+                my_mutex_lock(&lock);
+                cleanWarrior( warrior, node);
+                my_mutex_unlock(&lock);
+                my_thread_exit();
+            }
+            checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
+            my_mutex_lock(&lock);
+            moveWarrior(3,warrior,node, &up);
+            my_mutex_unlock(&lock);
+            my_thread_sleep(1);
+            wrefresh(screen1);
+            wrefresh(screen2);
+            up +=1;
+        }
+    }
+
+    return null;
 };
 
 

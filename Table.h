@@ -40,7 +40,7 @@ struct Tower
 };
 
 void createTable(int opcion);
-void moveWarrior(int nextMove,Warrior *warrior, warrior_ptr node);
+void moveWarrior(int nextMove,Warrior *warrior, warrior_ptr node, int* stepX);
 int iniciar();
 void createTowers(int opcion, struct Tower *tower1,  struct Tower *tower2,  struct Tower *tower3,  struct Tower *tower4,  struct Tower *tower5,  struct Tower *tower6);
 int decidirGanador(struct Tower *tower1,  struct Tower *tower2,  struct Tower *tower3,  struct Tower *tower4,  struct Tower *tower5,  struct Tower *tower6);
