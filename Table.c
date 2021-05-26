@@ -40,7 +40,7 @@ char* arr[21] = {
 };
 
 int iniciar(){
-    int check = initValues(&warrior1,200,100,10,5,"P",6,2,1,0);
+    int check = initValues(&warrior1,200,100,10,5,"P",6,3,1,0);
     warriorQueue1 = GetThreadQueueW();
     return check;
 }
@@ -67,10 +67,10 @@ void createTowers(int opcion, struct Tower *tower1,  struct Tower *tower2,  stru
     //---------------------------------------------------player2-----------------------
     int val;
     if(opcion == 1){
-        val = 18;
+        val = 24;
     }
     else if (opcion == 2){
-        val = 24;
+        val = 30;
     }
     tower4->health = 500;//vida
     tower4->towerSymbol = "-";//figura de la torre
@@ -683,7 +683,7 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node, int * stepX){
                     mvwprintw(screen2, warrior->Posy, warrior->Posx - 1, " ");
                     mvwprintw(screen2, warrior->Posy + 1, warrior->Posx - 1, " ");
                     wrefresh(screen2);
-                    warrior->Posx = 19;
+                    warrior->Posx = screen1->_maxx-2;
                     //se imprime la nueva posicion
                     mvwprintw(screen1, warrior->Posy, warrior->Posx, warrior->name);
                     mvwprintw(screen1, warrior->Posy + 1, warrior->Posx, lvl);
@@ -825,20 +825,20 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node, int * stepX){
             if(check->warrior->screen == 1){
                 mvwprintw(screen1, warrior->Posy, warrior->Posx, " ");
                 mvwprintw(screen1, warrior->Posy + 1, warrior->Posx, " ");
+                mvwprintw(screen1, warrior->Posy, warrior->Posx+1, " ");
+                mvwprintw(screen1, warrior->Posy + 1, warrior->Posx+1, " ");
             }
             else{
                 mvwprintw(screen2, warrior->Posy, warrior->Posx, " ");
                 mvwprintw(screen2, warrior->Posy + 1, warrior->Posx, " ");
-
+                mvwprintw(screen2, warrior->Posy, warrior->Posx+1, " ");
+                mvwprintw(screen2, warrior->Posy + 1, warrior->Posx+1, " ");
             }
             *stepX-=1;
             sigprocmask(SIG_BLOCK, &sigProcMask, NULL);
             PopNode_QueueW(warriorQueue1,check);
-            //cleanWarrior( check->warrior, check);
             sigprocmask(SIG_UNBLOCK, &sigProcMask, NULL);
             my_mutex_unlock(&battleLock);
-            //moveWarrior(nextMove,warrior,node);
-
         }
     }
 
@@ -867,10 +867,10 @@ void createTable(int opcion){
     init_pair(2,COLOR_RED,COLOR_BLACK);
     height = 13;
     if(opcion == 1){
-        width = 22;
+        width = 28;
     }
     else if( opcion == 2){
-        width = 28;
+        width = 34;
     }
     createTowers(opcion,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);//se crean las 3 torres
     screen1 = newwin(height, width, y, x);
@@ -882,17 +882,21 @@ void createTable(int opcion){
     box(screen1,0,0);
     box(screen2,0,0);
     //box(terminal,0,0);
-    //-------------------------------------------------------------------------------bridge screen1
-    mvwprintw(screen1,(height/2)-4,screen1->_maxx,"-");
-    mvwprintw(screen1,(height/2)-2,screen1->_maxx,"-");
-    mvwprintw(screen1,(height/2)+2,screen1->_maxx,"-");
-    mvwprintw(screen1,(height/2)+4,screen1->_maxx,"-");
-
-    //-------------------------------------------------------------------------------bridge screen
-    mvwprintw(screen2,(height/2)-4,0,"-");
-    mvwprintw(screen2,(height/2)-2,0,"-");
-    mvwprintw(screen2,(height/2)+2,0,"-");
-    mvwprintw(screen2,(height/2)+4,0,"-");
+    
+    int count = 0;
+    while(count < 7){
+        //-------------------------------------------------------------------------------bridge screen1
+        mvwprintw(screen1,(height/2)-5,screen1->_maxx-count,"-");
+        mvwprintw(screen1,(height/2)-1,screen1->_maxx-count,"-");
+        mvwprintw(screen1,(height/2)+1,screen1->_maxx-count,"-");
+        mvwprintw(screen1,(height/2)+5,screen1->_maxx-count,"-");
+        //-------------------------------------------------------------------------------bridge screen2
+        mvwprintw(screen2,(height/2)-5,count,"-");
+        mvwprintw(screen2,(height/2)-1,count,"-");
+        mvwprintw(screen2,(height/2)+1,count,"-");
+        mvwprintw(screen2,(height/2)+5,count,"-");
+        count += 1;
+    }
 
     char health[40] ;
     sprintf(health,"%d",tower1.health);
@@ -963,8 +967,8 @@ void createTable(int opcion){
     Warrior warrior2;
     Warrior warrior3;
 
-    initValues(&warrior2,100,10,10,5,"X",6,2,2,0);
-    initValues(&warrior3,100,10,10,5,"T",7,8,1,0);
+    initValues(&warrior2,100,10,10,5,"X",6,3,2,0);
+    initValues(&warrior3,100,10,10,5,"T",7,9,1,0);
 
     Push_QueueW(warriorQueue1,NewThreadW(&warrior1,1));
     Push_QueueW(warriorQueue1,NewThreadW(&warrior2,2));
@@ -1043,11 +1047,11 @@ void* movePlayer1(void * parameters){
     }
     int stepsX = 0;
     int pathLength;
-    if (width <= 27){
-        pathLength =10;
-    }
-    if (width >= 28){
+    if (width <= 29){
         pathLength =38;
+    }
+    if (width > 30){
+        pathLength =51;
     }
     wrefresh(screen1);
     wrefresh(screen2);
