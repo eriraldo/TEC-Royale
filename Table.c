@@ -820,19 +820,21 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node, int * stepX){
             my_mutex_unlock(&lock);
             my_thread_exit();
         }else{
-            srand(time(NULL));   // Initialization, should only be called once.
-            int r = rand();
             if(check->warrior->screen == 1){
-                mvwprintw(screen1, warrior->Posy, warrior->Posx, " ");
-                mvwprintw(screen1, warrior->Posy + 1, warrior->Posx, " ");
-                mvwprintw(screen1, warrior->Posy, warrior->Posx+1, " ");
-                mvwprintw(screen1, warrior->Posy + 1, warrior->Posx+1, " ");
+//                mvwprintw(screen1, checkExist->warrior->Posy, checkExist->warrior->Posx, " ");
+//                mvwprintw(screen1, checkExist->warrior->Posy + 1, checkExist->warrior->Posx, " ");
+                mvwprintw(screen1, checkExist->warrior->Posy, checkExist->warrior->Posx+1, " ");
+                mvwprintw(screen1, checkExist->warrior->Posy + 1, checkExist->warrior->Posx+1, " ");
+                mvwprintw(screen1, checkExist->warrior->Posy, checkExist->warrior->Posx-1, " ");
+                mvwprintw(screen1, checkExist->warrior->Posy + 1, checkExist->warrior->Posx-1, " ");
             }
             else{
-                mvwprintw(screen2, warrior->Posy, warrior->Posx, " ");
-                mvwprintw(screen2, warrior->Posy + 1, warrior->Posx, " ");
-                mvwprintw(screen2, warrior->Posy, warrior->Posx+1, " ");
-                mvwprintw(screen2, warrior->Posy + 1, warrior->Posx+1, " ");
+//                mvwprintw(screen2, checkExist->warrior->Posy, checkExist->warrior->Posx, " ");
+//                mvwprintw(screen2, checkExist->warrior->Posy + 1, checkExist->warrior->Posx, " ");
+                mvwprintw(screen2, checkExist->warrior->Posy, checkExist->warrior->Posx+1, " ");
+                mvwprintw(screen2, checkExist->warrior->Posy + 1, checkExist->warrior->Posx+1, " ");
+                mvwprintw(screen2, checkExist->warrior->Posy, checkExist->warrior->Posx-1, " ");
+                mvwprintw(screen2, checkExist->warrior->Posy + 1, checkExist->warrior->Posx-1, " ");
             }
             *stepX-=1;
             sigprocmask(SIG_BLOCK, &sigProcMask, NULL);
@@ -882,10 +884,9 @@ void createTable(int opcion){
     box(screen1,0,0);
     box(screen2,0,0);
     //box(terminal,0,0);
-    
+    //-------------------------------------------------------------------------------bridge screen1
     int count = 0;
     while(count < 7){
-        //-------------------------------------------------------------------------------bridge screen1
         mvwprintw(screen1,(height/2)-5,screen1->_maxx-count,"-");
         mvwprintw(screen1,(height/2)-1,screen1->_maxx-count,"-");
         mvwprintw(screen1,(height/2)+1,screen1->_maxx-count,"-");
@@ -897,6 +898,32 @@ void createTable(int opcion){
         mvwprintw(screen2,(height/2)+5,count,"-");
         count += 1;
     }
+
+//    mvwprintw(screen1,(height/2)-5,screen1->_maxx-1,"-");
+//    mvwprintw(screen1,(height/2)-1,screen1->_maxx-1,"-");
+//    mvwprintw(screen1,(height/2)+1,screen1->_maxx-1,"-");
+//    mvwprintw(screen1,(height/2)+5,screen1->_maxx-1,"-");
+//    mvwprintw(screen1,(height/2)-5,screen1->_maxx-2,"-");
+//    mvwprintw(screen1,(height/2)-1,screen1->_maxx-2,"-");
+//    mvwprintw(screen1,(height/2)+1,screen1->_maxx-2,"-");
+//    mvwprintw(screen1,(height/2)+5,screen1->_maxx-2,"-");
+//    mvwprintw(screen1,(height/2)-5,screen1->_maxx-3,"-");
+//    mvwprintw(screen1,(height/2)-1,screen1->_maxx-3,"-");
+//    mvwprintw(screen1,(height/2)+1,screen1->_maxx-3,"-");
+//    mvwprintw(screen1,(height/2)+5,screen1->_maxx-3,"-");
+
+//    mvwprintw(screen2,(height/2)-5,1,"-");
+//    mvwprintw(screen2,(height/2)-1,1,"-");
+//    mvwprintw(screen2,(height/2)+1,1,"-");
+//    mvwprintw(screen2,(height/2)+5,1,"-");
+//    mvwprintw(screen2,(height/2)-5,2,"-");
+//    mvwprintw(screen2,(height/2)-1,2,"-");
+//    mvwprintw(screen2,(height/2)+1,2,"-");
+//    mvwprintw(screen2,(height/2)+5,2,"-");
+//    mvwprintw(screen2,(height/2)-5,3,"-");
+//    mvwprintw(screen2,(height/2)-1,3,"-");
+//    mvwprintw(screen2,(height/2)+1,3,"-");
+//    mvwprintw(screen2,(height/2)+5,3,"-");
 
     char health[40] ;
     sprintf(health,"%d",tower1.health);
