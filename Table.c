@@ -595,6 +595,7 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node, int * stepX){
 
     char * lvl = arr[warrior->level];
 
+    int player = node->player;
     int idWarrior = node->id;
     warrior_ptr checkAlly = null;
     if (node->player == 1){
@@ -829,6 +830,12 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node, int * stepX){
         if(checkExist == null){
             my_mutex_unlock(&battleLock);
             my_mutex_unlock(&lock);
+            my_mutex_unlock(&bridge1Lock);
+            my_mutex_unlock(&bridge2Lock);
+            if(partnerBridge1 == player)
+                partnerBridge1 = 0;
+            if(partnerBridge2 == player)
+                partnerBridge2 = 0;
             my_thread_exit();
         }else{
             if(check->warrior->screen == 1){
@@ -1001,6 +1008,8 @@ void createTable(int opcion){
     my_thread_t t1;
     my_thread_t t2;
     my_thread_t t3;
+    my_thread_t t4;
+    my_thread_t t5;
     my_thread_init(100);
 
     struct Params * par = (struct Params *)malloc(sizeof(struct Params));
@@ -1030,6 +1039,27 @@ void createTable(int opcion){
     par3->warrior = &warrior3;
     par3->nextMove = 1;
     my_thread_create(&t3,movePlayer1,(void*)par3, 1);
+    my_thread_sleep(20);
+    Warrior warrior4;
+    Warrior warrior5;
+    initValues(&warrior4,200,100,10,5,"P",6,3,1,0);
+    initValues(&warrior5,200,100,10,5,"T",1,3,1,0);
+    Push_QueueW(warriorQueue1,NewThreadW(&warrior4,1));
+    Push_QueueW(warriorQueue1,NewThreadW(&warrior5,1));
+    struct Params * par4 = (struct Params *)malloc(sizeof(struct Params));
+    struct Params * par5 = (struct Params *)malloc(sizeof(struct Params));
+
+    par4->width = width;
+    par4->node = GetThreadW(4);
+    par4->warrior = &warrior4;
+    par4->nextMove = 1;
+
+    par5->width = width;
+    par5->node = GetThreadW(5);
+    par5->warrior = &warrior5;
+    par5->nextMove = 1;
+    my_thread_create(&t4,movePlayer1,(void*)par4, 1);
+    my_thread_create(&t5,movePlayer1,(void*)par5, 1);
     while(1){
         int terminar =decidirGanador(&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
         if(terminar == 1){
@@ -1074,8 +1104,16 @@ void* movePlayer1(void * parameters){
     }
     wrefresh(screen1);
     wrefresh(screen2);
-
+    int idWarrior = node->id;
     while(stepsX < pathLength ){//solo tiene que moverse a la derecha
+        /*warrior_ptr checkExist = GetThreadW(idWarrior);
+        if(checkExist == null){
+            my_mutex_unlock(&battleLock);
+            my_mutex_unlock(&lock);
+            my_mutex_unlock(&bridge1Lock);
+            my_mutex_unlock(&bridge2Lock);
+            my_thread_exit();
+        }*/
         if(stepsX == entryBridge) {
             if (warrior->Posy > 6) {
                 if(partnerBridge2 == node->player){
@@ -1083,9 +1121,14 @@ void* movePlayer1(void * parameters){
                         continue;
                     }
                 }else{
-                    my_mutex_lock(&bridge2Lock);
-                    node->lock = 1;
-                    partnerBridge1 = node->player;
+                    if(partnerBridge2 == 0){
+                        my_mutex_lock(&bridge2Lock);
+                        node->lock = 1;
+                        partnerBridge2 = node->player;
+                    }else{
+                        continue;
+                    }
+
                 }
 
             } else {
@@ -1094,15 +1137,27 @@ void* movePlayer1(void * parameters){
                         continue;
                     }
                 }else{
-                    my_mutex_lock(&bridge2Lock);
-                    node->lock = 1;
-                    partnerBridge1 = node->player;
+                    if(partnerBridge1 == 0) {
+                        my_mutex_lock(&bridge1Lock);
+                        node->lock = 1;
+                        partnerBridge1 = node->player;
+                    }else{
+                        continue;
+                    }
                 }
             }
         }
+
+
+
         if(stepsX == exitBridge){
             if (warrior->Posy > 6) {
                 if(node->lock == 1){
+                    node->lock = 0;
+                    if(my_mutex_trylock(&partner2Lock)){
+                        my_mutex_unlock(&partner2Lock);
+                        partnerBridge2 = 0;
+                    }
                     my_mutex_unlock(&bridge2Lock);
                 }else{
                     partnerBridge2 = 0;
@@ -1112,7 +1167,13 @@ void* movePlayer1(void * parameters){
 
             } else {
                 if(node->lock == 1){
+                    node->lock = 0;
+                    if(my_mutex_trylock(&partner1Lock)){
+                        my_mutex_unlock(&partner1Lock);
+                        partnerBridge1 = 0;
+                    }
                     my_mutex_unlock(&bridge1Lock);
+
                 }else{
                     partnerBridge1 = 0;
                     my_mutex_unlock(&partner1Lock);
