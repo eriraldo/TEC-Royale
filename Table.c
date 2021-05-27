@@ -605,6 +605,7 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node, int * stepX){
             case 1://movimiento a la derecha
 
                 if ((warrior->Posx + 2 < screen1->_maxx) && (warrior->screen == 1)) {
+
                     mvwprintw(screen1, warrior->Posy, warrior->Posx, " ");
                     mvwprintw(screen1, warrior->Posy + 1, warrior->Posx, " ");
                     mvwprintw(screen1, warrior->Posy, warrior->Posx - 1, " ");
@@ -620,6 +621,8 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node, int * stepX){
                     mvwprintw(screen1, warrior->Posy + 1, warrior->Posx + 2, ">");
                     //se tiene que actualizar la posicion del warrior->x
                     warrior->Posx = warrior->Posx + 1;
+
+
                 }
                 //se cambia a movimientos en pantalla 2 a la derecha
                 if ((warrior->Posx + 2 >= screen1->_maxx) && (warrior->screen == 1)) {
@@ -801,6 +804,7 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node, int * stepX){
                         mvwprintw(screen2, warrior->Posy + 1, warrior->Posx + 1, "/");
                     }
                 }
+
                 break;
             default:
                 break;
@@ -1038,7 +1042,6 @@ void* movePlayer1(void * parameters){
     time_t t1;
     if (warrior->bomb ==1 ){
         my_thread_sleep(warrior->entry_limit);
-
         t1 = time(0) + warrior->depart_limit;
     }
     int stepsX = 0;
@@ -1061,6 +1064,7 @@ void* movePlayer1(void * parameters){
                     mvwprintw(screen1,warrior->Posy+1,warrior->Posx,"X");
                     mvwprintw(screen1,warrior->Posy,warrior->Posx+1,"X");
                     mvwprintw(screen1,warrior->Posy+1,warrior->Posx+1,"X");
+
                     wrefresh(screen1);
                 }
                 else{
@@ -1103,18 +1107,33 @@ void* movePlayer1(void * parameters){
         my_mutex_lock(&lock);
         if(node->player == 1 && warrior->screen == 1){
             wattron(screen1, COLOR_PAIR(1));
+            moveWarrior(nextMove,warrior,node, &stepsX);
         }
-        else{
+        else if(node->player == 1 && warrior->screen == 2){
             wattron(screen2, COLOR_PAIR(1));
+            moveWarrior(nextMove,warrior,node, &stepsX);
         }
-        moveWarrior(nextMove,warrior,node, &stepsX);
         if(node->player == 1 && warrior->screen == 1){
             wattroff(screen1, COLOR_PAIR(1));
         }
-        else{
+        else if(node->player == 1 && warrior->screen == 2){
             wattroff(screen2, COLOR_PAIR(1));
         }
-
+        //-------------------------------------------------
+        if(node->player == 2 && warrior->screen == 1){
+            wattron(screen1, COLOR_PAIR(2));
+            moveWarrior(nextMove,warrior,node, &stepsX);
+        }
+        else if(node->player == 2 && warrior->screen == 2){
+            wattron(screen2, COLOR_PAIR(2));
+            moveWarrior(nextMove,warrior,node, &stepsX);
+        }
+        if(node->player == 2 && warrior->screen == 1){
+            wattroff(screen1, COLOR_PAIR(2));
+        }
+        else if(node->player == 2 && warrior->screen == 2){
+            wattroff(screen2, COLOR_PAIR(2));
+        }
         my_mutex_unlock(&lock);
         my_thread_sleep(1);
         stepsX +=1;
@@ -1126,7 +1145,7 @@ void* movePlayer1(void * parameters){
     int down = 0;
     int up = 0;
     if(warrior->Posy < (screen1->_maxy)/2){
-        while(down <3){
+        while(down <2){
             if(node->finish ==1){
                 my_mutex_lock(&lock);
                 cleanWarrior( warrior, node);
@@ -1135,7 +1154,35 @@ void* movePlayer1(void * parameters){
             }
             checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
             my_mutex_lock(&lock);
-            moveWarrior(4,warrior,node, &down);
+            if(node->player == 1 && warrior->screen == 1){
+                wattron(screen1, COLOR_PAIR(1));
+                moveWarrior(4,warrior,node, &down);
+            }
+            else if(node->player == 1 && warrior->screen == 2){
+                wattron(screen2, COLOR_PAIR(1));
+                moveWarrior(4,warrior,node, &down);
+            }
+            if(node->player == 1 && warrior->screen == 1){
+                wattroff(screen1, COLOR_PAIR(1));
+            }
+            else if(node->player == 1 && warrior->screen == 2){
+                wattroff(screen2, COLOR_PAIR(1));
+            }
+            //-------------------------------------------------
+            if(node->player == 2 && warrior->screen == 1){
+                wattron(screen1, COLOR_PAIR(2));
+                moveWarrior(4,warrior,node, &down);
+            }
+            else if(node->player == 2 && warrior->screen == 2){
+                wattron(screen2, COLOR_PAIR(2));
+                moveWarrior(4,warrior,node, &down);
+            }
+            if(node->player == 2 && warrior->screen == 1){
+                wattroff(screen1, COLOR_PAIR(2));
+            }
+            else if(node->player == 2 && warrior->screen == 2){
+                wattroff(screen2, COLOR_PAIR(2));
+            }
             my_mutex_unlock(&lock);
             my_thread_sleep(1);
             wrefresh(screen1);
@@ -1153,7 +1200,35 @@ void* movePlayer1(void * parameters){
             }
             checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
             my_mutex_lock(&lock);
-            moveWarrior(3,warrior,node, &up);
+            if(node->player == 1 && warrior->screen == 1){
+                wattron(screen1, COLOR_PAIR(1));
+                moveWarrior(3,warrior,node, &up);
+            }
+            else if(node->player == 1 && warrior->screen == 2){
+                wattron(screen2, COLOR_PAIR(1));
+                moveWarrior(3,warrior,node, &up);
+            }
+            if(node->player == 1 && warrior->screen == 1){
+                wattroff(screen1, COLOR_PAIR(1));
+            }
+            else if(node->player == 1 && warrior->screen == 2){
+                wattroff(screen2, COLOR_PAIR(1));
+            }
+            //-------------------------------------------------
+            if(node->player == 2 && warrior->screen == 1){
+                wattron(screen1, COLOR_PAIR(2));
+                moveWarrior(3,warrior,node, &up);
+            }
+            else if(node->player == 2 && warrior->screen == 2){
+                wattron(screen2, COLOR_PAIR(2));
+                moveWarrior(3,warrior,node, &up);
+            }
+            if(node->player == 2 && warrior->screen == 1){
+                wattroff(screen1, COLOR_PAIR(2));
+            }
+            else if(node->player == 2 && warrior->screen == 2){
+                wattroff(screen2, COLOR_PAIR(2));
+            }
             my_mutex_unlock(&lock);
             my_thread_sleep(1);
             wrefresh(screen1);
@@ -1170,7 +1245,7 @@ int decidirGanador(struct Tower *tower1,  struct Tower *tower2,  struct Tower *t
     my_mutex_lock(&lock);
     if((tower2->health <= 0) )
     {
-        clear();
+        //clear();
 
         mvwprintw(screen2,4,10,"GANADOR ");
         wrefresh(screen1);//se refresca la ventana
@@ -1180,7 +1255,7 @@ int decidirGanador(struct Tower *tower1,  struct Tower *tower2,  struct Tower *t
     }
     else if((tower5->health <= 0))
     {
-        clear();
+        //clear();
         mvwprintw(screen1,4,10,"GANADOR ");
         wrefresh(screen1);//se refresca la ventana
         wrefresh(screen2);
@@ -1193,7 +1268,7 @@ int decidirGanador(struct Tower *tower1,  struct Tower *tower2,  struct Tower *t
 void exitWarriorThread(int id){
     warrior_ptr warriorToRemove =  GetThreadW(id);
     warriorToRemove->finish = 1;
-    //my_mutex_unlock(&lock);
+    my_mutex_unlock(&lock);
 }
 
 void cleanWarrior(Warrior * warrior, warrior_ptr node){
