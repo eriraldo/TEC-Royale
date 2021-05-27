@@ -19,6 +19,7 @@ typedef struct Node2
     struct warrior * warrior;
     int player;
     int finish;
+    int lock;
 
 } war,*warrior_ptr;
 
@@ -52,7 +53,7 @@ warrior_ptr NewThreadW(Warrior * warrior, int player);
 void PopNode_QueueW(warriorQueue queue, warrior_ptr node);
 int GetNextThreadIdW();
 warrior_ptr GetThreadW( long idThread);
-warrior_ptr  checkCollision(warrior_ptr warrior);
+warrior_ptr  checkCollision(warrior_ptr warrior, int samePlayer);
 void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower *tower2,  struct Tower *tower3,  struct Tower *tower4,  struct Tower *tower5,  struct Tower *tower6);
 void* movePlayer1(void * Params);
 void* movePlayer2(void * parameters);
