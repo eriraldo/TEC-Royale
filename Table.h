@@ -20,6 +20,8 @@ typedef struct Node2
     int player;
     int finish;
     int lock;
+    int Posx;
+    int Posy;
 
 } war,*warrior_ptr;
 
@@ -49,7 +51,7 @@ int Pop_QueueW(warriorQueue queue);
 int Push_QueueW(warriorQueue queue,warrior_ptr node);
 warriorQueue GetThreadQueueW();
 int MoveForwardW(warriorQueue queue);
-warrior_ptr NewThreadW(Warrior * warrior, int player);
+warrior_ptr NewThreadW(Warrior * warrior, int player, int posx, int posy);
 void PopNode_QueueW(warriorQueue queue, warrior_ptr node);
 int GetNextThreadIdW();
 warrior_ptr GetThreadW( long idThread);
@@ -61,5 +63,5 @@ void exitWarriorThread(int id);
 void cleanWarrior(Warrior * warrior, warrior_ptr node);
 void bombWarrior(Warrior * warrior);
 void printWarriorList();
-Warrior*  selectWarrior( int opcion,int localizacion, int player);
+warrior_ptr  selectWarrior( int opcion,int localizacion);
 #endif //UNTITLED_TABLE_H

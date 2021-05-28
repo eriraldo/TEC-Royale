@@ -17,11 +17,12 @@
     <list default="true" id="fb9ce27c-c051-4612-b136-449ba8c88f07" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Table.c" beforeDir="false" afterPath="$PROJECT_DIR$/Table.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TecRoyale.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TecRoyale.dir/C.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Table.h" beforeDir="false" afterPath="$PROJECT_DIR$/Table.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Warrior.c" beforeDir="false" afterPath="$PROJECT_DIR$/Warrior.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Warrior.h" beforeDir="false" afterPath="$PROJECT_DIR$/Warrior.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TecRoyale.dir/Table.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TecRoyale.dir/Table.c.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TecRoyale.dir/Warrior.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TecRoyale.dir/Warrior.c.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TecRoyale.dir/main.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TecRoyale.dir/main.c.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/TecRoyale" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/TecRoyale" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
     </list>
@@ -66,11 +67,6 @@
   </component>
   <component name="RunManager">
     <configuration name="TecRoyale" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="TecRoyale" TARGET_NAME="TecRoyale" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="TecRoyale" RUN_TARGET_NAME="TecRoyale">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -124,6 +120,7 @@
       <workItem from="1621662654458" duration="3224000" />
       <workItem from="1621811092593" duration="290000" />
       <workItem from="1621899200892" duration="4822000" />
+      <workItem from="1622219931087" duration="2877000" />
     </task>
     <servers />
   </component>

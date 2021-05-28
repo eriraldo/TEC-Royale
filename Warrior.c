@@ -1,7 +1,7 @@
 #include "Warrior.h"
 
 
-int initValues(Warrior* const warrior, int vitality, int attack, int defense, int speed, char* name,int posX,int posY, int screen, int bomb){
+int initValues(Warrior* const warrior, int vitality, int attack, int defense, int speed, char* name, int screen, int bomb){
     if(!warrior){
         perror("malloc failed");
         return 0;
@@ -11,8 +11,6 @@ int initValues(Warrior* const warrior, int vitality, int attack, int defense, in
     warrior->defense = defense;
     warrior->speed = speed;
     warrior->name = name;
-    warrior->Posx = posX;
-    warrior->Posy = posY;
     warrior->screen = screen;
     warrior->entry_limit = 0;
     warrior->depart_limit = 0;
