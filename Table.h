@@ -60,4 +60,6 @@ void* movePlayer2(void * parameters);
 void exitWarriorThread(int id);
 void cleanWarrior(Warrior * warrior, warrior_ptr node);
 void bombWarrior(Warrior * warrior);
+void printWarriorList();
+Warrior*  selectWarrior( int opcion,int localizacion, int player);
 #endif //UNTITLED_TABLE_H

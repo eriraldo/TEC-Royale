@@ -15,7 +15,9 @@ struct Tower tower3;
 struct Tower tower4;
 struct Tower tower5;
 struct Tower tower6;
-int i ;
+int countwarriors = 0;
+Warrior warrior;
+
 int entry_limit = 2;
 int depart_limit = 3;
 extern sigset_t sigProcMask;
@@ -26,6 +28,7 @@ Warrior warrior1;
 WINDOW *screen1;
 WINDOW *screen2;
 WINDOW *terminal;
+WINDOW *terminal2;
 int lock, battleLock, bridge1Lock, bridge2Lock, partner1Lock, partner2Lock;
 int partnerBridge1, partnerBridge2 = 0;
 struct Params{
@@ -871,7 +874,7 @@ void createTable(int opcion){
     iniciar();
     keypad(stdscr,TRUE);
     cbreak();
-    noecho();
+    //noecho();
     curs_set(0);
 
     int x, y, height, width;
@@ -895,13 +898,18 @@ void createTable(int opcion){
     createTowers(opcion,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);//se crean las 3 torres
     screen1 = newwin(height, width, y, x);
     screen2 = newwin(height, width, y, width);
-    //terminal = newwin(3, width, height, x);
+    terminal = newwin(6, width, height+1, x);
+    terminal2 = newwin(6, width, height+1, width);
     wrefresh(screen1);
     wrefresh(screen2);
-    //wrefresh(terminal);
+    wrefresh(terminal);
+    wrefresh(terminal2);
     box(screen1,0,0);
     box(screen2,0,0);
-    //box(terminal,0,0);
+    box(terminal,0,0);
+    box(terminal2,0,0);
+    wrefresh(terminal);
+    wrefresh(terminal2);
     //-------------------------------------------------------------------------------bridge screen1
     int count = 0;
     while(count < 7){
@@ -983,15 +991,16 @@ void createTable(int opcion){
     mvwprintw(screen2,tower6.posY+2,tower6.posX+2,tower6.towerSymbol);
     wattroff(screen2,COLOR_PAIR(2));
 
-    Warrior warrior2;
-    Warrior warrior3;
+    printWarriorList();
+    //Warrior warrior2;
+    //Warrior warrior3;
 
-    initValues(&warrior2,100,10,10,5,"X",26,3,2,0);
-    initValues(&warrior3,200,100,10,5,"T",1,3,1,0);
+    //initValues(&warrior2,100,10,10,5,"X",26,3,2,0);
+    //initValues(&warrior3,200,100,10,5,"T",1,3,1,0);
 
-    Push_QueueW(warriorQueue1,NewThreadW(&warrior1,1));
-    Push_QueueW(warriorQueue1,NewThreadW(&warrior2,2));
-    Push_QueueW(warriorQueue1,NewThreadW(&warrior3,1));
+    //Push_QueueW(warriorQueue1,NewThreadW(&warrior1,1));
+    //Push_QueueW(warriorQueue1,NewThreadW(&warrior2,2));
+    //Push_QueueW(warriorQueue1,NewThreadW(&warrior3,1));
 
     int key = 0;
     nodelay(stdscr, TRUE);
@@ -1012,54 +1021,82 @@ void createTable(int opcion){
     my_thread_t t5;
     my_thread_init(100);
 
-    struct Params * par = (struct Params *)malloc(sizeof(struct Params));
-    struct Params * par2 = (struct Params *)malloc(sizeof(struct Params));
-    struct Params * par3 = (struct Params *)malloc(sizeof(struct Params));
-    par->width = width;
-    par->node = GetThreadW(1);
-    par->warrior = &warrior1;
-    par->nextMove = 1;
-    //bombWarrior(&warrior1);
-    my_thread_create(&t1,movePlayer1,(void*)par, 2);
+//    struct Params * par = (struct Params *)malloc(sizeof(struct Params));
+//    struct Params * par2 = (struct Params *)malloc(sizeof(struct Params));
+//    struct Params * par3 = (struct Params *)malloc(sizeof(struct Params));
+//    par->width = width;
+//    par->node = GetThreadW(1);
+//    par->warrior = &warrior1;
+//    par->nextMove = 1;
+//    //bombWarrior(&warrior1);
+//    my_thread_create(&t1,movePlayer1,(void*)par, 2);
 
     wrefresh(screen1);//se refresca la ventana
     wrefresh(screen2);
+    wrefresh(terminal);
+    wrefresh(terminal2);
+//    par2->width = width;
+//    par2->node = GetThreadW(2);
+//    par2->warrior = &warrior2;
+//    par2->nextMove = 2;
+//    //bombWarrior(&warrior2);
+//    my_thread_create(&t2,movePlayer1,(void*)par2, 1);
+//    //my_thread_sleep(3);
+//    //exitWarriorThread(1);
+//
+//    par3->width = width;
+//    par3->node = GetThreadW(3);
+//    par3->warrior = &warrior3;
+//    par3->nextMove = 1;
+//    my_thread_create(&t3,movePlayer1,(void*)par3, 1);
+//    my_thread_sleep(20);
+//    Warrior warrior4;
+//    Warrior warrior5;
+//    initValues(&warrior4,200,100,10,5,"P",6,3,1,0);
+//    initValues(&warrior5,200,100,10,5,"T",1,3,1,0);
+//    Push_QueueW(warriorQueue1,NewThreadW(&warrior4,1));
+//    Push_QueueW(warriorQueue1,NewThreadW(&warrior5,1));
+//    struct Params * par4 = (struct Params *)malloc(sizeof(struct Params));
+//    struct Params * par5 = (struct Params *)malloc(sizeof(struct Params));
+//
+//    par4->width = width;
+//    par4->node = GetThreadW(4);
+//    par4->warrior = &warrior4;
+//    par4->nextMove = 1;
+//
+//    par5->width = width;
+//    par5->node = GetThreadW(5);
+//    par5->warrior = &warrior5;
+//    par5->nextMove = 1;
+//    my_thread_create(&t4,movePlayer1,(void*)par4, 1);
+//    my_thread_create(&t5,movePlayer1,(void*)par5, 1);
+    my_mutex_lock(&lock);
+    wmove(terminal,1,6);
 
-    par2->width = width;
-    par2->node = GetThreadW(2);
-    par2->warrior = &warrior2;
-    par2->nextMove = 2;
-    //bombWarrior(&warrior2);
-    my_thread_create(&t2,movePlayer1,(void*)par2, 1);
-    //my_thread_sleep(3);
-    //exitWarriorThread(1);
+    key = (int)wgetch(terminal);
+    my_mutex_unlock(&lock);
+    Warrior * prueba = selectWarrior(key,3,1);
 
-    par3->width = width;
-    par3->node = GetThreadW(3);
-    par3->warrior = &warrior3;
-    par3->nextMove = 1;
-    my_thread_create(&t3,movePlayer1,(void*)par3, 1);
-    my_thread_sleep(20);
-    Warrior warrior4;
-    Warrior warrior5;
-    initValues(&warrior4,200,100,10,5,"P",6,3,1,0);
-    initValues(&warrior5,200,100,10,5,"T",1,3,1,0);
-    Push_QueueW(warriorQueue1,NewThreadW(&warrior4,1));
-    Push_QueueW(warriorQueue1,NewThreadW(&warrior5,1));
+    Push_QueueW(warriorQueue1,NewThreadW(prueba,1));
     struct Params * par4 = (struct Params *)malloc(sizeof(struct Params));
-    struct Params * par5 = (struct Params *)malloc(sizeof(struct Params));
-
     par4->width = width;
-    par4->node = GetThreadW(4);
-    par4->warrior = &warrior4;
-    par4->nextMove = 1;
-
-    par5->width = width;
-    par5->node = GetThreadW(5);
-    par5->warrior = &warrior5;
-    par5->nextMove = 1;
+    par4->node = GetThreadW(countwarriors);
+    par4->warrior = prueba;
+    par4->nextMove = 2;
     my_thread_create(&t4,movePlayer1,(void*)par4, 1);
-    my_thread_create(&t5,movePlayer1,(void*)par5, 1);
+    //-----------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------
+//    prueba = selectWarrior(114,9,1);
+//
+//    Push_QueueW(warriorQueue1,NewThreadW(prueba,1));
+//    par4 = (struct Params *)malloc(sizeof(struct Params));
+//    par4->width = width;
+//    par4->node = GetThreadW(countwarriors);
+//    par4->warrior = prueba;
+//    par4->nextMove = 1;
+//    my_thread_create(&t5,movePlayer1,(void*)par4, 1);
+
+
     while(1){
         int terminar =decidirGanador(&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
         if(terminar == 1){
@@ -1068,11 +1105,13 @@ void createTable(int opcion){
 
     wrefresh(screen1);//se refresca la ventana
     wrefresh(screen2);
-    //wrefresh(terminal);
+    wrefresh(terminal);
+    wrefresh(terminal2);
     wgetch(screen1);
     delwin(screen1);
     delwin(screen2);
-    //delwin(terminal);
+    delwin(terminal);
+    delwin(terminal2);
 };
 //el deploy en el INIT tiene que ser en el x = 6
 void* movePlayer1(void * parameters){
@@ -1423,6 +1462,62 @@ void bombWarrior(Warrior * warrior){
         warrior->depart_limit = depart_limit;
 
     }
+}
+
+void printWarriorList(){
+    mvwprintw(terminal,3,(terminal->_maxx)/4-2,"R");
+    mvwprintw(terminal,4,(terminal->_maxx)/4-2,"1");
+    mvwprintw(terminal,3,(terminal->_maxx/4)*2-3,"T");
+    mvwprintw(terminal,4,(terminal->_maxx/4)*2-3,"1");
+    mvwprintw(terminal,3,(terminal->_maxx/4)*3-3,"Y");
+    mvwprintw(terminal,4,(terminal->_maxx/4)*3-3,"1");
+    mvwprintw(terminal,3,(terminal->_maxx)-4,"U");
+    mvwprintw(terminal,4,(terminal->_maxx)-4,"1");
+    wrefresh(terminal);
+    //---------------------------
+    mvwprintw(terminal2,3,(terminal2->_maxx)/4-2,"F");
+    mvwprintw(terminal2,4,(terminal2->_maxx)/4-2,"1");
+    mvwprintw(terminal2,3,(terminal2->_maxx/4)*2-3,"G");
+    mvwprintw(terminal2,4,(terminal2->_maxx/4)*2-3,"1");
+    mvwprintw(terminal2,3,(terminal2->_maxx/4)*3-3,"H");
+    mvwprintw(terminal2,4,(terminal2->_maxx/4)*3-3,"1");
+    mvwprintw(terminal2,3,(terminal2->_maxx)-4,"J");
+    mvwprintw(terminal2,4,(terminal2->_maxx)-4,"1");
+    wrefresh(terminal2);
+}
+
+Warrior *selectWarrior( int opcion,int localizacion, int player){
+
+    switch (opcion) {
+        case  114:// r
+            initValues(&warrior,200,100,10,5,"R",6,localizacion,1,0);
+            break;
+        case  116:// t
+            initValues(&warrior,50,10,10,5,"T",6,localizacion,1,0);
+            break;
+        case  121:// y
+            initValues(&warrior,50,10,10,5,"Y",6,localizacion,1,0);
+            break;
+        case  117:// u          ------> bomba del P1
+            initValues(&warrior,50,10,10,5,"U",6,localizacion,1,1);
+            break;
+        case  102:// f
+            initValues(&warrior,50,10,10,5,"F",screen2->_maxx-6,localizacion,2,0);
+            break;
+        case  103:// g
+            initValues(&warrior,50,10,10,5,"G",screen2->_maxx-6,localizacion,2,0);
+            break;
+        case  104:// h
+            initValues(&warrior,50,10,10,5,"H",screen2->_maxx-6,localizacion,2,0);
+            break;
+        case  106:// j          ------> bomba del P2
+            initValues(&warrior,50,10,10,5,"J",screen2->_maxx-6,localizacion,2,1);
+            break;
+    }
+    //warrior_ptr pointer = NewThreadW(&warrior,player);
+    countwarriors +=1;
+    return &warrior;
+
 }
 
 
