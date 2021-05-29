@@ -22,6 +22,7 @@ typedef struct Node2
     int lock;
     int Posx;
     int Posy;
+    int partner;
 
 } war,*warrior_ptr;
 

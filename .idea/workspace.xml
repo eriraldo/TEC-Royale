@@ -18,11 +18,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Table.c" beforeDir="false" afterPath="$PROJECT_DIR$/Table.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Table.h" beforeDir="false" afterPath="$PROJECT_DIR$/Table.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Warrior.c" beforeDir="false" afterPath="$PROJECT_DIR$/Warrior.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Warrior.h" beforeDir="false" afterPath="$PROJECT_DIR$/Warrior.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TecRoyale.dir/Table.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TecRoyale.dir/Table.c.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TecRoyale.dir/Warrior.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TecRoyale.dir/Warrior.c.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TecRoyale.dir/main.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TecRoyale.dir/main.c.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/TecRoyale" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/TecRoyale" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
     </list>
@@ -71,11 +67,6 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -120,7 +111,8 @@
       <workItem from="1621662654458" duration="3224000" />
       <workItem from="1621811092593" duration="290000" />
       <workItem from="1621899200892" duration="4822000" />
-      <workItem from="1622219931087" duration="2877000" />
+      <workItem from="1622219931087" duration="3445000" />
+      <workItem from="1622268919339" duration="3469000" />
     </task>
     <servers />
   </component>

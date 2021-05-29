@@ -19,7 +19,7 @@ int countwarriors = 0;
 Warrior warrior;
 
 int entry_limit = 2;
-int depart_limit = 3;
+int depart_limit = 25;
 extern sigset_t sigProcMask;
 
 warriorQueue warriorQueue1;
@@ -257,6 +257,7 @@ warrior_ptr NewThreadW(Warrior * warrior, int player, int posx, int posy)
     newThread->lock = 0;
     newThread->Posx = posx;
     newThread->Posy = posy;
+    newThread->partner = 0;
     return newThread;
 }
 warrior_ptr GetThreadW( long idThread){
@@ -285,18 +286,30 @@ warrior_ptr checkCollision(warrior_ptr warrior, int samePlayer){
 
     while((nextNode!=null))
     {
-        if((warrior->Posx+2 == nextNode->Posx) &&(warrior->Posy == nextNode->Posy) && (samePlayer!= nextNode->player) && (warrior->warrior->screen == nextNode->warrior->screen)){
 
-            return nextNode;
-        } else if((warrior->Posx-2 == nextNode->Posx) &&(warrior->Posy == nextNode->Posy)&& (samePlayer != nextNode->player) &&(warrior->warrior->screen == nextNode->warrior->screen)){
-            return nextNode;
+        if(warrior->player != samePlayer){
+            if((warrior->Posx+2 == nextNode->Posx) &&(warrior->Posy == nextNode->Posy) && (samePlayer!= nextNode->player) && (warrior->warrior->screen == nextNode->warrior->screen) && (warrior->player == 1)){
+
+                return nextNode;
+            }else if((warrior->Posx-2 == nextNode->Posx) &&(warrior->Posy == nextNode->Posy)&& (samePlayer != nextNode->player) &&(warrior->warrior->screen == nextNode->warrior->screen) && (warrior->player == 2)){
+                return nextNode;
+            }
+        }else{
+            if((warrior->Posx+2 == nextNode->Posx) &&(warrior->Posy == nextNode->Posy) && (samePlayer!= nextNode->player) && (warrior->warrior->screen == nextNode->warrior->screen)){
+
+                return nextNode;
+            } else if((warrior->Posx-2 == nextNode->Posx) &&(warrior->Posy == nextNode->Posy)&& (samePlayer != nextNode->player) &&(warrior->warrior->screen == nextNode->warrior->screen)) {
+                return nextNode;
+            }
         }
-        else if((warrior->Posx == nextNode->Posx) &&(warrior->Posy+2 == nextNode->Posy)&& (samePlayer != nextNode->player) && (warrior->warrior->screen == nextNode->warrior->screen)){
+        if((warrior->Posx == nextNode->Posx) &&(warrior->Posy+2 == nextNode->Posy)&& (samePlayer != nextNode->player) && (warrior->warrior->screen == nextNode->warrior->screen)){
             return nextNode;
         }
         else if((warrior->Posx == nextNode->Posx) &&(warrior->Posy-2 == nextNode->Posy)&& (samePlayer != nextNode->player) && (warrior->warrior->screen == nextNode->warrior->screen)){
             return nextNode;
         }
+
+
         nextNode = nextNode->next;
         if (head == nextNode)
             break;
@@ -602,6 +615,7 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node, int * stepX){
 
     int player = node->player;
     int idWarrior = node->id;
+    int partner = node->partner;
     warrior_ptr checkAlly = null;
     if (node->player == 1){
         checkAlly = checkCollision(node, 2);
@@ -837,9 +851,9 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node, int * stepX){
             my_mutex_unlock(&lock);
             my_mutex_unlock(&bridge1Lock);
             my_mutex_unlock(&bridge2Lock);
-            if(partnerBridge1 == player)
+            if(partnerBridge1 == player && partner == 1)
                 partnerBridge1 = 0;
-            if(partnerBridge2 == player)
+            if(partnerBridge2 == player && partner == 1)
                 partnerBridge2 = 0;
             my_thread_exit();
         }else{
@@ -1077,8 +1091,25 @@ void createTable(int opcion){
 
     key = (int)wgetch(terminal);
     my_mutex_unlock(&lock);
+    my_mutex_lock(&bridge1Lock);
+    partnerBridge1 = 1;
     warrior_ptr prueba = selectWarrior(key, 3);
+    my_thread_sleep(5);
+    my_thread_t thread2;
+    struct Params * par2 = (struct Params *)malloc(sizeof(struct Params));
 
+    Warrior warrior2;
+    initValues(&warrior2,50,10,10,5,"H",1,0);
+    warrior_ptr pointer2 = NewThreadW(&warrior2, 1, 6, 3);
+    Push_QueueW(warriorQueue1, pointer2);
+    par2->width = screen1->_maxx;
+    par2->node = pointer2;
+    par2->warrior = &warrior2;
+    par2->nextMove = 1;
+    my_thread_create(&thread2,movePlayer1,(void*)par2, 0);
+
+    my_thread_sleep(30);
+    my_mutex_unlock(&bridge1Lock);
 /*    Warrior * prueba = selectWarrior(key,3,1);
 
     Push_QueueW(warriorQueue1,NewThreadW(prueba,1, 2, 3));
@@ -1148,82 +1179,7 @@ void* movePlayer1(void * parameters){
     }
     wrefresh(screen1);
     wrefresh(screen2);
-    int idWarrior = node->id;
     while(stepsX < pathLength ){//solo tiene que moverse a la derecha
-        /*warrior_ptr checkExist = GetThreadW(idWarrior);
-        if(checkExist == null){
-            my_mutex_unlock(&battleLock);
-            my_mutex_unlock(&lock);
-            my_mutex_unlock(&bridge1Lock);
-            my_mutex_unlock(&bridge2Lock);
-            my_thread_exit();
-        }*/
-        if(stepsX == entryBridge) {
-            if (node->Posy > 6) {
-                if(partnerBridge2 == node->player){
-                    if(my_mutex_trylock(&partner2Lock) == false){
-                        continue;
-                    }
-                }else{
-                    if(partnerBridge2 == 0){
-                        my_mutex_lock(&bridge2Lock);
-                        node->lock = 1;
-                        partnerBridge2 = node->player;
-                    }else{
-                        continue;
-                    }
-
-                }
-
-            } else {
-                if(partnerBridge1 == node->player){
-                    if(my_mutex_trylock(&partner1Lock) == false){
-                        continue;
-                    }
-                }else{
-                    if(partnerBridge1 == 0) {
-                        my_mutex_lock(&bridge1Lock);
-                        node->lock = 1;
-                        partnerBridge1 = node->player;
-                    }else{
-                        continue;
-                    }
-                }
-            }
-        }
-
-
-
-        if(stepsX == exitBridge){
-            if (node->Posy > 6) {
-                if(node->lock == 1){
-                    node->lock = 0;
-                    if(my_mutex_trylock(&partner2Lock)){
-                        my_mutex_unlock(&partner2Lock);
-                        partnerBridge2 = 0;
-                    }
-                    my_mutex_unlock(&bridge2Lock);
-                }else{
-                    partnerBridge2 = 0;
-                    my_mutex_unlock(&partner2Lock);
-                }
-
-
-            } else {
-                if(node->lock == 1){
-                    node->lock = 0;
-                    if(my_mutex_trylock(&partner1Lock)){
-                        my_mutex_unlock(&partner1Lock);
-                        partnerBridge1 = 0;
-                    }
-                    my_mutex_unlock(&bridge1Lock);
-
-                }else{
-                    partnerBridge1 = 0;
-                    my_mutex_unlock(&partner1Lock);
-                }
-            }
-        }
         if (time(0) > t1 && warrior->bomb == 1){
             my_mutex_lock(&lock);
             if(node->player == 1){
@@ -1262,9 +1218,88 @@ void* movePlayer1(void * parameters){
 
             my_thread_sleep(1);
             cleanWarrior( warrior, node);
+            my_mutex_unlock(&battleLock);
             my_mutex_unlock(&lock);
+            my_mutex_unlock(&bridge1Lock);
+            my_mutex_unlock(&bridge2Lock);
+            if(partnerBridge1 == node->player && node->partner == 1)
+                partnerBridge1 = 0;
+            if(partnerBridge2 == node->player && node->partner == 1)
+                partnerBridge2 = 0;
             my_thread_exit();
         }
+
+        if(stepsX == entryBridge) {
+            if (node->Posy > 6) {
+                if(partnerBridge2 == node->player){
+                    if(my_mutex_trylock(&partner2Lock) == false){
+                        continue;
+                    }
+                    node->partner = 1;
+                }else{
+                    if(partnerBridge2 == 0){
+                        my_mutex_lock(&bridge2Lock);
+                        node->lock = 1;
+                        partnerBridge2 = node->player;
+                    }else{
+                        continue;
+                    }
+
+                }
+
+            } else {
+                if(partnerBridge1 == node->player){
+                    if(my_mutex_trylock(&partner1Lock) == false){
+                        continue;
+                    }
+                    node->partner = 1;
+                }else{
+                    if(partnerBridge1 == 0) {
+                        my_mutex_lock(&bridge1Lock);
+                        node->lock = 1;
+                        partnerBridge1 = node->player;
+                    }else{
+                        continue;
+                    }
+                }
+            }
+        }
+
+
+
+        if(stepsX == exitBridge){
+            if (node->Posy > 6) {
+                if(node->lock == 1){
+                    node->lock = 0;
+                    if(my_mutex_trylock(&partner2Lock)){
+                        my_mutex_unlock(&partner2Lock);
+                        partnerBridge2 = 0;
+                    }
+                    my_mutex_unlock(&bridge2Lock);
+                }else{
+                    node->partner = 0;
+                    partnerBridge2 = 0;
+                    my_mutex_unlock(&partner2Lock);
+                }
+
+
+            } else {
+                if(node->lock == 1){
+                    node->lock = 0;
+                    if(my_mutex_trylock(&partner1Lock)){
+                        my_mutex_unlock(&partner1Lock);
+                        partnerBridge1 = 0;
+                    }
+                    my_mutex_unlock(&bridge1Lock);
+
+                }else{
+                    node->partner = 0;
+                    partnerBridge1 = 0;
+                    my_mutex_unlock(&partner1Lock);
+                }
+            }
+        }
+
         if(node->finish ==1){
             my_mutex_lock(&lock);
             cleanWarrior( warrior, node);
@@ -1512,6 +1547,7 @@ warrior_ptr selectWarrior( int opcion,int localizacion){
         case  117:// u          ------> bomba del P1
             initValues(&warrior,50,10,10,5,"U",1,1);
             pointer = NewThreadW(&warrior, 1, 6, localizacion);
+            bombWarrior(&warrior);
             Push_QueueW(warriorQueue1, pointer);
             break;
         case  102:// f
@@ -1532,6 +1568,7 @@ warrior_ptr selectWarrior( int opcion,int localizacion){
         case  106:// j          ------> bomba del P2
             initValues(&warrior,50,10,10,5,"J",2,1);
             pointer = NewThreadW(&warrior, 2, screen2->_maxx-6, localizacion);
+            bombWarrior(&warrior);
             Push_QueueW(warriorQueue1, pointer);
             break;
     }
@@ -1545,6 +1582,11 @@ warrior_ptr selectWarrior( int opcion,int localizacion){
     par4->warrior = pointer->warrior;
     par4->nextMove = 1;
     my_thread_create(&thread,movePlayer1,(void*)par4, 1);
+
+    //test bridge
+
+
+
     return pointer;
 
 }
