@@ -128,40 +128,22 @@ void *Worker1(void *threadid)
     return (void*)jjd;
 }
 
-void pairing(Warrior* const cmp, Warrior* const depart){
-    int* stats1 [4] = {&cmp->vitality, &cmp->attack, &cmp->defense, &cmp->speed};
-    int* stats2 [4] = {&depart->vitality, &depart->attack, &depart->defense, &depart->speed};
-
-    int avg1 = *stats1[0]+ *stats1[1]+ *stats1[2]+ *stats1[3];
-    int avg2 = *stats2[0]+ *stats2[1]+ *stats2[2]+ *stats2[3];
-
-    if(avg2 < avg1){
-        printf("CAN DO :D\n");
-        srand(time(NULL));
-        int select_attr = rand()%4;
-        *stats2[select_attr] = *stats1[select_attr];
-        int check_mut = rand()%100;
-        if(check_mut<10){
-            select_attr = rand()%4;
-            printWarrior(depart);
-            printf("BEFORE: %d\n", *stats2[select_attr]);
-            mutation(stats2[select_attr]);
-            printf("A MUTATION HAS OCCURRED\n");
-        }
-        getLevel(depart);
-    }else {
-        printf("CAN'T DO D:\n");
-    }
-}
 
 
+#include "ini.h"
 
 int main(int argc, char** argv) {
 
-    createTable(2);
+    ini_t *config = ini_load("config.ini");
+    const char *opcion = ini_get(config, "table", "opcion");
+    if (strcmp(opcion,"1") == 0) {
 
-    delwin(screen1);
-    delwin(screen2);
+        createTable(1);
+    }
+    else{
+        createTable(2);
+    }
+
     endwin();
 /*
     my_thread_t t1;
