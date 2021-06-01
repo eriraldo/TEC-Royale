@@ -16,6 +16,9 @@ int initValues(Warrior* const warrior, int vitality, int attack, int defense, in
     warrior->bomb = bomb;
 
     int attr = ((warrior->vitality + warrior->speed + warrior->defense + warrior->attack) / 4)/10 + 1;
+    if (attr >= 10){
+        attr = 9;
+    }
     warrior->level = attr;
     return 1;
 }
@@ -26,12 +29,15 @@ void printWarrior(Warrior* const warrior){
 
 void getLevel(Warrior* const warrior){
     int attr = ((warrior->vitality + warrior->speed + warrior->defense + warrior->attack) / 4)/10 + 1;
+    if (attr >= 10){
+        attr = 9;
+    }
     warrior->level = attr;
 }
 
 void mutation(int* stat){
-    srand(time(NULL));
-    *stat+= rand()%40;
+    //srand(time(NULL));
+    *stat+= 40;
     /*int addOrSub = rand()%2;
     if(addOrSub){
         *stat+= rand()%40;

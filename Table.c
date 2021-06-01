@@ -53,14 +53,14 @@ int iniciar(){
     Warrior warrior5;
     Warrior warrior6;
     Warrior warrior7;
-    initValues(&warrior0,200,100,10,5,"R",0);
-    initValues(&warrior11,50,10,10,5,"T",0);
-    initValues(&warrior2,50,10,10,5,"Y",0);
-    initValues(&warrior3,50,10,10,5,"U",1);
-    initValues(&warrior4,50,10,10,5,"F",0);
-    initValues(&warrior5,50,10,10,5,"G",0);
-    initValues(&warrior6,50,10,10,5,"H",0);
-    initValues(&warrior7,50,10,10,5,"J",1);
+    initValues(&warrior0,50,100,10,5,"R",0);
+    initValues(&warrior11,50,100,10,5,"T",0);
+    initValues(&warrior2,50,100,10,5,"Y",0);
+    initValues(&warrior3,50,100,10,5,"U",1);
+    initValues(&warrior4,50,100,10,5,"F",0);
+    initValues(&warrior5,50,100,10,5,"G",0);
+    initValues(&warrior6,50,100,10,5,"H",0);
+    initValues(&warrior7,50,100,10,5,"J",1);
     bombWarrior(&warrior7);
     bombWarrior(&warrior3);
     warriors[0] = warrior0;
@@ -358,19 +358,19 @@ void checkBombCollision(warrior_ptr warrior, int samePlayer){
 
         if(((warrior->Posx+2 == nextNode->Posx) || (warrior->Posx+3 == nextNode->Posx) || (warrior->Posx+4 == nextNode->Posx)) &&(warrior->Posy == nextNode->Posy) && (samePlayer!= nextNode->player) && (warrior->screen == nextNode->screen)){
             nextNode->vitality = nextNode->vitality - damage;
-            printf("%d",nextNode->vitality);
+            //printf("%d",nextNode->vitality);
         } else if(((warrior->Posx-2 == nextNode->Posx) || (warrior->Posx-3 == nextNode->Posx) || (warrior->Posx-4 == nextNode->Posx)) &&(warrior->Posy == nextNode->Posy)&& (samePlayer != nextNode->player) &&(warrior->screen == nextNode->screen)) {
             nextNode->vitality = nextNode->vitality - damage;
-            printf("%d",nextNode->vitality);
+            //printf("%d",nextNode->vitality);
         }
 
         if((warrior->Posx == nextNode->Posx) &&((warrior->Posy+2 == nextNode->Posy) || (warrior->Posy+3 == nextNode->Posy) || (warrior->Posy+4 == nextNode->Posy)) && (samePlayer != nextNode->player) && (warrior->screen == nextNode->screen)){
             nextNode->vitality = nextNode->vitality - damage;
-            printf("%d",nextNode->vitality);
+            //printf("%d",nextNode->vitality);
         }
         else if((warrior->Posx == nextNode->Posx) &&((warrior->Posy-2 == nextNode->Posy) || (warrior->Posy-3 == nextNode->Posy) || (warrior->Posy-4 == nextNode->Posy))&& (samePlayer != nextNode->player) && (warrior->screen == nextNode->screen)){
             nextNode->vitality = nextNode->vitality - damage;
-            printf("%d",nextNode->vitality);
+            //printf("%d",nextNode->vitality);
         }
 
 
@@ -690,6 +690,8 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node, int * stepX){
         my_mutex_unlock(&lock);
         my_mutex_unlock(&bridge1Lock);
         my_mutex_unlock(&bridge2Lock);
+        my_mutex_unlock(&partnerBridge1);
+        my_mutex_unlock(&partnerBridge2);
         if(partnerBridge1 == player && partner == 1)
             partnerBridge1 = 0;
         if(partnerBridge2 == player && partner == 1)
@@ -941,6 +943,8 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node, int * stepX){
             my_mutex_unlock(&lock);
             my_mutex_unlock(&bridge1Lock);
             my_mutex_unlock(&bridge2Lock);
+            my_mutex_unlock(&partnerBridge1);
+            my_mutex_unlock(&partnerBridge2);
             if(partnerBridge1 == player && partner == 1)
                 partnerBridge1 = 0;
             if(partnerBridge2 == player && partner == 1)
@@ -1361,7 +1365,7 @@ void* movePlayer1(void * parameters){
                     wrefresh(screen2);
                 }
             }
-            //checkBombCollision(node,node->player);
+            checkBombCollision(node,node->player);
             my_thread_sleep(1);
             cleanWarrior( warrior, node);
             my_mutex_unlock(&battleLock);
@@ -1437,7 +1441,6 @@ void* movePlayer1(void * parameters){
                     partnerBridge2 = 0;
                     my_mutex_unlock(&partner2Lock);
                 }
-
 
             } else {
                 if(node->lock == 1){
