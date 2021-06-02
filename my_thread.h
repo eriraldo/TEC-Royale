@@ -1,14 +1,9 @@
-//
-// Created by ericksalazargranera on 5/19/21.
-//
-
 #ifndef TECROYALE_MY_THREAD_H
 #define TECROYALE_MY_THREAD_H
 
-#include "errorCodes.h"
 #include <stdio.h>
 #include <ucontext.h>
-#include "DataStructures.h"
+#include "thread_structure.h"
 #include <signal.h>
 #include <sys/time.h>
 #include <unistd.h>
@@ -24,6 +19,6 @@ int my_thread_create(my_thread_t *thread,void *(*start_routine)(void *),void *ar
 void my_thread_sleep(long seconds);
 void my_thread_chsched(Thread_ptr thread, int sched);
 void my_thread_yield();
-void my_thread_exit();
+void my_thread_end();
 
 #endif //TECROYALE_MY_THREAD_H

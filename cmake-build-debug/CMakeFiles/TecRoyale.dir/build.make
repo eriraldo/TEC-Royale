@@ -62,10 +62,10 @@ RM = /opt/clion-2021.1.1/bin/cmake/linux/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/erickelizondo/repos/otro/TEC-Royale
+CMAKE_SOURCE_DIR = /home/erickelizondo/Videos/TEC-Royale
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug
+CMAKE_BINARY_DIR = /home/erickelizondo/Videos/TEC-Royale/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/TecRoyale.dir/depend.make
@@ -78,132 +78,146 @@ include CMakeFiles/TecRoyale.dir/flags.make
 
 CMakeFiles/TecRoyale.dir/main.c.o: CMakeFiles/TecRoyale.dir/flags.make
 CMakeFiles/TecRoyale.dir/main.c.o: ../main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/TecRoyale.dir/main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/main.c.o -c /home/erickelizondo/repos/otro/TEC-Royale/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/Videos/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/TecRoyale.dir/main.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/main.c.o -c /home/erickelizondo/Videos/TEC-Royale/main.c
 
 CMakeFiles/TecRoyale.dir/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/TecRoyale.dir/main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/repos/otro/TEC-Royale/main.c > CMakeFiles/TecRoyale.dir/main.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/Videos/TEC-Royale/main.c > CMakeFiles/TecRoyale.dir/main.c.i
 
 CMakeFiles/TecRoyale.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/TecRoyale.dir/main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/repos/otro/TEC-Royale/main.c -o CMakeFiles/TecRoyale.dir/main.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/Videos/TEC-Royale/main.c -o CMakeFiles/TecRoyale.dir/main.c.s
 
 CMakeFiles/TecRoyale.dir/Table.c.o: CMakeFiles/TecRoyale.dir/flags.make
 CMakeFiles/TecRoyale.dir/Table.c.o: ../Table.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/TecRoyale.dir/Table.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/Table.c.o -c /home/erickelizondo/repos/otro/TEC-Royale/Table.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/Videos/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/TecRoyale.dir/Table.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/Table.c.o -c /home/erickelizondo/Videos/TEC-Royale/Table.c
 
 CMakeFiles/TecRoyale.dir/Table.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/TecRoyale.dir/Table.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/repos/otro/TEC-Royale/Table.c > CMakeFiles/TecRoyale.dir/Table.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/Videos/TEC-Royale/Table.c > CMakeFiles/TecRoyale.dir/Table.c.i
 
 CMakeFiles/TecRoyale.dir/Table.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/TecRoyale.dir/Table.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/repos/otro/TEC-Royale/Table.c -o CMakeFiles/TecRoyale.dir/Table.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/Videos/TEC-Royale/Table.c -o CMakeFiles/TecRoyale.dir/Table.c.s
 
 CMakeFiles/TecRoyale.dir/Warrior.c.o: CMakeFiles/TecRoyale.dir/flags.make
 CMakeFiles/TecRoyale.dir/Warrior.c.o: ../Warrior.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/TecRoyale.dir/Warrior.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/Warrior.c.o -c /home/erickelizondo/repos/otro/TEC-Royale/Warrior.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/Videos/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/TecRoyale.dir/Warrior.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/Warrior.c.o -c /home/erickelizondo/Videos/TEC-Royale/Warrior.c
 
 CMakeFiles/TecRoyale.dir/Warrior.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/TecRoyale.dir/Warrior.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/repos/otro/TEC-Royale/Warrior.c > CMakeFiles/TecRoyale.dir/Warrior.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/Videos/TEC-Royale/Warrior.c > CMakeFiles/TecRoyale.dir/Warrior.c.i
 
 CMakeFiles/TecRoyale.dir/Warrior.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/TecRoyale.dir/Warrior.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/repos/otro/TEC-Royale/Warrior.c -o CMakeFiles/TecRoyale.dir/Warrior.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/Videos/TEC-Royale/Warrior.c -o CMakeFiles/TecRoyale.dir/Warrior.c.s
 
-CMakeFiles/TecRoyale.dir/DataStructures.c.o: CMakeFiles/TecRoyale.dir/flags.make
-CMakeFiles/TecRoyale.dir/DataStructures.c.o: ../DataStructures.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/TecRoyale.dir/DataStructures.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/DataStructures.c.o -c /home/erickelizondo/repos/otro/TEC-Royale/DataStructures.c
+CMakeFiles/TecRoyale.dir/thread_structure.c.o: CMakeFiles/TecRoyale.dir/flags.make
+CMakeFiles/TecRoyale.dir/thread_structure.c.o: ../thread_structure.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/Videos/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/TecRoyale.dir/thread_structure.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/thread_structure.c.o -c /home/erickelizondo/Videos/TEC-Royale/thread_structure.c
 
-CMakeFiles/TecRoyale.dir/DataStructures.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/TecRoyale.dir/DataStructures.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/repos/otro/TEC-Royale/DataStructures.c > CMakeFiles/TecRoyale.dir/DataStructures.c.i
+CMakeFiles/TecRoyale.dir/thread_structure.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/TecRoyale.dir/thread_structure.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/Videos/TEC-Royale/thread_structure.c > CMakeFiles/TecRoyale.dir/thread_structure.c.i
 
-CMakeFiles/TecRoyale.dir/DataStructures.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/TecRoyale.dir/DataStructures.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/repos/otro/TEC-Royale/DataStructures.c -o CMakeFiles/TecRoyale.dir/DataStructures.c.s
+CMakeFiles/TecRoyale.dir/thread_structure.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/TecRoyale.dir/thread_structure.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/Videos/TEC-Royale/thread_structure.c -o CMakeFiles/TecRoyale.dir/thread_structure.c.s
 
 CMakeFiles/TecRoyale.dir/lottery_sched.c.o: CMakeFiles/TecRoyale.dir/flags.make
 CMakeFiles/TecRoyale.dir/lottery_sched.c.o: ../lottery_sched.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/TecRoyale.dir/lottery_sched.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/lottery_sched.c.o -c /home/erickelizondo/repos/otro/TEC-Royale/lottery_sched.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/Videos/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/TecRoyale.dir/lottery_sched.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/lottery_sched.c.o -c /home/erickelizondo/Videos/TEC-Royale/lottery_sched.c
 
 CMakeFiles/TecRoyale.dir/lottery_sched.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/TecRoyale.dir/lottery_sched.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/repos/otro/TEC-Royale/lottery_sched.c > CMakeFiles/TecRoyale.dir/lottery_sched.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/Videos/TEC-Royale/lottery_sched.c > CMakeFiles/TecRoyale.dir/lottery_sched.c.i
 
 CMakeFiles/TecRoyale.dir/lottery_sched.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/TecRoyale.dir/lottery_sched.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/repos/otro/TEC-Royale/lottery_sched.c -o CMakeFiles/TecRoyale.dir/lottery_sched.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/Videos/TEC-Royale/lottery_sched.c -o CMakeFiles/TecRoyale.dir/lottery_sched.c.s
 
 CMakeFiles/TecRoyale.dir/my_mutex.c.o: CMakeFiles/TecRoyale.dir/flags.make
 CMakeFiles/TecRoyale.dir/my_mutex.c.o: ../my_mutex.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/TecRoyale.dir/my_mutex.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/my_mutex.c.o -c /home/erickelizondo/repos/otro/TEC-Royale/my_mutex.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/Videos/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/TecRoyale.dir/my_mutex.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/my_mutex.c.o -c /home/erickelizondo/Videos/TEC-Royale/my_mutex.c
 
 CMakeFiles/TecRoyale.dir/my_mutex.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/TecRoyale.dir/my_mutex.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/repos/otro/TEC-Royale/my_mutex.c > CMakeFiles/TecRoyale.dir/my_mutex.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/Videos/TEC-Royale/my_mutex.c > CMakeFiles/TecRoyale.dir/my_mutex.c.i
 
 CMakeFiles/TecRoyale.dir/my_mutex.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/TecRoyale.dir/my_mutex.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/repos/otro/TEC-Royale/my_mutex.c -o CMakeFiles/TecRoyale.dir/my_mutex.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/Videos/TEC-Royale/my_mutex.c -o CMakeFiles/TecRoyale.dir/my_mutex.c.s
 
 CMakeFiles/TecRoyale.dir/my_thread.c.o: CMakeFiles/TecRoyale.dir/flags.make
 CMakeFiles/TecRoyale.dir/my_thread.c.o: ../my_thread.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/TecRoyale.dir/my_thread.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/my_thread.c.o -c /home/erickelizondo/repos/otro/TEC-Royale/my_thread.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/Videos/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/TecRoyale.dir/my_thread.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/my_thread.c.o -c /home/erickelizondo/Videos/TEC-Royale/my_thread.c
 
 CMakeFiles/TecRoyale.dir/my_thread.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/TecRoyale.dir/my_thread.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/repos/otro/TEC-Royale/my_thread.c > CMakeFiles/TecRoyale.dir/my_thread.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/Videos/TEC-Royale/my_thread.c > CMakeFiles/TecRoyale.dir/my_thread.c.i
 
 CMakeFiles/TecRoyale.dir/my_thread.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/TecRoyale.dir/my_thread.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/repos/otro/TEC-Royale/my_thread.c -o CMakeFiles/TecRoyale.dir/my_thread.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/Videos/TEC-Royale/my_thread.c -o CMakeFiles/TecRoyale.dir/my_thread.c.s
 
 CMakeFiles/TecRoyale.dir/realtime_sched.c.o: CMakeFiles/TecRoyale.dir/flags.make
 CMakeFiles/TecRoyale.dir/realtime_sched.c.o: ../realtime_sched.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/TecRoyale.dir/realtime_sched.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/realtime_sched.c.o -c /home/erickelizondo/repos/otro/TEC-Royale/realtime_sched.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/Videos/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/TecRoyale.dir/realtime_sched.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/realtime_sched.c.o -c /home/erickelizondo/Videos/TEC-Royale/realtime_sched.c
 
 CMakeFiles/TecRoyale.dir/realtime_sched.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/TecRoyale.dir/realtime_sched.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/repos/otro/TEC-Royale/realtime_sched.c > CMakeFiles/TecRoyale.dir/realtime_sched.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/Videos/TEC-Royale/realtime_sched.c > CMakeFiles/TecRoyale.dir/realtime_sched.c.i
 
 CMakeFiles/TecRoyale.dir/realtime_sched.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/TecRoyale.dir/realtime_sched.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/repos/otro/TEC-Royale/realtime_sched.c -o CMakeFiles/TecRoyale.dir/realtime_sched.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/Videos/TEC-Royale/realtime_sched.c -o CMakeFiles/TecRoyale.dir/realtime_sched.c.s
 
 CMakeFiles/TecRoyale.dir/roundRobin_sched.c.o: CMakeFiles/TecRoyale.dir/flags.make
 CMakeFiles/TecRoyale.dir/roundRobin_sched.c.o: ../roundRobin_sched.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/TecRoyale.dir/roundRobin_sched.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/roundRobin_sched.c.o -c /home/erickelizondo/repos/otro/TEC-Royale/roundRobin_sched.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/Videos/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/TecRoyale.dir/roundRobin_sched.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/roundRobin_sched.c.o -c /home/erickelizondo/Videos/TEC-Royale/roundRobin_sched.c
 
 CMakeFiles/TecRoyale.dir/roundRobin_sched.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/TecRoyale.dir/roundRobin_sched.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/repos/otro/TEC-Royale/roundRobin_sched.c > CMakeFiles/TecRoyale.dir/roundRobin_sched.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/Videos/TEC-Royale/roundRobin_sched.c > CMakeFiles/TecRoyale.dir/roundRobin_sched.c.i
 
 CMakeFiles/TecRoyale.dir/roundRobin_sched.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/TecRoyale.dir/roundRobin_sched.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/repos/otro/TEC-Royale/roundRobin_sched.c -o CMakeFiles/TecRoyale.dir/roundRobin_sched.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/Videos/TEC-Royale/roundRobin_sched.c -o CMakeFiles/TecRoyale.dir/roundRobin_sched.c.s
+
+CMakeFiles/TecRoyale.dir/ini.c.o: CMakeFiles/TecRoyale.dir/flags.make
+CMakeFiles/TecRoyale.dir/ini.c.o: ../ini.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/erickelizondo/Videos/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/TecRoyale.dir/ini.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/TecRoyale.dir/ini.c.o -c /home/erickelizondo/Videos/TEC-Royale/ini.c
+
+CMakeFiles/TecRoyale.dir/ini.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/TecRoyale.dir/ini.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/erickelizondo/Videos/TEC-Royale/ini.c > CMakeFiles/TecRoyale.dir/ini.c.i
+
+CMakeFiles/TecRoyale.dir/ini.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/TecRoyale.dir/ini.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/erickelizondo/Videos/TEC-Royale/ini.c -o CMakeFiles/TecRoyale.dir/ini.c.s
 
 # Object files for target TecRoyale
 TecRoyale_OBJECTS = \
 "CMakeFiles/TecRoyale.dir/main.c.o" \
 "CMakeFiles/TecRoyale.dir/Table.c.o" \
 "CMakeFiles/TecRoyale.dir/Warrior.c.o" \
-"CMakeFiles/TecRoyale.dir/DataStructures.c.o" \
+"CMakeFiles/TecRoyale.dir/thread_structure.c.o" \
 "CMakeFiles/TecRoyale.dir/lottery_sched.c.o" \
 "CMakeFiles/TecRoyale.dir/my_mutex.c.o" \
 "CMakeFiles/TecRoyale.dir/my_thread.c.o" \
 "CMakeFiles/TecRoyale.dir/realtime_sched.c.o" \
-"CMakeFiles/TecRoyale.dir/roundRobin_sched.c.o"
+"CMakeFiles/TecRoyale.dir/roundRobin_sched.c.o" \
+"CMakeFiles/TecRoyale.dir/ini.c.o"
 
 # External object files for target TecRoyale
 TecRoyale_EXTERNAL_OBJECTS =
@@ -211,17 +225,18 @@ TecRoyale_EXTERNAL_OBJECTS =
 TecRoyale: CMakeFiles/TecRoyale.dir/main.c.o
 TecRoyale: CMakeFiles/TecRoyale.dir/Table.c.o
 TecRoyale: CMakeFiles/TecRoyale.dir/Warrior.c.o
-TecRoyale: CMakeFiles/TecRoyale.dir/DataStructures.c.o
+TecRoyale: CMakeFiles/TecRoyale.dir/thread_structure.c.o
 TecRoyale: CMakeFiles/TecRoyale.dir/lottery_sched.c.o
 TecRoyale: CMakeFiles/TecRoyale.dir/my_mutex.c.o
 TecRoyale: CMakeFiles/TecRoyale.dir/my_thread.c.o
 TecRoyale: CMakeFiles/TecRoyale.dir/realtime_sched.c.o
 TecRoyale: CMakeFiles/TecRoyale.dir/roundRobin_sched.c.o
+TecRoyale: CMakeFiles/TecRoyale.dir/ini.c.o
 TecRoyale: CMakeFiles/TecRoyale.dir/build.make
 TecRoyale: /usr/lib/x86_64-linux-gnu/libcurses.so
 TecRoyale: /usr/lib/x86_64-linux-gnu/libform.so
 TecRoyale: CMakeFiles/TecRoyale.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking C executable TecRoyale"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/erickelizondo/Videos/TEC-Royale/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking C executable TecRoyale"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/TecRoyale.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -234,6 +249,6 @@ CMakeFiles/TecRoyale.dir/clean:
 .PHONY : CMakeFiles/TecRoyale.dir/clean
 
 CMakeFiles/TecRoyale.dir/depend:
-	cd /home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/erickelizondo/repos/otro/TEC-Royale /home/erickelizondo/repos/otro/TEC-Royale /home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug /home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug /home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/erickelizondo/Videos/TEC-Royale/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/erickelizondo/Videos/TEC-Royale /home/erickelizondo/Videos/TEC-Royale /home/erickelizondo/Videos/TEC-Royale/cmake-build-debug /home/erickelizondo/Videos/TEC-Royale/cmake-build-debug /home/erickelizondo/Videos/TEC-Royale/cmake-build-debug/CMakeFiles/TecRoyale.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/TecRoyale.dir/depend
 

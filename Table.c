@@ -140,7 +140,7 @@ warrior_ptr GetCurrentThreadW(warriorQueue queue)
     return queue->head;
 }
 
-//This will remove the Thread which is pointed by head of the given queue
+//This will remove the warrior which is pointed by head of the given queue
 int Pop_QueueW(warriorQueue queue)
 {
     int failure = 0;
@@ -182,8 +182,8 @@ int Pop_QueueW(warriorQueue queue)
     return failure;
 }
 
-
-int MoveForwardW(warriorQueue queue)
+//Moves head of queue
+int moveHeadW(warriorQueue queue)
 {
     int failure = -1;
     if(queue != null)
@@ -246,7 +246,7 @@ void PopNode_QueueW(warriorQueue queue, warrior_ptr node)
         if(nextNode->id == node->id)
             break;
         else{
-            MoveForwardW(queue);
+            moveHeadW(queue);
         }
         nextNode = GetCurrentThreadW(queue);
         if (nextNode == head){
@@ -259,12 +259,12 @@ void PopNode_QueueW(warriorQueue queue, warrior_ptr node)
     }
 
 }
+//Initialize new warrior queue
 warriorQueue GetThreadQueueW()
 {
     warriorQueue newQueue = (warriorQueue)malloc(sizeof(struct warriorQueue));
     if(newQueue == null)
     {
-        //Memory Exhaustion
         return null;
     }
     newQueue->count = 0;
@@ -431,7 +431,7 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
             if(warrior->vitality <= 0){
                 cleanWarrior(warrior->warrior,warrior);
                 my_mutex_unlock(&lock);
-                my_thread_exit();
+                my_thread_end();
                 break;
             }
             //Warrior attacks the tower
@@ -478,7 +478,7 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
             if(warrior->vitality <= 0){
                 cleanWarrior(warrior->warrior,warrior);
                 my_mutex_unlock(&lock);
-                my_thread_exit();
+                my_thread_end();
                 break;
             }
             //Warrior attacks the tower
@@ -526,7 +526,7 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
             if(warrior->vitality <= 0){
                 cleanWarrior(warrior->warrior,warrior);
                 my_mutex_unlock(&lock);
-                my_thread_exit();
+                my_thread_end();
                 break;
             }
             //Warrior attacks the tower
@@ -574,7 +574,7 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
             if(warrior->vitality <= 0){
                 cleanWarrior(warrior->warrior,warrior);
                 my_mutex_unlock(&lock);
-                my_thread_exit();
+                my_thread_end();
                 break;
             }
             //Warrior attacks the tower
@@ -623,7 +623,7 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
             if(warrior->vitality <= 0){
                 cleanWarrior(warrior->warrior,warrior);
                 my_mutex_unlock(&lock);
-                my_thread_exit();
+                my_thread_end();
                 break;
             }
             //Warrior attacks the tower
@@ -670,7 +670,7 @@ void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower
             if(warrior->vitality <= 0){
                 cleanWarrior(warrior->warrior,warrior);
                 my_mutex_unlock(&lock);
-                my_thread_exit();
+                my_thread_end();
                 break;
             }
             //Warrior attacks the tower
@@ -743,7 +743,7 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node, int * stepX){
                 pairing(lastDeadWarrior1, lastDeadWarrior2);
         }
         PopNode_QueueW(warriorQueue1,node);
-        my_thread_exit();
+        my_thread_end();
     }
     //checking if theres an Ally in front of the warrior
     if (node->player == 1){
@@ -1000,7 +1000,7 @@ void moveWarrior(int nextMove, Warrior *warrior, warrior_ptr node, int * stepX){
                 if(lastDeadWarrior1)
                     pairing(lastDeadWarrior1, lastDeadWarrior2);
             }
-            my_thread_exit();
+            my_thread_end();
         }else{
             if(check->screen == 1){
 
@@ -1034,10 +1034,10 @@ void pairing(Warrior* const cmp, Warrior* const depart){
 
     if(avg2 < avg1) {
         srand(time(NULL));
-        int select_attr = rand() % 4;
+        int select_attr = rand() % 4;//randomly select attribute to swap
         *stats2[select_attr] = *stats1[select_attr];
         int check_mut = rand() % 100;
-        if (check_mut < 10) {
+        if (check_mut < 10) {//check if eligible to mutation
             select_attr = rand() % 4;
             mutation(stats2[select_attr]);
         }
@@ -1408,7 +1408,7 @@ void* movePlayer1(void * parameters){
                 partnerBridge2 = 0;
 
 
-            my_thread_exit();
+            my_thread_end();
         }
         if(stepsX == entryBridge) {
             if (node->Posy > 6) {
@@ -1482,7 +1482,7 @@ void* movePlayer1(void * parameters){
             my_mutex_lock(&lock);
             cleanWarrior( warrior, node);
             my_mutex_unlock(&lock);
-            my_thread_exit();
+            my_thread_end();
         }
         //we have to check if the warrior has a collision with a tower
         checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
@@ -1535,7 +1535,7 @@ void* movePlayer1(void * parameters){
                 my_mutex_lock(&lock);
                 cleanWarrior( warrior, node);
                 my_mutex_unlock(&lock);
-                my_thread_exit();
+                my_thread_end();
             }
             checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
             my_mutex_lock(&lock);
@@ -1582,7 +1582,7 @@ void* movePlayer1(void * parameters){
                 my_mutex_lock(&lock);
                 cleanWarrior( warrior, node);
                 my_mutex_unlock(&lock);
-                my_thread_exit();
+                my_thread_end();
             }
             checkTowerCollision(node,&tower1,&tower2,&tower3,&tower4,&tower5,&tower6);
             my_mutex_lock(&lock);

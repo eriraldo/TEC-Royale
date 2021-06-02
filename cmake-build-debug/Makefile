@@ -67,10 +67,10 @@ RM = /opt/clion-2021.1.1/bin/cmake/linux/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/erickelizondo/repos/otro/TEC-Royale
+CMAKE_SOURCE_DIR = /home/erickelizondo/Videos/TEC-Royale
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug
+CMAKE_BINARY_DIR = /home/erickelizondo/Videos/TEC-Royale/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -99,9 +99,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/CMakeFiles /home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/erickelizondo/Videos/TEC-Royale/cmake-build-debug/CMakeFiles /home/erickelizondo/Videos/TEC-Royale/cmake-build-debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/erickelizondo/Videos/TEC-Royale/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -141,33 +141,6 @@ TecRoyale: cmake_check_build_system
 TecRoyale/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TecRoyale.dir/build.make CMakeFiles/TecRoyale.dir/build
 .PHONY : TecRoyale/fast
-
-DataStructures.o: DataStructures.c.o
-
-.PHONY : DataStructures.o
-
-# target to build an object file
-DataStructures.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TecRoyale.dir/build.make CMakeFiles/TecRoyale.dir/DataStructures.c.o
-.PHONY : DataStructures.c.o
-
-DataStructures.i: DataStructures.c.i
-
-.PHONY : DataStructures.i
-
-# target to preprocess a source file
-DataStructures.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TecRoyale.dir/build.make CMakeFiles/TecRoyale.dir/DataStructures.c.i
-.PHONY : DataStructures.c.i
-
-DataStructures.s: DataStructures.c.s
-
-.PHONY : DataStructures.s
-
-# target to generate assembly for a file
-DataStructures.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/TecRoyale.dir/build.make CMakeFiles/TecRoyale.dir/DataStructures.c.s
-.PHONY : DataStructures.c.s
 
 Table.o: Table.c.o
 
@@ -222,6 +195,33 @@ Warrior.s: Warrior.c.s
 Warrior.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TecRoyale.dir/build.make CMakeFiles/TecRoyale.dir/Warrior.c.s
 .PHONY : Warrior.c.s
+
+ini.o: ini.c.o
+
+.PHONY : ini.o
+
+# target to build an object file
+ini.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TecRoyale.dir/build.make CMakeFiles/TecRoyale.dir/ini.c.o
+.PHONY : ini.c.o
+
+ini.i: ini.c.i
+
+.PHONY : ini.i
+
+# target to preprocess a source file
+ini.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TecRoyale.dir/build.make CMakeFiles/TecRoyale.dir/ini.c.i
+.PHONY : ini.c.i
+
+ini.s: ini.c.s
+
+.PHONY : ini.s
+
+# target to generate assembly for a file
+ini.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TecRoyale.dir/build.make CMakeFiles/TecRoyale.dir/ini.c.s
+.PHONY : ini.c.s
 
 lottery_sched.o: lottery_sched.c.o
 
@@ -385,6 +385,33 @@ roundRobin_sched.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TecRoyale.dir/build.make CMakeFiles/TecRoyale.dir/roundRobin_sched.c.s
 .PHONY : roundRobin_sched.c.s
 
+thread_structure.o: thread_structure.c.o
+
+.PHONY : thread_structure.o
+
+# target to build an object file
+thread_structure.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TecRoyale.dir/build.make CMakeFiles/TecRoyale.dir/thread_structure.c.o
+.PHONY : thread_structure.c.o
+
+thread_structure.i: thread_structure.c.i
+
+.PHONY : thread_structure.i
+
+# target to preprocess a source file
+thread_structure.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TecRoyale.dir/build.make CMakeFiles/TecRoyale.dir/thread_structure.c.i
+.PHONY : thread_structure.c.i
+
+thread_structure.s: thread_structure.c.s
+
+.PHONY : thread_structure.s
+
+# target to generate assembly for a file
+thread_structure.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TecRoyale.dir/build.make CMakeFiles/TecRoyale.dir/thread_structure.c.s
+.PHONY : thread_structure.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -394,15 +421,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... TecRoyale"
-	@echo "... DataStructures.o"
-	@echo "... DataStructures.i"
-	@echo "... DataStructures.s"
 	@echo "... Table.o"
 	@echo "... Table.i"
 	@echo "... Table.s"
 	@echo "... Warrior.o"
 	@echo "... Warrior.i"
 	@echo "... Warrior.s"
+	@echo "... ini.o"
+	@echo "... ini.i"
+	@echo "... ini.s"
 	@echo "... lottery_sched.o"
 	@echo "... lottery_sched.i"
 	@echo "... lottery_sched.s"
@@ -421,6 +448,9 @@ help:
 	@echo "... roundRobin_sched.o"
 	@echo "... roundRobin_sched.i"
 	@echo "... roundRobin_sched.s"
+	@echo "... thread_structure.o"
+	@echo "... thread_structure.i"
+	@echo "... thread_structure.s"
 .PHONY : help
 
 

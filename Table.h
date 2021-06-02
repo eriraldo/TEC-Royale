@@ -55,7 +55,7 @@ int decideWinner(struct Tower *tower1,  struct Tower *tower2,  struct Tower *tow
 int Pop_QueueW(warriorQueue queue);
 int Push_QueueW(warriorQueue queue,warrior_ptr node);
 warriorQueue GetThreadQueueW();
-int MoveForwardW(warriorQueue queue);
+int moveHeadW(warriorQueue queue);
 warrior_ptr NewThreadW(Warrior * warrior, int player, int posx, int posyn, int screen);
 void PopNode_QueueW(warriorQueue queue, warrior_ptr node);
 int GetNextThreadIdW();

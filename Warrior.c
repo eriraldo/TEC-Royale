@@ -1,6 +1,6 @@
 #include "Warrior.h"
 
-
+//initialize warrior attributes
 int initValues(Warrior* const warrior, int vitality, int attack, int defense, int speed, char* name, int bomb){
     if(!warrior){
         perror("malloc failed");
@@ -27,6 +27,7 @@ void printWarrior(Warrior* const warrior){
     printf("VIT: %d, ATT: %d, DEF: %d, SPD: %d, NAME: %s\n", warrior->vitality,warrior->attack, warrior->defense, warrior->speed, warrior->name);
 }
 
+//calculates level based on its stats
 void getLevel(Warrior* const warrior){
     int attr = ((warrior->vitality + warrior->speed + warrior->defense + warrior->attack) / 4)/10 + 1;
     if (attr >= 10){
@@ -35,16 +36,8 @@ void getLevel(Warrior* const warrior){
     warrior->level = attr;
 }
 
+//From a randomly selected stat, increases it by 40, thus warrior's level is incremented by one
 void mutation(int* stat){
-    //srand(time(NULL));
     *stat+= 40;
-    /*int addOrSub = rand()%2;
-    if(addOrSub){
-        *stat+= rand()%40;
-    }else{
-        *stat-= rand()%40;
-        if(*stat < 0)
-            *stat = 0;
-    }*/
 }
 

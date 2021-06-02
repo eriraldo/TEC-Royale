@@ -22,14 +22,11 @@ typedef long my_thread_t;
 
 typedef struct Node
 {
-    int hasNoStackSpaceAllocated;
     int isCompleted;
-    int isBlocked;
     long quantum;
     my_thread_t idThread;
     ucontext_t context;
     struct Node *next;
-    struct WaitThreadList *waitingThreads;
     int tickets;
     int scheduler;
     int recently_used;
@@ -38,11 +35,11 @@ typedef struct Node
 } Thread,*Thread_ptr;
 
 
-typedef struct DeadNode
+typedef struct completedNode
 {
     my_thread_t idThread;
     void **returnStatus;
-    struct DeadNode *nextThread;
+    struct completedNode *nextThread;
 } *CompletedThread_ptr;
 
 typedef struct Thread_Queue
@@ -52,25 +49,16 @@ typedef struct Thread_Queue
     long count;
 } *Thread_Queue;
 
-typedef struct WaitThreadList
-{
-    Thread_ptr node;
-    struct WaitThreadList *next;
-} *WaitThreadList;
-
-
-
 typedef struct Completed_Thread_Queue
 {
-    struct DeadNode *node;
+    struct completedNode *node;
     long count;
 } *Completed_Queue;
 
 Thread_ptr GetCurrentThread(Thread_Queue queue);
-int MoveForward(Thread_Queue queue);
+int moveHead(Thread_Queue queue);
 int GetThreadCount(Thread_Queue queue);
 int GetNextThreadId();
-void FreeNode(Thread_ptr node);
 Thread_ptr NewThread();
 Thread_Queue GetThreadQueue();
 int Pop_Queue(Thread_Queue queue);
@@ -81,7 +69,6 @@ CompletedThread_ptr GetCompletedNode();
 void PopNode_Queue(Thread_Queue queue, Thread_ptr node);
 Thread_ptr GetThread(Thread_Queue queue, long idThread);
 int GetLotteryCount(Thread_Queue queue);
-Thread_Queue getNextThread(Thread_Queue queue, int sched);
 Thread_ptr cloneThread(Thread_ptr oldThread);
 void printThreads(Thread_Queue queue);
 void setNotUsed(Thread_Queue queue, int sched);

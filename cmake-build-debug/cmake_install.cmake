@@ -1,4 +1,4 @@
-# Install script for directory: /home/erickelizondo/repos/otro/TEC-Royale
+# Install script for directory: /home/erickelizondo/Videos/TEC-Royale
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/erickelizondo/repos/otro/TEC-Royale/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/erickelizondo/Videos/TEC-Royale/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
