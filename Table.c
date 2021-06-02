@@ -51,6 +51,8 @@ char* arr[21] = {
         "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"
 };
 
+extern ini_t *config;
+
 //function to initializes all  kinds of warriors and add them to a list
 int start(){
     int check = initValues(&warrior1,200,100,10,5,"P",0);
@@ -1054,7 +1056,6 @@ void createTable(int opcion){
     cbreak();
     curs_set(0);
     //here we initialize de variables that are stored in the config.ini file
-    ini_t *config = ini_load("config.ini");
     const char *optionBomb = ini_get(config, "bombWarrior", "damage");
     damage = atoi(optionBomb);
     const char *optionBomb2 = ini_get(config, "bombWarrior", "entry_limit");
