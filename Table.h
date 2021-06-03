@@ -11,6 +11,8 @@
 #include "unistd.h"
 #include "my_thread.h"
 #include <time.h>
+#include <curses.h>
+#include "ini.h"
 #define null  NULL
 typedef struct Node2
 {
@@ -19,6 +21,12 @@ typedef struct Node2
     struct warrior * warrior;
     int player;
     int finish;
+    int lock;
+    int Posx;
+    int Posy;
+    int partner;
+    int vitality;
+    int screen;
 
 } war,*warrior_ptr;
 
@@ -41,22 +49,25 @@ struct Tower
 
 void createTable(int opcion);
 void moveWarrior(int nextMove,Warrior *warrior, warrior_ptr node, int* stepX);
-int iniciar();
+int start();
 void createTowers(int opcion, struct Tower *tower1,  struct Tower *tower2,  struct Tower *tower3,  struct Tower *tower4,  struct Tower *tower5,  struct Tower *tower6);
-int decidirGanador(struct Tower *tower1,  struct Tower *tower2,  struct Tower *tower3,  struct Tower *tower4,  struct Tower *tower5,  struct Tower *tower6);
+int decideWinner(struct Tower *tower1,  struct Tower *tower2,  struct Tower *tower3,  struct Tower *tower4,  struct Tower *tower5,  struct Tower *tower6);
 int Pop_QueueW(warriorQueue queue);
 int Push_QueueW(warriorQueue queue,warrior_ptr node);
 warriorQueue GetThreadQueueW();
-int MoveForwardW(warriorQueue queue);
-warrior_ptr NewThreadW(Warrior * warrior, int player);
+int moveHeadW(warriorQueue queue);
+warrior_ptr NewThreadW(Warrior * warrior, int player, int posx, int posyn, int screen);
 void PopNode_QueueW(warriorQueue queue, warrior_ptr node);
 int GetNextThreadIdW();
 warrior_ptr GetThreadW( long idThread);
-warrior_ptr  checkCollision(warrior_ptr warrior);
+warrior_ptr  checkCollision(warrior_ptr warrior, int samePlayer);
 void checkTowerCollision(warrior_ptr warrior,struct Tower *tower1,  struct Tower *tower2,  struct Tower *tower3,  struct Tower *tower4,  struct Tower *tower5,  struct Tower *tower6);
 void* movePlayer1(void * Params);
-void* movePlayer2(void * parameters);
-void exitWarriorThread(int id);
 void cleanWarrior(Warrior * warrior, warrior_ptr node);
 void bombWarrior(Warrior * warrior);
+void printWarriorList();
+warrior_ptr  selectWarrior( int opcion,int localizacion);
+void checkBombCollision(warrior_ptr warrior);
+void* interactiveInputs();
+void pairing(Warrior*  cmp, Warrior* depart);
 #endif //UNTITLED_TABLE_H

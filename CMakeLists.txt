@@ -5,7 +5,7 @@ add_executable(TecRoyale
         Table.c
         Table.h
         Warrior.c
-        Warrior.h DataStructures.c DataStructures.h errorCodes.h lottery_sched.c lottery_sched.h my_mutex.c my_mutex.h my_thread.c my_thread.h realtime_sched.c realtime_sched.h roundRobin_sched.c roundRobin_sched.h)
+        Warrior.h thread_structure.c thread_structure.h lottery_sched.c lottery_sched.h my_mutex.c my_mutex.h my_thread.c my_thread.h realtime_sched.c realtime_sched.h roundRobin_sched.c roundRobin_sched.h ini.c ini.h )
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_FLAGS "-lncurses")
 find_package(Curses REQUIRED)

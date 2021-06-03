@@ -1,6 +1,3 @@
-//
-// Created by ericksalazargranera on 5/19/21.
-//
 #include "realtime_sched.h"
 #include "my_thread.h"
 
@@ -10,23 +7,16 @@ bool select_sched = false;
 extern Thread_Queue readyQueue;
 extern Thread_Queue lotteryQueue;
 int ticks = 0;
-void threadCompletedNotifier()
+
+//notify that thread is completed
+void notifyThreadCompleted()
 {
     Thread_ptr currentNode = GetCurrentThread_ptr();
-    WaitThreadList blockedNode = currentNode->waitingThreads;
-    while(blockedNode != null)
-    {
-        blockedNode->node->isBlocked = 0;
-        blockedNode = blockedNode->next;
-    }
-    //printf("Thread Completed:%ld\n",currentNode->idThread);
     currentNode->isCompleted = 1;
-
     raise(SIGPROF);
-
 }
 
-
+//Initializes context so it will call notifyThreadCompleted once thread is finished
 ucontext_t setupCompleteContext()
 {
     static int hasContextCreated;
@@ -38,12 +28,13 @@ ucontext_t setupCompleteContext()
         notifierContext.uc_stack.ss_sp = malloc(STACKSIZE);
         notifierContext.uc_stack.ss_size = STACKSIZE;
         notifierContext.uc_stack.ss_flags= 0;
-        makecontext( &notifierContext, (void (*) (void))&threadCompletedNotifier, 0);
+        makecontext( &notifierContext, (void (*) (void))&notifyThreadCompleted, 0);
         hasContextCreated = 1;
     }
     return notifierContext;
 }
 
+//Temporarily disables scheduler on 'special' thread so it doesn't mess with count function on each scheduler
 void disableSpecialThreads(){
     Thread_ptr nextNode = GetCurrentThread(readyQueue);
     Thread_ptr head = nextNode;
@@ -58,7 +49,7 @@ void disableSpecialThreads(){
     }
 }
 
-int getRR(){
+int getRR(){ //get the amount of threads running on round-robin scheduler
     Thread_ptr nextNode = GetCurrentThread(readyQueue);
     Thread_ptr head = nextNode;
     int rrCount = 0;
@@ -73,6 +64,7 @@ int getRR(){
     return rrCount;
 }
 
+//For each 'special' thread in queue, find the best sched to place it in
 void manageSpecialThread(){
     Thread_ptr nextNode = GetCurrentThread(readyQueue);
     Thread_ptr head = nextNode;
@@ -86,15 +78,12 @@ void manageSpecialThread(){
             else
                 tickets+=50;
             if (1/rrCount > 50/tickets){
-                my_thread_chsched(nextNode, 0);
+                my_thread_chsched(nextNode, 0); //if the amount of round-robin threads is fewer than total tickets, then change sched to rr
                 nextNode->tickets = 0;
-                //printf("CHANGED TO RR \n");
             }else{
-                my_thread_chsched(nextNode, 1);
+                my_thread_chsched(nextNode, 1); //else, lottery sched
                 nextNode->tickets = 50;
-                //printf("CHANGED TO LOTTERY \n");
             }
-            //printf("RR: %f, LOTTERY: %f\n", 1/rrCount, 50/tickets);
         }
         nextNode = nextNode->next;
         if (nextNode == head)
@@ -102,7 +91,7 @@ void manageSpecialThread(){
     }
 }
 
-int getSpecialThread(){
+int getSpecialThread(){//get count of 'special' thread
     Thread_ptr nextNode = GetCurrentThread(readyQueue);
     Thread_ptr head = nextNode;
     int specialCount = 0;
@@ -117,11 +106,12 @@ int getSpecialThread(){
     return specialCount;
 }
 
+//clean queue from completed nodes, finishes once found node is not completed, it's from the same scheduler and not recently used
 void cleanQueue(int sched, int origSched){
     Thread_ptr nextNode = GetCurrentThread(readyQueue);
     Thread_ptr head = nextNode;
 
-    while((nextNode!=null) && (nextNode->isBlocked || nextNode->isCompleted || nextNode->scheduler == sched || nextNode->recently_used == 1))
+    while((nextNode!=null) && (nextNode->isCompleted || nextNode->scheduler == sched || nextNode->recently_used == 1))
     {
         if(nextNode->isCompleted)
         {
@@ -129,16 +119,17 @@ void cleanQueue(int sched, int origSched){
         }
         else
         {
-            MoveForward(readyQueue);
+            moveHead(readyQueue);
         }
         nextNode = GetCurrentThread(readyQueue);
-        if (nextNode == head){
+        if (nextNode == head){//if node came back to head, it means all nodes were recently used
             setNotUsed(readyQueue, origSched);
             break;
         }
     }
 }
 
+//Function that swap schedulers each time a quantum is used
 void manage(int sigNum){
     int special = getSpecialThread();
     int test = ticks;
@@ -161,8 +152,7 @@ void manage(int sigNum){
 
 }
 
-
-
+//add tickets to given thread
 void setTicket(Thread_ptr thread, int tickets){
     thread->tickets = tickets;
 }
